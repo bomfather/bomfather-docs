@@ -1,0 +1,110 @@
+---
+// HowItWorks.astro - A visual explanation of how Bomfather works
+---
+
+<section class="py-16 bg-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4">How Bomfather Works</h2>
+      <p class="text-lg text-mid-gray max-w-3xl mx-auto">
+        Bomfather uses eBPF technology to monitor kernel-level file access during builds, creating accurate dependency trees.
+      </p>
+    </div>
+    
+    <div class="relative">
+      <!-- Connected steps with flow lines -->
+      <div class="hidden md:block absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-light-gray z-0"></div>
+      
+      <div class="grid md:grid-cols-3 gap-8 relative z-10">
+        <!-- Step 1 -->
+        <div class="bg-light-gray p-8 border border-gray-200 rounded-lg text-center">
+          <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+            1
+          </div>
+          <h3 class="text-xl font-bold mb-3">eBPF Monitoring</h3>
+          <p class="text-mid-gray">
+            Bomfather attaches eBPF probes to monitor system calls during the build process, capturing all file access events.
+          </p>
+        </div>
+        
+        <!-- Step 2 -->
+        <div class="bg-light-gray p-8 border border-gray-200 rounded-lg text-center">
+          <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+            2
+          </div>
+          <h3 class="text-xl font-bold mb-3">Hash Computation</h3>
+          <p class="text-mid-gray">
+            Cryptographic hashes (SHA-256) are computed for every file accessed, creating unique identifiers for each dependency.
+          </p>
+        </div>
+        
+        <!-- Step 3 -->
+        <div class="bg-light-gray p-8 border border-gray-200 rounded-lg text-center">
+          <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+            3
+          </div>
+          <h3 class="text-xl font-bold mb-3">SBOM Creation</h3>
+          <p class="text-mid-gray">
+            A comprehensive Software Bill of Materials (SBOM) is generated with cryptographic evidence of all dependencies, ensuring security and compliance.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-12 text-center">
+      <p class="mb-6 text-mid-gray">
+        The result is a comprehensive Software Bill of Materials (SBOM) with cryptographic evidence of all dependencies used during the build.
+      </p>
+      <div class="inline-block p-6 bg-light-gray rounded-lg">
+        <pre class="text-left text-sm text-dark font-mono overflow-x-auto"><code>{`{  
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "metadata": {
+    "timestamp": "1970-01-01T00:00:00Z",
+    "authors": [
+      {
+        "name": "Bomfather Authors"
+      }
+    ],
+    "component": {
+      "type": "library",
+      "name": "bomfather",
+      "purl": "pkg:golang/github.com/bomfather/bomfather"
+    },
+    "properties": [
+      {
+        "name": "bomfather:merkle_root",
+        "value": "123...xyz"
+      },
+      {
+        "name": "bomfather:command:pid=5832",
+        "value": "command..."
+      },
+      {
+        "name": "bomfather:kernel_version",
+        "value": "6.8.0-52-generic"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "cyclonedx-go",
+      "version": "v0.9.1",
+      "purl": "pkg:golang/github.com/CycloneDX/cyclonedx-go@v0.9.1"
+    },
+    {
+      "type": "library",
+      "name": "ebpf",
+      "version": "v0.16.0",
+      "purl": "pkg:golang/github.com/cilium/ebpf@v0.16.0"
+    },
+  ]
+}
+`}</code></pre>
+      </div>
+    </div>
+  </div>
+</section> 

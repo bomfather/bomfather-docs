@@ -1,0 +1,221 @@
+---
+import DocLayout from '../../layouts/DocLayout.astro';
+---
+
+<DocLayout
+  title="Configuration"
+  description="Learn how to configure Bomfather for your specific use cases and environment."
+>
+  <h1 class="text-3xl font-bold mb-6">Configuring Bomfather</h1>
+  
+  <div class="prose prose-lg max-w-none">
+    <h2>Configuration Overview</h2>
+    <p>
+      Bomfather's configuration is controlled through a YAML file located at <code>/etc/bomfather/config.yaml</code> by default.
+      This guide covers all available configuration options and provides examples for common scenarios.
+    </p>
+    
+    <h2>Basic Configuration Structure</h2>
+    <p>
+      The configuration file has the following main sections:
+    </p>
+    
+    <ul>
+      <li><strong>monitoring</strong>: What to monitor (processes, directories, etc.)</li>
+      <li><strong>output</strong>: How to output the results</li>
+      <li><strong>analysis</strong>: Configuration for analysis features</li>
+      <li><strong>logging</strong>: Logging configuration</li>
+      <li><strong>advanced</strong>: Advanced eBPF and system settings</li>
+    </ul>
+    
+    <h2>Monitoring Configuration</h2>
+    <p>
+      The monitoring section defines what Bomfather should monitor:
+    </p>
+    
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>monitoring:
+  # Process monitoring
+  processes:
+    # Monitor by process name
+    - name: "python"
+    
+    # Monitor by command line pattern
+    - cmdline: "node.*server\\.js"
+    
+    # Monitor by exact path
+    - path: "/usr/local/bin/java"
+    
+    # Monitor by PID
+    - pid: 1234
+    
+  # Directory monitoring
+  directories:
+    # Monitor a specific directory for file accesses
+    - path: "/usr/local/lib/python3.9"
+      recursive: true  # Include subdirectories
+      
+    # Monitor with pattern matching
+    - path: "/usr/lib"
+      include: "*.so*"  # Only monitor shared libraries
+      exclude: "libsystem_*"  # Exclude system libraries
+      
+  # Container monitoring
+  containers:
+    - name: "app-backend"  # Container name
+    - id: "abcdef123456"   # Container ID</code></pre>
+    
+    <h2>Output Configuration</h2>
+    <p>
+      Configure how Bomfather outputs its results:
+    </p>
+    
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>output:
+  # Output format
+  format: "sbom"  # Options: sbom, json, yaml, cyclonedx, spdx
+  
+  # Output destination
+  file: "/var/run/bomfather/sbom.json"  # Write to file
+  
+  # HTTP endpoint (optional)
+  http:
+    url: "https://your-server.example.com/api/sbom"
+    method: "POST"
+    headers:
+      Authorization: "Bearer YOUR_API_KEY"
+      Content-Type: "application/json"
+    
+  # Update frequency
+  update_interval: "1h"  # How often to update the SBOM
+  
+  # Include details
+  include_details:
+    file_access_events: true
+    network_connections: true
+    unused_dependencies: true</code></pre>
+    
+    <h2>Analysis Configuration</h2>
+    <p>
+      Configure how Bomfather analyzes the collected data:
+    </p>
+    
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>analysis:
+  # Detection features
+  detect_unused: true     # Detect unused dependencies
+  detect_unknown: true    # Detect unknown/undeclared dependencies
+  detect_dynamic: true    # Detect dynamically loaded dependencies
+  
+  # Analysis thresholds
+  unused_threshold: "7d"  # Mark as unused after 7 days of no access
+  
+  # Dependency resolution
+  resolution:
+    package_managers:
+      - npm
+      - pip
+      - maven
+    repositories:
+      - "/path/to/local/repo"
+      - "https://repo.example.com"</code></pre>
+    
+    <h2>Logging Configuration</h2>
+    <p>
+      Configure Bomfather's logging:
+    </p>
+    
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>logging:
+  level: "info"  # Options: debug, info, warn, error
+  file: "/var/log/bomfather.log"
+  max_size: "100M"
+  max_files: 5
+  syslog: true</code></pre>
+    
+    <h2>Advanced Configuration</h2>
+    <p>
+      Advanced configuration options for eBPF and system integration:
+    </p>
+    
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>advanced:
+  # eBPF settings
+  ebpf:
+    map_size: 262144  # Size of eBPF maps
+    perf_buffer_pages: 64  # Size of perf buffer in pages
+    
+  # System integration
+  system:
+    scheduler_policy: "idle"  # CPU scheduler policy for the agent
+    nice_level: 19  # Process priority (higher = lower priority)
+    
+  # Security settings
+  security:
+    drop_capabilities: true  # Drop unnecessary capabilities
+    seccomp_profile: "/etc/bomfather/seccomp.json"</code></pre>
+    
+    <h2>Environment-Specific Configurations</h2>
+    
+    <h3>Development Environment</h3>
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>monitoring:
+  processes:
+    - name: "node"
+  directories:
+    - path: "./node_modules"
+    - path: "./vendor"
+
+output:
+  format: "json"
+  file: "./bomfather-dev.json"
+  update_interval: "10s"
+
+logging:
+  level: "debug"</code></pre>
+    
+    <h3>Production Environment</h3>
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>monitoring:
+  processes:
+    - cmdline: ".*production.*"
+  containers:
+    - name: "prod-.*"
+
+output:
+  format: "sbom"
+  file: "/var/run/bomfather/sbom.json"
+  http:
+    url: "https://sbom-repository.internal/api/upload"
+  update_interval: "1h"
+
+logging:
+  level: "warn"
+  syslog: true</code></pre>
+    
+    <h2>Configuration Validation</h2>
+    <p>
+      You can validate your configuration file using the Bomfather CLI:
+    </p>
+    
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>bomfather validate --config /path/to/config.yaml</code></pre>
+    
+    <h2>Environment Variables</h2>
+    <p>
+      Bomfather supports overriding configuration settings with environment variables:
+    </p>
+    
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code># Override log level
+export BOMFATHER_LOGGING_LEVEL=debug
+
+# Override output file
+export BOMFATHER_OUTPUT_FILE=/tmp/bomfather.json
+
+# Start Bomfather with these overrides
+bomfather start</code></pre>
+    
+    <h2>Next Steps</h2>
+    <p>
+      With your configuration optimized, you might want to explore:
+    </p>
+    
+    <ul>
+      <li><a href="/docs/integration" class="text-primary hover:underline">Integration with CI/CD Pipelines</a></li>
+      <li><a href="/docs/api" class="text-primary hover:underline">Using the Bomfather API</a></li>
+      <li><a href="/docs/troubleshooting" class="text-primary hover:underline">Troubleshooting and FAQ</a></li>
+    </ul>
+  </div>
+</DocLayout> 

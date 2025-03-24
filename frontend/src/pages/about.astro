@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="About Bomfather - Our Mission and Team"
+  description="Learn about the Bomfather project, our mission to secure software supply chains, and the team behind this innovative tool."
+>
+  <section class="py-16 bg-light-blue">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4">About Bomfather</h1>
+        <p class="text-lg text-mid-gray max-w-3xl mx-auto">
+          Our mission is to bring kernel-level truth to software supply chains, providing unprecedented visibility and security.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6">Our Story</h2>
+        <p class="text-lg mb-6">
+          The Bomfather project was born out of the recognition that traditional dependency management tools were 
+          insufficient for today's complex software supply chains. With the rise of supply chain attacks and increasing 
+          regulatory requirements, we saw the need for a tool that could provide absolute truth about what dependencies 
+          are actually used during builds.
+        </p>
+        <p class="text-lg mb-6">
+          By leveraging eBPF technology to monitor system calls at the kernel level, Bomfather captures all file access 
+          events during the build process, creating a cryptographically verifiable record of every dependency — including 
+          those that are dynamically loaded, pulled from caches, or otherwise hidden from traditional manifest-based tools.
+        </p>
+        <div class="bg-light-gray p-6 rounded-lg my-8 border-l-4 border-primary">
+          <p class="text-lg italic">
+            "We built Bomfather to solve the fundamental problem of dependency tracking: the gap between what's declared 
+            and what's actually used."
+          </p>
+        </div>
+        <p class="text-lg">
+          Today, Bomfather is an open-source project dedicated to enhancing software supply chain security through 
+          accurate, comprehensive dependency tracking.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-light-gray">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">Our Principles</h2>
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-bold mb-3">Transparency</h3>
+          <p>
+            We believe in complete transparency about software dependencies and their origins. Our open-source approach 
+            reflects this commitment.
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-bold mb-3">Security</h3>
+          <p>
+            Security is at the core of everything we do. We're committed to helping organizations build more secure 
+            software through accurate dependency tracking.
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-bold mb-3">Innovation</h3>
+          <p>
+            By leveraging cutting-edge technologies like eBPF, we're pushing the boundaries of what's possible in 
+            dependency tracking and software supply chain security.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6">Open Source Community</h2>
+        <p class="text-lg mb-8">
+          Bomfather is proudly open source and community-driven. We welcome contributions from developers, security 
+          researchers, and organizations who share our vision for more secure software supply chains.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="https://github.com/bitbomdev/bomfather" class="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition duration-300">
+            View on GitHub
+          </a>
+          <a href="/docs/contributing" class="px-6 py-3 bg-gray-100 text-gray-800 rounded-lg font-medium hover:bg-gray-200 transition duration-300">
+            Contribute
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout> 

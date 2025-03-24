@@ -1,0 +1,187 @@
+---
+// UseCases.astro - Showcase different applications and use cases for Bomfather
+---
+
+<section class="py-16 bg-light-gray overflow-hidden">
+  <div class="container">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4 gsap-reveal">Use Cases</h2>
+      <p class="text-lg text-mid-gray max-w-3xl mx-auto gsap-reveal">
+        Bomfather addresses critical challenges in software supply chain security and dependency management.
+      </p>
+    </div>
+    
+    <div class="space-y-24">
+      <!-- Use Case 1 -->
+      <div class="use-case-row flex flex-col md:flex-row items-center">
+        <div class="w-full md:w-1/3 mb-8 md:mb-0">
+          <div class="use-case-number text-8xl font-bold text-primary/30">01</div>
+          <h3 class="text-2xl font-bold text-primary mb-2">Supply Chain Security</h3>
+        </div>
+        <div class="w-full md:w-2/3 pl-0 md:pl-12 slide-in-right">
+          <p class="mb-6 text-lg text-mid-gray">
+            Identify unknown or potentially malicious dependencies in your software supply chain to prevent supply chain attacks.
+          </p>
+          <ul class="space-y-4 text-mid-gray">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Detect unauthorized dependencies introduced during the build process</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Create tamper-evident build provenance for security audits</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Verify integrity of dependencies with cryptographic proofs</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Use Case 2 -->
+      <div class="use-case-row flex flex-col md:flex-row items-center">
+        <div class="w-full md:w-1/3 mb-8 md:mb-0">
+          <div class="use-case-number text-8xl font-bold text-primary/30">02</div>
+          <h3 class="text-2xl font-bold text-primary mb-2">Regulatory Compliance</h3>
+        </div>
+        <div class="w-full md:w-2/3 pl-0 md:pl-12 slide-in-right">
+          <p class="mb-6 text-lg text-mid-gray">
+            Meet government and industry regulations requiring accurate Software Bills of Materials (SBOMs) for critical software.
+          </p>
+          <ul class="space-y-4 text-mid-gray">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Comply with Executive Order 14028 on improving cybersecurity</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Generate SBOMs that meet NTIA and CISA standards</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Provide audit-ready documentation of software dependencies</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Use Case 3 -->
+      <div class="use-case-row flex flex-col md:flex-row items-center">
+        <div class="w-full md:w-1/3 mb-8 md:mb-0">
+          <div class="use-case-number text-8xl font-bold text-primary/30">03</div>
+          <h3 class="text-2xl font-bold text-primary mb-2">Vulnerability Management</h3>
+        </div>
+        <div class="w-full md:w-2/3 pl-0 md:pl-12 slide-in-right">
+          <p class="mb-6 text-lg text-mid-gray">
+            Improve vulnerability detection and management with accurate dependency information.
+          </p>
+          <ul class="space-y-4 text-mid-gray">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Identify all affected components when vulnerabilities are discovered</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Reduce false positives by knowing which dependencies are actually used</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Prioritize remediation based on accurate dependency information</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .slide-in-right {
+    /* We'll now handle the initial state via JavaScript to avoid conflicts */
+    visibility: hidden; /* Hide initially but keep layout intact */
+  }
+  
+  .use-case-number {
+    line-height: 1;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    // Register ScrollTrigger with GSAP
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Initial header animation
+    gsap.from('.gsap-reveal', {
+      opacity: 0,
+      y: 30,
+      stagger: 0.2,
+      duration: 1,
+      ease: 'power2.out'
+    });
+    
+    // Set up animations for use case rows
+    const useCaseRows = document.querySelectorAll('.use-case-row');
+    
+    useCaseRows.forEach((row) => {
+      const slideInElement = row.querySelector('.slide-in-right');
+      const numberElement = row.querySelector('.use-case-number');
+      
+      // Set initial state of the elements (make them visible for GSAP)
+      gsap.set(slideInElement, { 
+        visibility: 'visible',
+        opacity: 0,
+        x: 50
+      });
+      
+      // Create the timeline with markers for debugging
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: row,
+          start: 'top 80%',  // Trigger when the top of the row hits 80% down the viewport
+          end: 'bottom 20%', // End when the bottom of the row is 20% from the top of the viewport
+          toggleActions: 'play none none none', // Only play forward, don't reset
+          once: false,        // Can play multiple times
+          // markers: true    // Uncomment for debugging
+        }
+      });
+      
+      // Add animations to the timeline
+      tl.from(numberElement, {
+        opacity: 0,
+        x: -30,
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+      
+      tl.to(slideInElement, {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      }, '-=0.4');
+    });
+  });
+</script> 

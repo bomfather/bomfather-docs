@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary colors */
+  --color-primary: #0B5FFF;
+  --color-secondary: #224BC5;
+  --color-dark-blue: #0A2463;
+  
+  /* Neutral colors */
+  --color-dark: #121212;
+  --color-mid-gray: #505050;
+  --color-light-gray: #F3F4F6;
+  --color-white: #FFFFFF;
+  
+  /* Accent colors */
+  --color-green: #45C4B0;
+  --color-orange: #FF6B35;
+  --color-red: #E63946;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--color-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom component classes */
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-md font-medium transition duration-300;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-secondary;
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-primary border border-primary hover:bg-light-gray;
+  }
+  
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+} 

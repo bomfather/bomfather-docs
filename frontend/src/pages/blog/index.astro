@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { blogPosts } from '../../data/blog';
+---
+
+<BaseLayout
+  title="Blog"
+  description="Latest news, tutorials, and insights about software supply chain security and Bomfather."
+>
+  <section class="container py-12">
+    <h1 class="text-4xl font-bold mb-8">Bomfather Blog</h1>
+    <p class="text-xl mb-12 max-w-3xl">
+      Insights, tutorials, and updates on software supply chain security, eBPF technology, and the Bomfather ecosystem.
+    </p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {blogPosts.map((post) => (
+        <article class="border border-light-gray rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+          <a href={`/blog/${post.slug}`} class="block">
+            <div class="aspect-video bg-light-gray">
+              {post.image ? (
+                <img 
+                  src={post.image} 
+                  alt={post.title} 
+                  class="w-full h-full object-cover" 
+                />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center bg-primary/10">
+                  <span class="text-primary font-medium">Bomfather</span>
+                </div>
+              )}
+            </div>
+            <div class="p-6">
+              <p class="text-sm text-mid-gray mb-2">
+                {new Date(post.publishedDate).toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })} · {post.author}
+              </p>
+              <h2 class="text-xl font-bold mb-3 text-dark-blue">{post.title}</h2>
+              <p class="text-mid-gray mb-4 line-clamp-3">{post.excerpt}</p>
+              <p class="text-primary font-medium">Read more →</p>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout> 

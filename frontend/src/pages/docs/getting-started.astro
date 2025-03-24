@@ -1,0 +1,100 @@
+---
+import DocLayout from '../../layouts/DocLayout.astro';
+---
+
+<DocLayout
+  title="Getting Started"
+  description="Learn how to install, configure, and start using Bomfather for your software supply chain security needs."
+>
+  <h1 class="text-3xl font-bold mb-6">Getting Started with Bomfather</h1>
+  
+  <div class="prose prose-lg max-w-none">
+    <h2>Installation</h2>
+    <p>
+      Bomfather requires Linux kernel 5.8+ with eBPF support. To install Bomfather, you can use our binary packages or build from source.
+    </p>
+    
+    <h3>Method 1: Using the pre-built binary (Recommended)</h3>
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>curl -sSL https://get.bomfather.org | sudo bash</code></pre>
+    
+    <h3>Method 2: Using Docker</h3>
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>docker run -d --name bomfather \
+  --privileged \
+  -v /var/run/bomfather:/var/run/bomfather \
+  bomfather/agent:latest</code></pre>
+    
+    <h3>Method 3: Building from source</h3>
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>git clone https://github.com/bitbomdev/bomfather.git
+cd bomfather
+make build
+sudo make install</code></pre>
+    
+    <h2>Configuration</h2>
+    <p>
+      After installation, you'll need to configure Bomfather to monitor your application(s). The default configuration file is located at <code>/etc/bomfather/config.yaml</code>.
+    </p>
+    
+    <p>Here's a basic configuration example:</p>
+    
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code># Basic Bomfather configuration
+monitoring:
+  # Processes to monitor (by name, path, or command line)
+  processes:
+    - name: "node"
+    - name: "python"
+    - name: "java"
+  
+  # Specific directories to monitor for file access
+  directories:
+    - path: "/usr/local/lib"
+    - path: "/usr/lib"
+    - path: "/opt/node_modules"
+    
+# Output configuration
+output:
+  format: "sbom"  # Options: sbom, json, yaml
+  file: "/var/run/bomfather/sbom.json"
+  
+# Analysis configuration
+analysis:
+  detect_unused: true
+  detect_unknown: true
+  detect_dynamic: true</code></pre>
+    
+    <h2>Running Bomfather</h2>
+    <p>
+      Once installed and configured, you can start the Bomfather agent:
+    </p>
+    
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>sudo systemctl start bomfather</code></pre>
+    
+    <p>To check the status:</p>
+    
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>sudo systemctl status bomfather</code></pre>
+    
+    <h2>Viewing Results</h2>
+    <p>
+      Bomfather generates an SBOM (Software Bill of Materials) with extended annotations for unused, unknown, and dynamically loaded dependencies.
+      You can find this output at the location specified in your configuration.
+    </p>
+    
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>cat /var/run/bomfather/sbom.json</code></pre>
+    
+    <p>You can also use the Bomfather CLI to query the results:</p>
+    
+    <pre class="bg-light-gray p-4 rounded-md overflow-x-auto"><code>bomfather status
+bomfather list dependencies
+bomfather list unused</code></pre>
+    
+    <h2>Next Steps</h2>
+    <p>
+      Now that you have Bomfather up and running, you might want to:
+    </p>
+    
+    <ul>
+      <li>Check out the <a href="/docs/configuration" class="text-primary hover:underline">Configuration</a> guide for advanced settings</li>
+      <li>Learn about <a href="/docs/integration" class="text-primary hover:underline">Integrating Bomfather</a> into your CI/CD pipeline</li>
+      <li>Explore the <a href="/docs/api" class="text-primary hover:underline">API</a> for programmatic access to Bomfather data</li>
+    </ul>
+  </div>
+</DocLayout> 

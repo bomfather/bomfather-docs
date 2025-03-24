@@ -1,0 +1,53 @@
+---
+// Header component for site navigation
+---
+
+<header class="sticky top-0 z-50 bg-white shadow-sm">
+  <div class="container py-4 flex justify-between items-center">
+    <a href="/" class="flex items-center">
+      <img src="/images/logos/bitbom-long-logo.png" alt="Bomfather Logo" class="h-12" />
+    </a>
+    <nav class="hidden md:flex space-x-6">
+      <a href="/" class="hover:text-primary">Home</a>
+      <a href="/solutions" class="hover:text-primary">Solutions</a>
+      <a href="/docs" class="hover:text-primary">Documentation</a>
+      <a href="/blog" class="hover:text-primary">Blog</a>
+      <a href="/about" class="hover:text-primary">About</a>
+    </nav>
+    <div class="md:hidden">
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-button" class="text-dark">Menu</button>
+      
+      <!-- Mobile menu (hidden by default) -->
+      <div id="mobile-menu" class="fixed inset-0 bg-dark-blue bg-opacity-95 z-50 flex flex-col justify-center items-center hidden">
+        <button id="mobile-menu-close" class="absolute top-4 right-4 text-white text-2xl">&times;</button>
+        <nav class="flex flex-col space-y-6 text-center">
+          <a href="/" class="text-white text-xl hover:text-primary">Home</a>
+          <a href="/solutions" class="text-white text-xl hover:text-primary">Solutions</a>
+          <a href="/docs" class="text-white text-xl hover:text-primary">Documentation</a>
+          <a href="/blog" class="text-white text-xl hover:text-primary">Blog</a>
+          <a href="/about" class="text-white text-xl hover:text-primary">About</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile menu functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    
+    mobileMenuButton?.addEventListener('click', () => {
+      mobileMenu?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+    });
+    
+    mobileMenuClose?.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      document.body.style.overflow = 'auto'; // Re-enable scrolling
+    });
+  });
+</script> 

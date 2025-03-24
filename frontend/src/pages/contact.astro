@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactUs from '../components/ContactUs.astro';
+---
+
+<BaseLayout 
+  title="Contact Us"
+  description="Get in touch with the Bomfather team for questions, support, or to schedule a demo."
+>
+  <div class="pt-12 pb-8 bg-primary/5">
+    <div class="container">
+      <h1 class="text-4xl md:text-5xl font-bold font-heading">Contact Us</h1>
+      <p class="mt-4 text-lg text-mid-gray max-w-2xl">
+        We're here to help you secure your software supply chain and answer any questions you might have about Bomfather.
+      </p>
+    </div>
+  </div>
+  
+  <ContactUs />
+  
+  <!-- FAQ Section -->
+  <section class="py-16 bg-light-gray">
+    <div class="container">
+      <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+      
+      <div class="max-w-3xl mx-auto space-y-6">
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-bold mb-2">What is Bomfather?</h3>
+          <p class="text-mid-gray">
+            Bomfather is an eBPF-based kernel-level monitoring framework for accurate identification of unknown, unused, and dynamically loaded dependencies in modern software supply chains.
+          </p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-bold mb-2">How does Bomfather differ from other dependency scanning tools?</h3>
+          <p class="text-mid-gray">
+            Unlike traditional tools that analyze package manifests, Bomfather monitors actual runtime behavior at the kernel level, providing a complete and accurate picture of all dependencies actually used during builds and execution.
+          </p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-bold mb-2">Is Bomfather open source?</h3>
+          <p class="text-mid-gray">
+            Yes, Bomfather is an open source project. You can find the source code on our GitHub repository and contribute to its development.
+          </p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-bold mb-2">How can I deploy Bomfather in my organization?</h3>
+          <p class="text-mid-gray">
+            Bomfather can be deployed in various environments, from development workstations to CI/CD pipelines. Check our documentation for detailed deployment guides or contact us for personalized assistance.
+          </p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-bold mb-2">Do you offer commercial support?</h3>
+          <p class="text-mid-gray">
+            Yes, we offer commercial support options for organizations that need dedicated assistance, customizations, or enterprise features. Contact us to discuss your specific needs.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout> 

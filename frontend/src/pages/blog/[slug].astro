@@ -1,0 +1,68 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import { blogPosts } from '../../data/blog';
+
+export function getStaticPaths() {
+  return blogPosts.map(post => {
+    return {
+      params: { slug: post.slug },
+      props: { post }
+    };
+  });
+}
+
+const { post } = Astro.props;
+---
+
+<BlogLayout
+  title={post.title}
+  description={post.description}
+  publishedDate={post.publishedDate}
+  author={post.author}
+  image={post.image}
+>
+  <div class="mb-10">
+    <h1 class="text-4xl font-bold mb-6">{post.title}</h1>
+    {post.image && (
+      <div class="my-8 rounded-lg overflow-hidden">
+        <img 
+          src={post.image} 
+          alt={post.title} 
+          class="w-full h-auto" 
+        />
+      </div>
+    )}
+  </div>
+  
+  <div class="prose prose-lg max-w-none" set:html={post.content} />
+  
+  <div class="mt-12 pt-6 border-t border-light-gray">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+      <a href="/blog" class="text-primary hover:underline flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to all posts
+      </a>
+      
+      <div class="mt-4 md:mt-0 flex space-x-4">
+        <a
+          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://bomfather.org/blog/${post.slug}`)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-mid-gray hover:text-primary"
+        >
+          Share on Twitter
+        </a>
+        <a
+          href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`https://bomfather.org/blog/${post.slug}`)}&title=${encodeURIComponent(post.title)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-mid-gray hover:text-primary"
+        >
+          Share on LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</BlogLayout> 

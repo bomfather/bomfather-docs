@@ -1,0 +1,74 @@
+---
+import DocLayout from '../../layouts/DocLayout.astro';
+---
+
+<DocLayout 
+  title="Documentation" 
+  description="Documentation for Bomfather, an eBPF-based kernel-level monitoring framework for accurate dependency tracking."
+>
+  <p class="lead">
+    Bomfather is an eBPF-based kernel-level monitoring framework for accurate identification of unknown, unused, and dynamically loaded dependencies in modern software supply chains.
+  </p>
+  
+  <h2>Overview</h2>
+  
+  <p>
+    Traditional Software Bill of Materials (SBOM) generators rely on static analysis or manifest files to identify dependencies. While useful, this approach often misses dynamically loaded libraries, conditional dependencies, and can include declared but unused components.
+  </p>
+  
+  <p>
+    Bomfather takes a fundamentally different approach by monitoring system calls at the kernel level during the build process, tracking every file that is accessed. This provides a complete and accurate picture of your actual dependencies.
+  </p>
+  
+  <h2>Key Features</h2>
+  
+  <ul>
+    <li><strong>Kernel-Level Monitoring</strong>: Uses eBPF to intercept system calls during builds</li>
+    <li><strong>Tamper-Evident Verification</strong>: Creates cryptographic Merkle trees for verification</li>
+    <li><strong>Accurate SBOMs</strong>: Captures all dependencies, including dynamically loaded ones</li>
+    <li><strong>High Performance</strong>: Optimized eBPF implementation with minimal overhead</li>
+    <li><strong>Integration Ready</strong>: Works with CI/CD pipelines and build systems</li>
+    <li><strong>Customizable</strong>: Flexible configuration for different environments</li>
+  </ul>
+  
+  <h2>Getting Started</h2>
+  
+  <p>
+    To get started with Bomfather, follow these steps:
+  </p>
+  
+  <ol>
+    <li>
+      <a href="/docs/installation">Install Bomfather</a> on your system or CI/CD environment
+    </li>
+    <li>
+      Configure Bomfather for your specific build environment
+    </li>
+    <li>
+      Run your build process with Bomfather monitoring
+    </li>
+    <li>
+      Analyze the generated SBOM and dependency graphs
+    </li>
+  </ol>
+  
+  <h2>Quick Example</h2>
+  
+  <p>
+    Here's a simple example of using Bomfather to monitor a build process:
+  </p>
+  
+  <pre><code>$ bomfather monitor -- make
+Monitoring build process...
+Build completed. Found 143 direct dependencies and 587 transitive dependencies.
+SBOM generated at ./bomfather-sbom.json</code></pre>
+  
+  <h2>Next Steps</h2>
+  
+  <ul>
+    <li><a href="/docs/getting-started">Quick Start Guide</a>: Step-by-step instructions for your first project</li>
+    <li><a href="/docs/concepts/architecture">Architecture</a>: Learn about Bomfather's technical design</li>
+    <li><a href="/docs/cli/commands">CLI Reference</a>: Detailed documentation of all commands</li>
+    <li><a href="/docs/integrations/ci-cd">CI/CD Integration</a>: Add Bomfather to your CI/CD pipeline</li>
+  </ul>
+</DocLayout> 

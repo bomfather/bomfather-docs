@@ -1,0 +1,41 @@
+---
+// About.astro - Explains what Bomfather is and its purpose
+---
+
+<section class="py-16 bg-light-blue">
+  <div class="container">
+    <h2 class="text-3xl md:text-4xl font-bold font-heading mb-6 text-center">What is Bomfather?</h2>
+    
+    <div class="max-w-6xl mx-auto">
+      <div class="bg-light-gray border border-gray-200 rounded-lg shadow-sm p-8 w-full">
+        <div class="border-l-4 border-primary pl-4 mb-6">
+          <p class="text-lg italic text-gray-700">
+            "Bomfather brings kernel-level truth to your software supply chain by capturing what actually happens during builds."
+          </p>
+        </div>
+        
+        <p class="text-lg mb-4">
+          <strong>Bomfather</strong> is an advanced tool that provides kernel-level truth about software dependencies. 
+          It creates accurate Software Bills of Materials (SBOMs) by capturing actual file access during builds.
+        </p>
+        
+        <p class="text-lg mb-4">
+          Unlike traditional dependency scanners that rely on manifest files or static analysis, Bomfather uses eBPF technology 
+          to monitor system calls at the kernel level, capturing <em>all</em> dependencies - even those that are:
+        </p>
+        
+        <ul class="list-disc mb-6 text-lg space-y-2 pl-8">
+          <li><strong>Dynamically loaded</strong> at runtime</li>
+          <li><strong>Implicitly included</strong> by build systems</li>
+          <li><strong>Hidden</strong> in complex multi-stage builds</li>
+          <li><strong>Pulled from local caches</strong> with no network activity</li>
+        </ul>
+        
+        <p class="text-lg">
+          This approach helps teams meet supply chain security requirements with confidence, providing cryptographically verifiable 
+          evidence of every dependency used in your software. Bomfather bridges the gap between what's declared and what's actually used.
+        </p>
+      </div>
+    </div>
+  </div>
+</section> 
