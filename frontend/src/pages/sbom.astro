@@ -1,0 +1,516 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const sbomExample = `{
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "metadata": {
+    "timestamp": "1970-01-01T00:00:00Z",
+    "authors": [
+      {
+        "name": "Bomfather Authors"
+      }
+    ],
+    "component": {
+      "type": "library",
+      "name": "bomfather",
+      "purl": "pkg:golang/github.com/bomfather/bomfather"
+    },
+    "properties": [
+      {
+        "name": "bomfather:merkle_root",
+        "value": "2c6105bd68a99f6bef9574f80d92fc441d92133dee4831e407cf9007e3f49a4f"
+      },
+      {
+        "name": "bomfather:command:pid=5832",
+        "value": "command..."
+      },
+      {
+        "name": "bomfather:kernel_version",
+        "value": "6.8.0-52-generic"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "cyclonedx-go",
+      "version": "v0.9.1",
+      "purl": "pkg:golang/github.com/CycloneDX/cyclonedx-go@v0.9.1"
+    },
+    {
+      "type": "library",
+      "name": "ebpf",
+      "version": "v0.16.0",
+      "purl": "pkg:golang/github.com/cilium/ebpf@v0.16.0"
+    },
+    {
+      "type": "file",
+      "name": "bomfather:/usr/local/go/src/encoding/binary/binary.go",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b8fe055b43fde8f7bb2b39608626a76dc014d274c03bbe98e6431d679748895d"
+        }
+      ],
+      "properties": [
+        {
+          "name": "bomfather:pid",
+          "value": "5890"
+        }
+      ]
+    }
+  ]
+}`;
+
+// Define annotations with their explanations
+const annotations = [
+  {
+    line: 21, // "name": "bomfather:merkle_root",
+    id: "1",
+    title: "Merkle Root",
+    text: "Cryptographic hash that verifies the integrity of all components in the SBOM"
+  },
+  {
+    line: 29, // "name": "bomfather:kernel_version",
+    id: "2",
+    title: "Kernel Version",
+    text: "We capture the Linux kernel version that was running when the SBOM was generated"
+  },
+  {
+    line: 35, // "type": "library", - First component in the array
+    id: "3",
+    title: "Library Components",
+    text: "Bomfather captures all library dependencies with their version information and package URLs"
+  },
+  {
+    line: 47, // "type": "file", for the file component
+    id: "4",
+    title: "File Access Tracking",
+    text: "We track all files that were accessed during the build process, including their paths and hashes"
+  }
+];
+---
+
+<BaseLayout 
+  title="Bomfather SBOM Format"
+  description="Learn about the Bomfather Software Bill of Materials (SBOM) format and how it provides kernel-level truth in software supply chains."
+>
+  <section class="py-16 bg-blue-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4">Bomfather SBOM Format</h1>
+        <p class="text-lg text-mid-gray max-w-3xl mx-auto">
+          Understanding our comprehensive Software Bill of Materials format that captures all dependencies at the kernel level
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6">What is a Bomfather SBOM?</h2>
+        <p class="text-lg mb-6">
+          A Bomfather Software Bill of Materials (SBOM) is a comprehensive inventory of all software components used during your build process, captured at the kernel level using eBPF. Unlike traditional dependency manifests, our SBOMs include <strong>dynamically loaded libraries</strong>, <strong>conditionally included dependencies</strong>, and <strong>all files accessed</strong> during the build process.
+        </p>
+        <p class="text-lg mb-6">
+          Bomfather SBOMs follow the industry-standard CycloneDX format with additional properties that provide kernel-level insights into your software supply chain.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-light-gray">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6">SBOM Structure</h2>
+        <p class="text-lg mb-6">
+          Below is an example of the Bomfather SBOM format. This JSON structure follows the CycloneDX schema while incorporating our unique kernel-level monitoring data:
+        </p>
+        
+        <div class="annotated-code-container">
+          <div class="code-content bg-gray-900 text-white rounded-lg p-4 overflow-x-auto">
+            <pre><code id="sbom-code">{sbomExample}</code></pre>
+          </div>
+          
+          <!-- Hidden explanations that will be shown when annotations are clicked -->
+          <div class="annotation-explanations">
+            {annotations.map((annotation) => (
+              <div class="explanation-card" id={`explanation-${annotation.id}`}>
+                <h4 class="font-bold">{annotation.title}</h4>
+                <p>{annotation.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6">Key Elements Explained</h2>
+        
+        <div class="mb-8">
+          <h3 class="text-xl font-bold mb-3">Metadata</h3>
+          <p class="text-lg mb-4">
+            The metadata section contains important information about the SBOM itself, including:
+          </p>
+          <ul class="list-disc pl-6 text-lg space-y-2">
+            <li><strong>timestamp:</strong> When the SBOM was generated</li>
+            <li><strong>authors:</strong> Who generated the SBOM</li>
+            <li><strong>component:</strong> The main software component being documented</li>
+            <li><strong>properties:</strong> Special Bomfather-specific fields including:
+              <ul class="list-disc pl-6 mt-2">
+                <li><strong>merkle_root:</strong> Cryptographic hash that verifies the integrity of the SBOM</li>
+                <li><strong>command:pid:</strong> Process ID and command being monitored</li>
+                <li><strong>kernel_version:</strong> Version of the Linux kernel used during monitoring</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-xl font-bold mb-3">Components</h3>
+          <p class="text-lg mb-4">
+            The components section lists all dependencies detected during the build process:
+          </p>
+          <ul class="list-disc pl-6 text-lg space-y-2">
+            <li><strong>Library components:</strong> Traditional library dependencies with version information and Package URL (purl)</li>
+            <li><strong>File components:</strong> Individual files accessed during the build process, including:
+              <ul class="list-disc pl-6 mt-2">
+                <li><strong>name:</strong> Path to the file</li>
+                <li><strong>hashes:</strong> Cryptographic hash of the file contents for integrity verification</li>
+                <li><strong>properties:</strong> Additional metadata like the process ID that accessed the file</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-light-gray">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6">Benefits of Bomfather SBOMs</h2>
+        <div class="grid md:grid-cols-3 gap-8 text-left">
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-bold mb-3">Complete Visibility</h3>
+            <p>Capture all dependencies, even those that traditional tools miss, for a comprehensive understanding of your supply chain.</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-bold mb-3">Verifiable Integrity</h3>
+            <p>Cryptographic hashes and Merkle trees provide tamper-evident verification of your build dependencies.</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-bold mb-3">Regulatory Compliance</h3>
+            <p>Meet or exceed requirements for SBOM generation in regulated industries and government procurement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout> 
+
+<style>
+  .annotated-code-container {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  
+  /* Info icon button style */
+  .annotation-marker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.8em;
+    height: 1.8em;
+    background-color: #F59E0B; /* Yellow color */
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 0.6em;
+    margin-right: 0.2em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    position: relative;
+    vertical-align: middle;
+    z-index: 10;
+    border: 2px solid white;
+    font-size: 0.85em;
+    transition: transform 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  .annotation-marker:hover {
+    background-color: #D97706; /* Darker yellow on hover */
+    transform: scale(1.2);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  /* More noticeable pulse animation */
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+  }
+  
+  .annotation-marker {
+    animation: pulse 2s infinite;
+  }
+  
+  /* Make the annotation markers feel more interactive */
+  .annotation-marker:active {
+    transform: scale(0.95);
+    background-color: #B45309;
+  }
+  
+  /* Font Awesome icon styling */
+  .annotation-marker i {
+    font-size: 0.9em;
+  }
+  
+  /* JSON syntax highlighting styles */
+  .json-key {
+    color: #7dd3fc; /* Light blue */
+  }
+  
+  .json-string {
+    color: #a5b4fc; /* Light purple */
+  }
+  
+  .json-number {
+    color: #fca5a5; /* Light red */
+  }
+  
+  .json-boolean {
+    color: #fdba74; /* Light orange */
+  }
+  
+  .json-null {
+    color: #94a3b8; /* Light slate */
+  }
+  
+  .json-bracket {
+    color: #d4d4d8; /* Light gray */
+  }
+  
+  .code-content {
+    background-color: #0f172a; /* Dark blue background */
+    line-height: 1.5;
+  }
+  
+  .annotation-explanations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+  
+  .explanation-card {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+    width: 280px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 20;
+    transform: translateY(-50%);
+    opacity: 0;
+    pointer-events: auto;
+    border-left: 4px solid #F59E0B;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  
+  .explanation-card h4 {
+    color: #D97706;
+    margin-top: 0;
+    font-size: 1.1em;
+  }
+  
+  .explanation-card p {
+    margin-bottom: 0;
+    color: #4B5563;
+  }
+  
+  .explanation-card.visible {
+    display: block;
+    opacity: 1;
+  }
+  
+  @media (max-width: 768px) {
+    .explanation-card {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      width: auto;
+      max-width: calc(100% - 40px);
+      transform: none;
+      z-index: 1000;
+    }
+  }
+  
+  /* Add a small label to help users */
+  .annotation-hint {
+    display: block;
+    text-align: right;
+    font-size: 0.85rem;
+    color: #6B7280;
+    font-style: italic;
+    margin-top: 0.5rem;
+    margin-bottom: -0.5rem;
+  }
+</style>
+
+<div class="annotation-hint">Click on the <span style="color: #F59E0B;"><i class="fa-solid fa-circle-info"></i></span> icons for explanations</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const codeContainer = document.getElementById('sbom-code');
+    if (!codeContainer) return; // Safeguard
+    
+    const annotations = [
+      {
+        line: 21, // "name": "bomfather:merkle_root",
+        id: "1",
+        title: "Merkle Root",
+        text: "Cryptographic hash that verifies the integrity of all components in the SBOM"
+      },
+      {
+        line: 29, // "name": "bomfather:kernel_version",
+        id: "2",
+        title: "Kernel Version",
+        text: "We capture the Linux kernel version that was running when the SBOM was generated"
+      },
+      {
+        line: 35, // "type": "library", - First component in the array
+        id: "3",
+        title: "Library Components",
+        text: "Bomfather captures all library dependencies with their version information and package URLs"
+      },
+      {
+        line: 47, // "type": "file", for the file component
+        id: "4",
+        title: "File Access Tracking",
+        text: "We track all files that were accessed during the build process, including their paths and hashes"
+      }
+    ];
+    
+    // Apply syntax highlighting to the JSON code
+    function applySyntaxHighlighting(code) {
+      // Replace JSON keys with colored spans
+      let highlighted = code.replace(/"([^"]+)":/g, '<span class="json-key">"$1"</span>:');
+      
+      // Replace string values with colored spans
+      highlighted = highlighted.replace(/: "([^"]+)"/g, ': <span class="json-string">"$1"</span>');
+      
+      // Replace numeric values with colored spans
+      highlighted = highlighted.replace(/: ([0-9]+)/g, ': <span class="json-number">$1</span>');
+      
+      // Replace boolean values with colored spans
+      highlighted = highlighted.replace(/: (true|false)/g, ': <span class="json-boolean">$1</span>');
+      
+      // Replace null values with colored spans
+      highlighted = highlighted.replace(/: null/g, ': <span class="json-null">null</span>');
+      
+      // Replace brackets with colored spans
+      highlighted = highlighted.replace(/({|}|\[|\])/g, '<span class="json-bracket">$1</span>');
+      
+      return highlighted;
+    }
+    
+    // Function to add annotation markers to the code
+    function addAnnotationMarkers() {
+      try {
+        // Apply syntax highlighting first
+        const highlightedCode = applySyntaxHighlighting(codeContainer.innerHTML);
+        
+        // Get all lines in the highlighted code
+        let lines = highlightedCode.split('\n');
+        
+        // For each annotation, add a marker to the end of the specified line
+        annotations.forEach(annotation => {
+          const lineIndex = annotation.line - 1;
+          if (lineIndex >= 0 && lineIndex < lines.length) {
+            // Add space before the marker and keep it inline
+            lines[lineIndex] = lines[lineIndex] + ` <span class="annotation-marker" data-id="${annotation.id}" title="Click for explanation about ${annotation.title}"><i class="fa-solid fa-circle-info"></i></span>`;
+          }
+        });
+        
+        // Join the lines back together and update the HTML
+        codeContainer.innerHTML = lines.join('\n');
+        
+      } catch (e) {
+        console.error("Error adding annotation markers:", e);
+      }
+    }
+    
+    // Call the function to add the markers
+    addAnnotationMarkers();
+    
+    // Add click event listeners to the markers
+    setTimeout(() => {
+      const markers = document.querySelectorAll('.annotation-marker');
+      const markerPositions = new Map(); // Store marker positions
+      
+      // Record each marker's position
+      markers.forEach(marker => {
+        const id = marker.getAttribute('data-id');
+        const rect = marker.getBoundingClientRect();
+        const containerRect = document.querySelector('.annotated-code-container').getBoundingClientRect();
+        
+        markerPositions.set(id, {
+          top: rect.top - containerRect.top + (rect.height / 2),
+          left: rect.left - containerRect.left + rect.width
+        });
+        
+        // Add click event listener
+        marker.addEventListener('click', function(e) {
+          const id = this.getAttribute('data-id');
+          toggleExplanation(id, markerPositions.get(id));
+          e.stopPropagation();
+        });
+      });
+    }, 100);
+    
+    // Function to toggle explanation visibility
+    function toggleExplanation(id, position) {
+      const explanationCard = document.getElementById(`explanation-${id}`);
+      if (!explanationCard) return;
+      
+      const allExplanations = document.querySelectorAll('.explanation-card');
+      
+      // Hide all explanations first
+      allExplanations.forEach(card => {
+        card.classList.remove('visible');
+      });
+      
+      // Position and show the selected explanation
+      explanationCard.classList.add('visible');
+      
+      // Position the explanation at the marker
+      if (window.innerWidth > 768) {
+        explanationCard.style.top = `${position.top}px`;
+        explanationCard.style.left = `${position.left + 15}px`; 
+      }
+    }
+    
+    // Hide all explanations when clicking elsewhere
+    document.addEventListener('click', function(e) {
+      if (!e.target.classList.contains('annotation-marker') && !e.target.closest('.annotation-marker')) {
+        const explanations = document.querySelectorAll('.explanation-card');
+        explanations.forEach(card => {
+          card.classList.remove('visible');
+        });
+      }
+    });
+  });
+</script> 

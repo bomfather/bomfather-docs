@@ -8,33 +8,47 @@
     
     <div class="max-w-6xl mx-auto">
       <div class="bg-light-gray border border-gray-200 rounded-lg shadow-sm p-8 w-full">
-        <div class="border-l-4 border-primary pl-4 mb-6">
-          <p class="text-lg italic text-gray-700">
-            "Bomfather brings kernel-level truth to your software supply chain by capturing what actually happens during builds."
-          </p>
+        <p class="text-lg mb-4">
+          <strong>Bomfather</strong> is an advanced security tool that creates <strong>Runtime AI Bills of Materials (Runtime-AIBOMs)</strong> and provides active protection for AI systems. 
+          Unlike static approaches that only assess files and configurations at build time, Bomfather captures information in the kernel in real-time.
+        </p>
+        
+        <p class="text-lg mb-4">
+          Modern AI systems often operate as "opaque systems," revealing little about critical components. Bomfather leverages eBPF 
+          to monitor system calls at the kernel level, creating a comprehensive audit log for every component and runtime change during AI training and fine-tuning.
+        </p>
+        
+        <h3 class="text-xl font-bold mb-4 text-center">Two Core Capabilities</h3>
+        
+        <div class="grid md:grid-cols-2 gap-6 my-6">
+          <!-- Runtime-AIBOM Section -->
+          <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+            <h3 class="text-xl font-bold mb-2">Runtime AI Bills of Materials</h3>
+            <p class="text-lg mb-3">
+              Bomfather creates comprehensive Runtime-AIBOMs that provide cryptographic proof of an AI system's composition:
+            </p>
+            <ul class="list-disc ml-6 text-lg space-y-2">
+              <li>Captures the <strong>complete runtime environment</strong></li>
+              <li>Provides <strong>tamper-evident verification</strong></li>
+              <li>Creates an <strong>audit trail of all activities</strong></li>
+              <li>Follows Zero Trust Architecture (ZTA)</li>
+            </ul>
+          </div>
+          
+          <!-- Active Protection Section -->
+          <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+            <h3 class="text-xl font-bold mb-2">Active Protection</h3>
+            <p class="text-lg mb-3">
+              Bomfather goes beyond passive monitoring by actively preventing malicious accesses:
+            </p>
+            <ul class="list-disc ml-6 text-lg space-y-2">
+              <li>Users specify which files they <strong>trust</strong></li>
+              <li><strong>Blocks unauthorized access</strong> in real-time</li>
+              <li>Allows legitimate workflows to <strong>continue normally</strong></li>
+              <li>Uses a secure <strong>"default-deny" principle</strong></li>
+            </ul>
+          </div>
         </div>
-        
-        <p class="text-lg mb-4">
-          <strong>Bomfather</strong> is an advanced tool that provides kernel-level truth about software dependencies. 
-          It creates accurate Software Bills of Materials (SBOMs) by capturing actual file access during builds.
-        </p>
-        
-        <p class="text-lg mb-4">
-          Unlike traditional dependency scanners that rely on manifest files or static analysis, Bomfather uses eBPF technology 
-          to monitor system calls at the kernel level, capturing <em>all</em> dependencies - even those that are:
-        </p>
-        
-        <ul class="list-disc mb-6 text-lg space-y-2 pl-8">
-          <li><strong>Dynamically loaded</strong> at runtime</li>
-          <li><strong>Implicitly included</strong> by build systems</li>
-          <li><strong>Hidden</strong> in complex multi-stage builds</li>
-          <li><strong>Pulled from local caches</strong> with no network activity</li>
-        </ul>
-        
-        <p class="text-lg">
-          This approach helps teams meet supply chain security requirements with confidence, providing cryptographically verifiable 
-          evidence of every dependency used in your software. Bomfather bridges the gap between what's declared and what's actually used.
-        </p>
       </div>
     </div>
   </div>

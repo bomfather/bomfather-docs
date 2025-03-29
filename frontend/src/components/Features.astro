@@ -1,94 +1,284 @@
 ---
-// Features.astro - Display the key features of Bomfather
+// Features.astro - Display the key features of Bomfather with horizontal scroll effect
 ---
 
-<section class="py-16 bg-light-gray">
-  <div class="container">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4">Key Features</h2>
-      <p class="text-lg text-mid-gray max-w-3xl mx-auto">
-        Bomfather offers unique capabilities to secure your software supply chain through kernel-level monitoring and verification.
-      </p>
+<section id="features-section" class="relative bg-light-gray py-12">
+  <div class="features-container">
+    <!-- Sticky container that stays in place during scroll -->
+    <div id="features-sticky-container" class="sticky top-0 left-0 w-full min-h-screen flex flex-col justify-center items-center">
+      <!-- Fixed header at the top -->
+      <div id="features-header" class="text-center mb-16 w-full max-w-4xl mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold font-heading mb-6">Key Features</h2>
+        <p class="text-lg text-mid-gray max-w-3xl mx-auto">
+          Bomfather offers unique capabilities to secure your AI systems through kernel-level monitoring, Runtime-AIBOM creation, and active protection.
+        </p>
+      </div>
+      
+      <!-- Single feature display container - features will be moved in and out of this area -->
+      <div id="feature-display-container" class="w-full max-w-3xl mx-auto px-4 relative h-64 md:h-48 overflow-hidden mt-15">
+        <!-- Feature wrapper to allow horizontal positioning -->
+        <div id="feature-slider" class="absolute w-[600%] flex">
+          <!-- Feature 1 -->
+          <div class="feature-item w-[16.666%] flex-shrink-0 flex items-start pr-4">
+            <div class="feature-number mr-6 md:mr-10 flex-shrink-0">
+              <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold">01</div>
+            </div>
+            <div class="feature-content">
+              <h3 class="text-2xl md:text-3xl font-bold mb-4">Kernel-Level Monitoring</h3>
+              <p class="text-lg text-mid-gray">
+                Continuous monitoring at the kernel level using eBPF, ensuring complete visibility of all AI system activities at runtime.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Feature 2 -->
+          <div class="feature-item w-[16.666%] flex-shrink-0 flex items-start pr-4">
+            <div class="feature-number mr-6 md:mr-10 flex-shrink-0">
+              <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold">02</div>
+            </div>
+            <div class="feature-content">
+              <h3 class="text-2xl md:text-3xl font-bold mb-4">Runtime-AIBOM Creation</h3>
+              <p class="text-lg text-mid-gray">
+                Generates Runtime AI Bills of Materials with Merkle tree hashing for tamper-evident records while protecting sensitive data and model parameters.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Feature 3 -->
+          <div class="feature-item w-[16.666%] flex-shrink-0 flex items-start pr-4">
+            <div class="feature-number mr-6 md:mr-10 flex-shrink-0">
+              <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold">03</div>
+            </div>
+            <div class="feature-content">
+              <h3 class="text-2xl md:text-3xl font-bold mb-4">Active Threat Prevention</h3>
+              <p class="text-lg text-mid-gray">
+                Block malicious accesses in real-time with a trust-based model where users define trusted files and all other accesses are automatically prevented.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Feature 4 -->
+          <div class="feature-item w-[16.666%] flex-shrink-0 flex items-start pr-4">
+            <div class="feature-number mr-6 md:mr-10 flex-shrink-0">
+              <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold">04</div>
+            </div>
+            <div class="feature-content">
+              <h3 class="text-2xl md:text-3xl font-bold mb-4">GPU Monitoring</h3>
+              <p class="text-lg text-mid-gray">
+                Track CUDA activities, data transfers between CPU and GPU memory, execution patterns, and unusual resource allocation that could indicate tampering.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Feature 5 -->
+          <div class="feature-item w-[16.666%] flex-shrink-0 flex items-start pr-4">
+            <div class="feature-number mr-6 md:mr-10 flex-shrink-0">
+              <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold">05</div>
+            </div>
+            <div class="feature-content">
+              <h3 class="text-2xl md:text-3xl font-bold mb-4">Minimal Overhead</h3>
+              <p class="text-lg text-mid-gray">
+                Optimized eBPF-based implementation with only 2-3% performance impact, ensuring AI workflows remain efficient while being secured.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Feature 6 -->
+          <div class="feature-item w-[16.666%] flex-shrink-0 flex items-start pr-4">
+            <div class="feature-number mr-6 md:mr-10 flex-shrink-0">
+              <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold">06</div>
+            </div>
+            <div class="feature-content">
+              <h3 class="text-2xl md:text-3xl font-bold mb-4">No Workflow Changes</h3>
+              <p class="text-lg text-mid-gray">
+                Runtime-AIBOM operates at the kernel level, so existing AI workflows don't need to be modified to gain runtime security benefits.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Progress indicator - now inside the sticky container for better visibility -->
+      <div id="features-progress" class="w-full flex justify-center gap-3 mt-10">
+        <div class="progress-dot h-3 w-3 rounded-full bg-primary cursor-pointer" data-index="0"></div>
+        <div class="progress-dot h-3 w-3 rounded-full bg-primary/30 cursor-pointer" data-index="1"></div>
+        <div class="progress-dot h-3 w-3 rounded-full bg-primary/30 cursor-pointer" data-index="2"></div>
+        <div class="progress-dot h-3 w-3 rounded-full bg-primary/30 cursor-pointer" data-index="3"></div>
+        <div class="progress-dot h-3 w-3 rounded-full bg-primary/30 cursor-pointer" data-index="4"></div>
+        <div class="progress-dot h-3 w-3 rounded-full bg-primary/30 cursor-pointer" data-index="5"></div>
+      </div>
     </div>
     
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Feature 1 -->
-      <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-3">Kernel-Level Monitoring</h3>
-        <p class="text-mid-gray">
-          Track dependencies directly at the kernel level using eBPF, ensuring complete visibility of all files accessed during builds.
-        </p>
-      </div>
-      
-      <!-- Feature 2 -->
-      <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-3">Tamper-Evident Verification</h3>
-        <p class="text-mid-gray">
-          Verify the integrity of your software supply chain with cryptographic Merkle trees that provide tamper-evident proof of build provenance.
-        </p>
-      </div>
-      
-      <!-- Feature 3 -->
-      <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-3">Accurate SBOMs</h3>
-        <p class="text-mid-gray">
-          Generate comprehensive Software Bills of Materials (SBOMs) that include dynamically loaded and conditional dependencies often missed by other tools.
-        </p>
-      </div>
-      
-      <!-- Feature 4 -->
-      <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-3">High Performance</h3>
-        <p class="text-mid-gray">
-          Optimized eBPF-based implementation with minimal overhead during build processes, ensuring performance isn't compromised.
-        </p>
-      </div>
-      
-      <!-- Feature 5 -->
-      <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-3">Integration Ready</h3>
-        <p class="text-mid-gray">
-          Seamlessly integrate with existing CI/CD pipelines, build systems, and security tools for automated dependency verification.
-        </p>
-      </div>
-      
-      <!-- Feature 6 -->
-      <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-3">Customizable</h3>
-        <p class="text-mid-gray">
-          Flexible configuration options to adapt to your specific project requirements, build environments, and security policies.
-        </p>
-      </div>
+    <!-- Segments with consistent heights -->
+    <div id="features-segments">
+      <div class="feature-segment h-[40vh]" data-index="0"></div>
+      <div class="feature-segment h-[40vh]" data-index="1"></div>
+      <div class="feature-segment h-[40vh]" data-index="2"></div>
+      <div class="feature-segment h-[40vh]" data-index="3"></div>
+      <div class="feature-segment h-[40vh]" data-index="4"></div>
+      <div class="feature-segment h-[40vh]" data-index="5"></div>
     </div>
   </div>
-</section> 
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initFeaturesAnimation();
+  });
+  
+  async function initFeaturesAnimation() {
+    try {
+      // Dynamic import of GSAP and ScrollTrigger
+      const { gsap } = await import('gsap');
+      let ScrollTrigger;
+      
+      try {
+        ScrollTrigger = (await import('gsap/ScrollTrigger')).ScrollTrigger;
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate the header
+        gsap.from("#features-header", {
+          opacity: 0,
+          y: -20,
+          duration: 0.8,
+          scrollTrigger: {
+            trigger: "#features-section",
+            start: "top 80%",
+            toggleActions: "play none none none"
+          }
+        });
+        
+        // Get all progress dots
+        const progressDots = document.querySelectorAll('.progress-dot');
+        const featureSlider = document.querySelector('#feature-slider');
+        const featureItems = document.querySelectorAll('.feature-item');
+        const featureSegments = document.querySelectorAll('.feature-segment');
+        
+        // Number of features
+        const featureCount = featureItems.length;
+        
+        // Set the active progress dot
+        const setActiveDot = (index) => {
+          progressDots.forEach((dot, i) => {
+            if (i === index) {
+              dot.classList.add('bg-primary');
+              dot.classList.remove('bg-primary/30');
+            } else {
+              dot.classList.remove('bg-primary');
+              dot.classList.add('bg-primary/30');
+            }
+          });
+        };
+        
+        // Ensure all items are visible
+        featureItems.forEach(item => {
+          item.style.visibility = 'visible';
+          item.style.opacity = '1';
+        });
+        
+        // Set initial position (first feature is visible)
+        gsap.set(featureSlider, { x: '0%' });
+        setActiveDot(0);
+        
+        // Create scroll triggers for each segment with consistent triggering
+        featureSegments.forEach((segment, index) => {
+          ScrollTrigger.create({
+            trigger: segment,
+            start: "top 70%", // More consistent trigger point
+            end: "bottom 30%", // More consistent end point
+            onEnter: () => {
+              gsap.to(featureSlider, {
+                x: `${-16.666 * index}%`,
+                duration: 0.6,
+                ease: "power2.out"
+              });
+              setActiveDot(index);
+            },
+            onEnterBack: () => {
+              gsap.to(featureSlider, {
+                x: `${-16.666 * index}%`,
+                duration: 0.6,
+                ease: "power2.out"
+              });
+              setActiveDot(index);
+            }
+          });
+        });
+        
+        // Add click functionality to dots for direct navigation
+        progressDots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            // Calculate the x position for this feature
+            const xPosition = index * -16.666 + '%';
+            
+            // Animate to the new position
+            gsap.to(featureSlider, {
+              x: xPosition,
+              duration: 0.6,
+              ease: "power2.out"
+            });
+            
+            // Update active dot
+            setActiveDot(index);
+            
+            // Scroll to the corresponding segment with offset to trigger the animation
+            const yOffset = window.innerHeight * 0.3; // 30% of viewport height
+            const top = featureSegments[index].getBoundingClientRect().top + window.pageYOffset - yOffset;
+            window.scrollTo({top, behavior: 'smooth'});
+          });
+        });
+        
+      } catch (error) {
+        console.warn('ScrollTrigger not available, using fallback animation', error);
+        
+        // Simple fallback
+        const headerEl = document.querySelector('#features-header');
+        const featureSlider = document.querySelector('#feature-slider');
+        const progressDots = document.querySelectorAll('.progress-dot');
+        
+        gsap.to(headerEl, { opacity: 1, y: 0, duration: 0.5 });
+        gsap.set(featureSlider, { x: '0%' }); // Show the first feature
+        
+        // Make the first dot active
+        progressDots[0].classList.add('bg-primary');
+        progressDots[0].classList.remove('bg-primary/30');
+        
+        // Add click functionality to dots
+        progressDots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            // Calculate the x position for this feature
+            const xPosition = index * -16.666 + '%';
+            
+            // Animate to the new position
+            gsap.to(featureSlider, {
+              x: xPosition,
+              duration: 0.6,
+              ease: "power2.out"
+            });
+            
+            // Update active dot
+            progressDots.forEach((d, i) => {
+              if (i === index) {
+                d.classList.add('bg-primary');
+                d.classList.remove('bg-primary/30');
+              } else {
+                d.classList.remove('bg-primary');
+                d.classList.add('bg-primary/30');
+              }
+            });
+          });
+        });
+      }
+    } catch (error) {
+      console.error('Error initializing feature animations:', error);
+      // Fallback to make content visible
+      document.querySelector('#features-header').style.opacity = 1;
+      document.querySelector('#feature-slider').style.transform = 'translateX(0%)';
+      const firstDot = document.querySelector('.progress-dot');
+      if (firstDot) {
+        firstDot.classList.add('bg-primary');
+        firstDot.classList.remove('bg-primary/30');
+      }
+    }
+  }
+</script> 

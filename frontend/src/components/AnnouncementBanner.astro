@@ -1,0 +1,72 @@
+---
+// AnnouncementBanner.astro - A dismissible announcement banner with local storage persistence
+---
+
+<div id="announcement-banner" class="announcement-banner bg-primary text-white py-3 px-4 relative hidden">
+  <div class="container mx-auto flex items-center justify-between">
+    <div class="flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+      </svg>
+      <p class="font-medium text-sm md:text-base">
+        <span class="font-bold">Exciting News!</span> Bomfather will be open-sourced soon!
+      </p>
+    </div>
+    <button id="close-banner" class="ml-4 text-white hover:text-gray-200 focus:outline-none" aria-label="Close banner">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .announcement-banner {
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .announcement-banner.show {
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  // Constants for localStorage
+  const BANNER_KEY = 'bomfather_announcement';
+  const BANNER_VERSION = 'open_source_2024'; // Update this when banner content changes
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const banner = document.getElementById('announcement-banner');
+    const closeButton = document.getElementById('close-banner');
+    
+    if (!banner || !closeButton) return;
+    
+    // Check if this version of the banner has been dismissed
+    const storedBanner = localStorage.getItem(BANNER_KEY);
+    
+    // Show banner if it's never been dismissed or if it's a new version
+    if (!storedBanner || storedBanner !== BANNER_VERSION) {
+      // Make banner visible
+      banner.classList.remove('hidden');
+      // Animate banner in
+      setTimeout(() => {
+        banner.classList.add('show');
+      }, 100);
+    }
+    
+    // Handle close button click
+    closeButton.addEventListener('click', () => {
+      // Save dismissal to localStorage
+      localStorage.setItem(BANNER_KEY, BANNER_VERSION);
+      
+      // Animate banner out
+      banner.classList.remove('show');
+      
+      // Hide banner after animation completes
+      setTimeout(() => {
+        banner.classList.add('hidden');
+      }, 300);
+    });
+  });
+</script> 
