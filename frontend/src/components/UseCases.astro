@@ -1,5 +1,5 @@
 ---
-// UseCases.astro - Showcase different applications and use cases for Bomfather
+// UseCases.astro - Showcase different applications and use cases for R-AIBOM
 ---
 
 <section class="py-16 bg-light-gray overflow-hidden">
@@ -7,7 +7,7 @@
     <div class="text-center mb-16">
       <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4 gsap-reveal">Use Cases</h2>
       <p class="text-lg text-mid-gray max-w-3xl mx-auto gsap-reveal">
-        Bomfather addresses critical challenges in software supply chain security and dependency management.
+        R-AIBOM addresses critical security challenges in AI systems through real-time monitoring and verification.
       </p>
     </div>
     
@@ -16,96 +16,75 @@
       <div class="use-case-row flex flex-col md:flex-row items-center">
         <div class="w-full md:w-1/3 mb-8 md:mb-0">
           <div class="use-case-number text-8xl font-bold text-primary/30">01</div>
-          <h3 class="text-2xl font-bold text-primary mb-2">Supply Chain Security</h3>
+          <h3 class="text-2xl font-bold text-primary mb-2">AI System Security</h3>
         </div>
         <div class="w-full md:w-2/3 pl-0 md:pl-12 slide-in-right">
           <p class="mb-6 text-lg text-mid-gray">
-            Identify unknown or potentially malicious dependencies in your software supply chain to prevent supply chain attacks.
+            Identify and prevent unauthorized modifications to AI models and their runtime environments.
           </p>
           <ul class="space-y-4 text-mid-gray">
             <li class="flex items-start">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
-              <span>Detect unauthorized dependencies introduced during the build process</span>
+              <span>Detect malicious libraries or resources loaded at runtime</span>
             </li>
             <li class="flex items-start">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
-              <span>Create tamper-evident build provenance for security audits</span>
+              <span>Monitor for suspicious network connections or data exfiltration</span>
             </li>
             <li class="flex items-start">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
-              <span>Verify integrity of dependencies with cryptographic proofs</span>
+              <span>Create tamper-evident cryptographic records of AI operations</span>
             </li>
           </ul>
         </div>
       </div>
       
-      <!-- Use Case 2 -->
+      <!-- Use Case 2 (formerly Use Case 3) -->
       <div class="use-case-row flex flex-col md:flex-row items-center">
         <div class="w-full md:w-1/3 mb-8 md:mb-0">
           <div class="use-case-number text-8xl font-bold text-primary/30">02</div>
-          <h3 class="text-2xl font-bold text-primary mb-2">Regulatory Compliance</h3>
+          <h3 class="text-2xl font-bold text-primary mb-2">Critical Infrastructure Protection</h3>
         </div>
         <div class="w-full md:w-2/3 pl-0 md:pl-12 slide-in-right">
           <p class="mb-6 text-lg text-mid-gray">
-            Meet government and industry regulations requiring accurate Software Bills of Materials (SBOMs) for critical software.
+            Actively protect AI systems in mission-critical environments with a trust-based security model that prevents unauthorized access.
           </p>
+          <div class="bg-white p-6 rounded-lg mb-6 border border-gray-200">
+            <h4 class="text-lg font-bold mb-2">Airport Security AI Example</h4>
+            <p class="mb-4 text-mid-gray">
+              Modern airports rely on AI systems for passenger screening and threat detection. Bomfather secures these systems by:
+            </p>
+            <ul class="space-y-3 text-mid-gray pl-5 list-disc">
+              <li>Creating a whitelist of trusted components (screening algorithms, model weights, reference databases)</li>
+              <li>Blocking any attempt to load unauthorized code or backdoors at runtime</li>
+              <li>Preventing attackers from extracting sensitive passenger data through unauthorized channels</li>
+              <li>Generating cryptographic proof of proper system operation for security audits</li>
+            </ul>
+          </div>
           <ul class="space-y-4 text-mid-gray">
             <li class="flex items-start">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
-              <span>Comply with Executive Order 14028 on improving cybersecurity</span>
+              <span>Define trusted files for critical AI systems and <strong>automatically block all other accesses</strong></span>
             </li>
             <li class="flex items-start">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
-              <span>Generate SBOMs that meet NTIA and CISA standards</span>
+              <span>Prevent data exfiltration with real-time blocking of unauthorized network connections</span>
             </li>
             <li class="flex items-start">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
-              <span>Provide audit-ready documentation of software dependencies</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      
-      <!-- Use Case 3 -->
-      <div class="use-case-row flex flex-col md:flex-row items-center">
-        <div class="w-full md:w-1/3 mb-8 md:mb-0">
-          <div class="use-case-number text-8xl font-bold text-primary/30">03</div>
-          <h3 class="text-2xl font-bold text-primary mb-2">Vulnerability Management</h3>
-        </div>
-        <div class="w-full md:w-2/3 pl-0 md:pl-12 slide-in-right">
-          <p class="mb-6 text-lg text-mid-gray">
-            Improve vulnerability detection and management with accurate dependency information.
-          </p>
-          <ul class="space-y-4 text-mid-gray">
-            <li class="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg>
-              <span>Identify all affected components when vulnerabilities are discovered</span>
-            </li>
-            <li class="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg>
-              <span>Reduce false positives by knowing which dependencies are actually used</span>
-            </li>
-            <li class="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-green mt-1 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg>
-              <span>Prioritize remediation based on accurate dependency information</span>
+              <span>Maintain operational continuity while blocking threats—safer than trying to identify every possible malicious file</span>
             </li>
           </ul>
         </div>

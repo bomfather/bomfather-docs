@@ -7,7 +7,7 @@
     <div class="text-center mb-12">
       <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4">How Bomfather Works</h2>
       <p class="text-lg text-mid-gray max-w-3xl mx-auto">
-        Bomfather uses eBPF technology to monitor kernel-level file access during builds, creating accurate dependency trees.
+        Bomfather uses eBPF technology to monitor kernel-level activities in AI systems, creating R-AIBOMs with tamper-evident audit trails while actively blocking malicious accesses.
       </p>
     </div>
     
@@ -15,37 +15,48 @@
       <!-- Connected steps with flow lines -->
       <div class="hidden md:block absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-light-gray z-0"></div>
       
-      <div class="grid md:grid-cols-3 gap-8 relative z-10">
+      <div class="grid md:grid-cols-4 gap-6 relative z-10">
         <!-- Step 1 -->
-        <div class="bg-light-gray p-8 border border-gray-200 rounded-lg text-center">
+        <div class="bg-light-gray p-6 border border-gray-200 rounded-lg text-center">
           <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
             1
           </div>
-          <h3 class="text-xl font-bold mb-3">eBPF Monitoring</h3>
+          <h3 class="text-xl font-bold mb-3">Trust Definition</h3>
           <p class="text-mid-gray">
-            Bomfather attaches eBPF probes to monitor system calls during the build process, capturing all file access events.
+            Users define which files and resources are trusted in their AI workflows.
           </p>
         </div>
         
         <!-- Step 2 -->
-        <div class="bg-light-gray p-8 border border-gray-200 rounded-lg text-center">
+        <div class="bg-light-gray p-6 border border-gray-200 rounded-lg text-center">
           <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
             2
           </div>
-          <h3 class="text-xl font-bold mb-3">Hash Computation</h3>
+          <h3 class="text-xl font-bold mb-3">Kernel Monitoring</h3>
           <p class="text-mid-gray">
-            Cryptographic hashes (SHA-256) are computed for every file accessed, creating unique identifiers for each dependency.
+            Bomfather attaches eBPF probes to monitor system calls during AI training and inference.
           </p>
         </div>
         
         <!-- Step 3 -->
-        <div class="bg-light-gray p-8 border border-gray-200 rounded-lg text-center">
+        <div class="bg-light-gray p-6 border border-gray-200 rounded-lg text-center">
           <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
             3
           </div>
-          <h3 class="text-xl font-bold mb-3">SBOM Creation</h3>
+          <h3 class="text-xl font-bold mb-3">Threat Detection & Prevention</h3>
           <p class="text-mid-gray">
-            A comprehensive Software Bill of Materials (SBOM) is generated with cryptographic evidence of all dependencies, ensuring security and compliance.
+            Identifies and blocks unauthorized accesses in real-time using the trust model while allowing legitimate operations.
+          </p>
+        </div>
+        
+        <!-- Step 4 -->
+        <div class="bg-light-gray p-6 border border-gray-200 rounded-lg text-center">
+          <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+            4
+          </div>
+          <h3 class="text-xl font-bold mb-3">R-AIBOM Creation</h3>
+          <p class="text-mid-gray">
+            Creates cryptographically verified Runtime AI Bills of Materials documenting the system's activities and security events.
           </p>
         </div>
       </div>
@@ -53,54 +64,99 @@
     
     <div class="mt-12 text-center">
       <p class="mb-6 text-mid-gray">
-        The result is a comprehensive Software Bill of Materials (SBOM) with cryptographic evidence of all dependencies used during the build.
+        The result is both a secure runtime environment and a comprehensive Runtime AI Bill of Materials (R-AIBOM) with cryptographic evidence of all legitimate activities and blocked threats.
       </p>
       <div class="inline-block p-6 bg-light-gray rounded-lg">
         <pre class="text-left text-sm text-dark font-mono overflow-x-auto"><code>{`{  
-  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
-  "bomFormat": "CycloneDX",
-  "specVersion": "1.6",
+  "$schema": "http://raibom.org/schema/bom-1.0.schema.json",
+  "bomFormat": "R-AIBOM",
+  "specVersion": "1.0",
   "version": 1,
   "metadata": {
-    "timestamp": "1970-01-01T00:00:00Z",
+    "timestamp": "2023-03-15T14:32:26Z",
     "authors": [
       {
-        "name": "Bomfather Authors"
+        "name": "R-AIBOM System"
       }
     ],
     "component": {
-      "type": "library",
-      "name": "bomfather",
-      "purl": "pkg:golang/github.com/bomfather/bomfather"
+      "type": "ai-model",
+      "name": "passenger-screening-model",
+      "version": "2.3.1"
     },
     "properties": [
       {
-        "name": "bomfather:merkle_root",
-        "value": "123...xyz"
+        "name": "raibom:merkle_root",
+        "value": "a1b2c3d4e5f6..."
       },
       {
-        "name": "bomfather:command:pid=5832",
-        "value": "command..."
+        "name": "raibom:session:pid=12345",
+        "value": "training-session-20230315"
       },
       {
-        "name": "bomfather:kernel_version",
+        "name": "raibom:kernel_version",
         "value": "6.8.0-52-generic"
+      },
+      {
+        "name": "raibom:gpu:device_count",
+        "value": "4"
+      },
+      {
+        "name": "raibom:security:blocked_accesses",
+        "value": "7"
       }
     ]
   },
   "components": [
     {
-      "type": "library",
-      "name": "cyclonedx-go",
-      "version": "v0.9.1",
-      "purl": "pkg:golang/github.com/CycloneDX/cyclonedx-go@v0.9.1"
+      "type": "framework",
+      "name": "pytorch",
+      "version": "2.0.1",
+      "hash": "sha256:f7a3e7...",
+      "trusted": true
     },
     {
       "type": "library",
-      "name": "ebpf",
-      "version": "v0.16.0",
-      "purl": "pkg:golang/github.com/cilium/ebpf@v0.16.0"
+      "name": "cuda-toolkit",
+      "version": "11.8.0",
+      "hash": "sha256:9d8c7b...",
+      "trusted": true
     },
+    {
+      "type": "dataset",
+      "name": "training-data",
+      "version": "20230301",
+      "hash": "sha256:6e2f1a...",
+      "trusted": true
+    }
+  ],
+  "activities": [
+    {
+      "timestamp": "2023-03-15T14:35:42Z",
+      "type": "gpu-operation",
+      "details": "Memory transfer to GPU device 0",
+      "hash": "sha256:3b8a7c..."
+    },
+    {
+      "timestamp": "2023-03-15T15:02:17Z",
+      "type": "library-load",
+      "details": "Dynamic library load: libcudnn.so.8",
+      "hash": "sha256:d1e9f4..."
+    }
+  ],
+  "security_events": [
+    {
+      "timestamp": "2023-03-15T15:18:42Z",
+      "type": "blocked-access",
+      "details": "Untrusted library load attempt: suspicious_module.so",
+      "hash": "sha256:8c4d2e..."
+    },
+    {
+      "timestamp": "2023-03-15T15:46:13Z",
+      "type": "blocked-access",
+      "details": "Untrusted network connection attempt to 203.0.113.100:4444",
+      "hash": "sha256:2e7b9f..."
+    }
   ]
 }
 `}</code></pre>
