@@ -52,3 +52,19 @@ code, pre {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 } 
+
+/* Override any ConvertKit styles */
+.formkit-alert svg,
+.formkit-alert path,
+.formkit-success svg,
+.formkit-success path {
+  color: var(--color-primary) !important;
+  fill: var(--color-primary) !important;
+  stroke: var(--color-primary) !important;
+}
+
+/* Hide any ConvertKit success elements entirely if desired */
+.formkit-alert.formkit-alert-success,
+.formkit-success {
+  display: none !important;
+} 
