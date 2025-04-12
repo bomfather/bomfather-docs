@@ -24,63 +24,94 @@ export const handler = async (event) => {
         statusCode: 500, 
         body: JSON.stringify({ 
           success: false, 
-          error: 'Server configuration error' 
+          error: 'Server configuration error: Missing API key' 
         }) 
       };
     }
     
-    console.log(`Attempting to subscribe email to form ${formId}`);
+    console.log(`Attempting to subscribe email ${email} to form ${formId}`);
     
     // Submit to ConvertKit API
-    const response = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        api_key: apiKey,
-        email
-      }),
-    });
-
-    const data = await response.json();
-    console.log('ConvertKit API response status:', response.status);
-    console.log('ConvertKit API response body:', JSON.stringify(data));
-
-    if (response.ok) {
-      return {
-        statusCode: 200,
+    try {
+      const response = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          success: true,
-          message: 'Subscription successful'
-        })
-      };
-    } else {
-      console.error('ConvertKit API error:', data);
+        body: JSON.stringify({
+          api_key: apiKey,
+          email
+        }),
+      });
+
+      // Log full response for debugging
+      console.log('Response status:', response.status);
+      console.log('Response headers:', JSON.stringify([...response.headers.entries()]));
+      
+      const responseText = await response.text();
+      console.log('Raw response:', responseText);
+      
+      let data;
+      try {
+        data = JSON.parse(responseText);
+        console.log('Parsed response:', JSON.stringify(data));
+      } catch (parseError) {
+        console.error('Error parsing response:', parseError);
+        console.log('Response was not valid JSON:', responseText);
+        return {
+          statusCode: 500,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            success: false, 
+            error: 'Error parsing API response',
+            details: responseText
+          })
+        };
+      }
+
+      if (response.ok) {
+        return {
+          statusCode: 200,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            success: true,
+            message: 'Subscription successful',
+            subscriber: data.subscription ? data.subscription.subscriber : null
+          })
+        };
+      } else {
+        console.error('ConvertKit API error:', data);
+        return {
+          statusCode: 400,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            success: false, 
+            error: data.error || 'Error from ConvertKit API',
+            details: data
+          })
+        };
+      }
+    } catch (fetchError) {
+      console.error('Network error calling ConvertKit API:', fetchError);
       return {
-        statusCode: 400,
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        statusCode: 500,
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           success: false, 
-          error: data.error || 'Error subscribing to newsletter' 
+          error: 'Network error calling ConvertKit API',
+          details: fetchError.message
         })
       };
     }
   } catch (error) {
-    console.error('Subscription error:', error);
+    console.error('General subscription error:', error);
     return {
       statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
         success: false, 
-        error: 'Server error processing subscription'
+        error: 'Server error processing subscription',
+        details: error.message
       })
     };
   }
