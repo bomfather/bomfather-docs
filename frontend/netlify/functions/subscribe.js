@@ -1,16 +1,43 @@
-import fetch from 'node-fetch';
+// CommonJS syntax for Netlify Functions compatibility
+const fetch = require('node-fetch');
 
-export const handler = async (event) => {
+// Use CommonJS exports
+exports.handler = async (event) => {
+  // Set CORS headers for all responses
+  const headers = {
+    'Access-Control-Allow-Origin': '*', // Or restrict to your domain
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json'
+  };
+  
+  // Handle preflight OPTIONS request
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers,
+      body: ''
+    };
+  }
+  
   // Only allow POST
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return { 
+      statusCode: 405, 
+      headers,
+      body: JSON.stringify({ error: 'Method Not Allowed' })
+    };
   }
 
   try {
     const { email } = JSON.parse(event.body);
     
     if (!email) {
-      return { statusCode: 400, body: JSON.stringify({ success: false, error: 'Email is required' }) };
+      return { 
+        statusCode: 400, 
+        headers,
+        body: JSON.stringify({ success: false, error: 'Email is required' }) 
+      };
     }
 
     // Your ConvertKit form ID
@@ -21,7 +48,8 @@ export const handler = async (event) => {
     if (!apiKey) {
       console.error('Missing CONVERTKIT_API_KEY environment variable');
       return { 
-        statusCode: 500, 
+        statusCode: 500,
+        headers,
         body: JSON.stringify({ 
           success: false, 
           error: 'Server configuration error: Missing API key' 
@@ -46,7 +74,6 @@ export const handler = async (event) => {
 
       // Log full response for debugging
       console.log('Response status:', response.status);
-      console.log('Response headers:', JSON.stringify([...response.headers.entries()]));
       
       const responseText = await response.text();
       console.log('Raw response:', responseText);
@@ -60,7 +87,7 @@ export const handler = async (event) => {
         console.log('Response was not valid JSON:', responseText);
         return {
           statusCode: 500,
-          headers: { 'Content-Type': 'application/json' },
+          headers,
           body: JSON.stringify({ 
             success: false, 
             error: 'Error parsing API response',
@@ -72,7 +99,7 @@ export const handler = async (event) => {
       if (response.ok) {
         return {
           statusCode: 200,
-          headers: { 'Content-Type': 'application/json' },
+          headers,
           body: JSON.stringify({ 
             success: true,
             message: 'Subscription successful',
@@ -83,7 +110,7 @@ export const handler = async (event) => {
         console.error('ConvertKit API error:', data);
         return {
           statusCode: 400,
-          headers: { 'Content-Type': 'application/json' },
+          headers,
           body: JSON.stringify({ 
             success: false, 
             error: data.error || 'Error from ConvertKit API',
@@ -95,7 +122,7 @@ export const handler = async (event) => {
       console.error('Network error calling ConvertKit API:', fetchError);
       return {
         statusCode: 500,
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({ 
           success: false, 
           error: 'Network error calling ConvertKit API',
@@ -107,7 +134,7 @@ export const handler = async (event) => {
     console.error('General subscription error:', error);
     return {
       statusCode: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({ 
         success: false, 
         error: 'Server error processing subscription',

@@ -92,6 +92,7 @@ const { title, description } = Astro.props;
             if (!email) return;
             
             try {
+              console.log('Submitting to Netlify function...');
               // Submit to our Netlify function
               const response = await fetch('/.netlify/functions/subscribe', {
                 method: 'POST',
@@ -101,19 +102,32 @@ const { title, description } = Astro.props;
                 body: JSON.stringify({ email }),
               });
               
-              const result = await response.json();
+              console.log('Response status:', response.status);
               
-              if (result.success) {
+              if (!response.ok) {
+                throw new Error(`Server returned ${response.status}`);
+              }
+              
+              let result;
+              try {
+                result = await response.json();
+                console.log('Response data:', result);
+              } catch (jsonError) {
+                console.error('Error parsing JSON response:', jsonError);
+                throw new Error('Invalid response from server');
+              }
+              
+              if (result && result.success) {
                 // Show success message
                 formContainer.classList.add('hidden');
                 successMessage.classList.remove('hidden');
               } else {
-                console.error('Subscription failed:', result.error);
-                alert('There was an error. Please try again.');
+                console.error('Subscription failed:', result ? result.error : 'Unknown error');
+                alert('There was an error subscribing. Please try again.');
               }
             } catch (error) {
-              console.error('Error:', error);
-              alert('There was an error. Please try again.');
+              console.error('Submission error:', error);
+              alert(`Error: ${error.message || 'There was a problem with your subscription.'}`);
             }
           });
         }
