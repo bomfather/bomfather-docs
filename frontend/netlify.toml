@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm ci && npm run build"
   publish = "dist"
   
 [build.environment]
@@ -7,15 +7,15 @@
 
 # Production context: all deploys from the Production branch
 [context.production]
-  command = "npm run build"
+  command = "npm ci && npm run build"
 
 # Branch deploy context: All deploys that are not from the Production branch
 [context.branch-deploy]
-  command = "npm run build"
+  command = "npm ci && npm run build"
 
 # Deploy Preview context: Deploy Previews (https://docs.netlify.com/site-deploys/deploy-previews/)
 [context.deploy-preview]
-  command = "npm run build"
+  command = "npm ci && npm run build"
 
 # Form handling settings
 [build.processing.html]
@@ -23,6 +23,7 @@
 
 [functions]
   directory = "netlify/functions"
+  node_bundler = "esbuild"
 
 # Redirects and headers
 [[redirects]]

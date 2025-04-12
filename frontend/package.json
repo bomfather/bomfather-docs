@@ -6,13 +6,16 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "verify-functions": "node -e \"const fs=require('fs'); const path=require('path'); const axios=require('axios'); console.log('Axios found in version:', axios.VERSION || 'unknown')\"",
+    "deploy": "npm run build && netlify deploy"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.1",
     "@astrojs/sitemap": "^3.3.0",
     "@astrojs/tailwind": "^6.0.1",
     "astro": "^5.5.4",
+    "axios": "^1.6.2",
     "d3": "^7.9.0",
     "gsap": "^3.12.7",
     "node-fetch": "^3.3.2",
