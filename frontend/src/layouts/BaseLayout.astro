@@ -91,8 +91,34 @@ const { title, description } = Astro.props;
             
             if (!email) return;
             
+            // Create a diagnostic log area
+            let logArea = document.getElementById('diagnostic-log');
+            if (!logArea) {
+              logArea = document.createElement('div');
+              logArea.id = 'diagnostic-log';
+              logArea.style.display = 'none';
+              logArea.style.marginTop = '20px';
+              logArea.style.padding = '10px';
+              logArea.style.backgroundColor = '#f0f0f0';
+              logArea.style.borderRadius = '4px';
+              logArea.style.fontSize = '12px';
+              logArea.style.fontFamily = 'monospace';
+              logArea.style.whiteSpace = 'pre-wrap';
+              logArea.style.color = '#333';
+              logArea.style.maxHeight = '200px';
+              logArea.style.overflow = 'auto';
+              logArea.innerHTML = '<h4>Submission Log</h4>';
+              formContainer.parentNode.appendChild(logArea);
+            }
+            
+            // Log helper function
+            const log = (message) => {
+              console.log(message);
+              logArea.innerHTML += `<div>${message}</div>`;
+            };
+            
             try {
-              console.log('Submitting to Netlify function...');
+              log('Submitting to Netlify function...');
               
               // Display submission attempt
               const submitBtn = form.querySelector('button[type="submit"]');
@@ -100,7 +126,11 @@ const { title, description } = Astro.props;
               submitBtn.innerHTML = 'Submitting...';
               submitBtn.disabled = true;
               
+              // Show log area for debugging
+              log(`Attempting to subscribe: ${email}`);
+              
               // Submit to our Netlify function
+              log(`POST request to /.netlify/functions/subscribe`);
               const response = await fetch('/.netlify/functions/subscribe', {
                 method: 'POST',
                 headers: {
@@ -109,41 +139,56 @@ const { title, description } = Astro.props;
                 body: JSON.stringify({ email }),
               });
               
-              console.log('Response status:', response.status);
+              log(`Response status: ${response.status} ${response.statusText}`);
               
               let responseText;
               try {
                 responseText = await response.text();
-                console.log('Raw response:', responseText);
+                log(`Raw response: ${responseText}`);
               } catch (textError) {
-                console.error('Error getting response text:', textError);
+                log(`Error getting response text: ${textError.message}`);
                 throw new Error('Could not read response');
               }
               
               let result;
               try {
                 result = JSON.parse(responseText);
-                console.log('Parsed response:', result);
+                log(`Parsed response: ${JSON.stringify(result, null, 2)}`);
               } catch (jsonError) {
-                console.error('Error parsing JSON:', jsonError, 'Raw text:', responseText);
+                log(`Error parsing JSON: ${jsonError.message}`);
+                log(`Raw text: ${responseText}`);
                 throw new Error('Invalid JSON response');
               }
               
               if (result && result.success) {
                 // Show success message
+                log('Subscription successful!');
                 formContainer.classList.add('hidden');
                 successMessage.classList.remove('hidden');
+                
+                // Keep the log visible
+                logArea.style.display = 'block';
               } else {
-                console.error('Submission failed:', result ? (result.error || 'Unknown error') : 'No result');
-                alert('There was an error subscribing. Please try again.');
+                log(`Submission failed: ${result ? (result.error || 'Unknown error') : 'No result'}`);
+                if (result && result.details) {
+                  log(`Details: ${JSON.stringify(result.details)}`);
+                }
+                
+                alert('There was an error subscribing. Please try again and check the diagnostic log below.');
+                
+                // Show the log
+                logArea.style.display = 'block';
                 
                 // Reset button
                 submitBtn.innerHTML = originalBtnText;
                 submitBtn.disabled = false;
               }
             } catch (error) {
-              console.error('Submission error:', error);
+              log(`Submission error: ${error.message}`);
               alert(`Error: ${error.message || 'There was a problem with your subscription.'}`);
+              
+              // Show the log
+              logArea.style.display = 'block';
               
               // Reset form if there was an error
               const submitBtn = form.querySelector('button[type="submit"]');
