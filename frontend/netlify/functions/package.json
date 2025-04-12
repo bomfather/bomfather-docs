@@ -3,7 +3,5 @@
   "version": "1.0.0",
   "description": "Netlify functions for Bomfather",
   "main": "subscribe.js",
-  "dependencies": {
-    "node-fetch": "^2.6.7"
-  }
+  "dependencies": {}
 } 
