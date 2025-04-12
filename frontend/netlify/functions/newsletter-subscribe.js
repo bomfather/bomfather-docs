@@ -3,6 +3,9 @@ const axios = require('axios');
 
 // Use CommonJS exports
 exports.handler = async (event) => {
+  // Log the entire event for debugging
+  console.log('Full event:', JSON.stringify(event));
+  
   // Set CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -21,17 +24,24 @@ exports.handler = async (event) => {
   }
   
   console.log('Newsletter function invoked with HTTP method:', event.httpMethod);
+  console.log('Function path:', event.path);
+  console.log('Query string parameters:', JSON.stringify(event.queryStringParameters));
   
   try {
     // Parse body
     let email = null;
+    let timestamp = null;
+    
     if (event.body) {
       try {
         const body = JSON.parse(event.body);
         email = body.email;
+        timestamp = body.timestamp;
         console.log('Received email:', email);
+        console.log('Received timestamp:', timestamp);
       } catch (e) {
         console.log('Error parsing body:', e.message);
+        console.log('Raw body:', event.body);
         return {
           statusCode: 400,
           headers,
@@ -104,7 +114,8 @@ exports.handler = async (event) => {
           body: JSON.stringify({
             success: true,
             message: 'Subscription successful',
-            subscriber: response.data.subscription ? response.data.subscription.subscriber : null
+            subscriber: response.data.subscription ? response.data.subscription.subscriber : null,
+            timestamp: timestamp // Return the timestamp for verification
           })
         };
       } catch (formError) {
@@ -134,7 +145,8 @@ exports.handler = async (event) => {
             body: JSON.stringify({
               success: true,
               message: 'Subscription successful via alternative endpoint',
-              subscriber: altResponse.data.subscriber
+              subscriber: altResponse.data.subscriber,
+              timestamp: timestamp
             })
           };
         } catch (altError) {
@@ -149,7 +161,8 @@ exports.handler = async (event) => {
               body: JSON.stringify({
                 success: false,
                 error: 'Error from ConvertKit API',
-                details: formError.response.data
+                details: formError.response.data,
+                timestamp: timestamp
               })
             };
           }
@@ -162,7 +175,8 @@ exports.handler = async (event) => {
               body: JSON.stringify({
                 success: false,
                 error: 'Error from ConvertKit API',
-                details: altError.response.data
+                details: altError.response.data,
+                timestamp: timestamp
               })
             };
           }
@@ -175,7 +189,8 @@ exports.handler = async (event) => {
               success: false,
               error: 'Error communicating with ConvertKit API',
               formError: formError.message,
-              altError: altError.message
+              altError: altError.message,
+              timestamp: timestamp
             })
           };
         }
@@ -188,7 +203,8 @@ exports.handler = async (event) => {
         body: JSON.stringify({
           success: false,
           error: 'Network error calling ConvertKit API',
-          details: networkError.message
+          details: networkError.message,
+          timestamp: timestamp
         })
       };
     }

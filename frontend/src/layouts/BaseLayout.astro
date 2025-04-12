@@ -77,16 +77,21 @@ const { title, description } = Astro.props;
     
     <!-- JavaScript for form handling -->
     <script>
-      const VERSION = "1.0.1"; // Change this version number with each deployment
+      // Cache busting timestamp
+      const timestamp = new Date().getTime();
+      console.log('Form script loaded with timestamp:', timestamp);
       
       document.addEventListener('DOMContentLoaded', () => {
         const form = document.getElementById('newsletter-form');
         const formContainer = document.getElementById('form-container');
         const successMessage = document.getElementById('success-message');
         
+        console.log('Form found:', !!form);
+        
         if (form) {
           form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            console.log('Form submitted, timestamp:', timestamp);
             
             const emailInput = document.getElementById('email-input');
             const email = emailInput.value;
@@ -131,14 +136,21 @@ const { title, description } = Astro.props;
               // Show log area for debugging
               log(`Attempting to subscribe: ${email}`);
               
-              // Submit to our new Netlify function
-              log(`POST request to /.netlify/functions/newsletter-subscribe`);
-              const response = await fetch('/.netlify/functions/newsletter-subscribe', {
+              // Add cache busting parameter to request URL
+              const functionUrl = `/.netlify/functions/newsletter-subscribe?_=${timestamp}`;
+              log(`POST request to ${functionUrl}`);
+              
+              const response = await fetch(functionUrl, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
+                  'Cache-Control': 'no-cache, no-store',
+                  'Pragma': 'no-cache'
                 },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ 
+                  email,
+                  timestamp // Include timestamp in the request body as well
+                }),
               });
               
               log(`Response status: ${response.status} ${response.statusText}`);
