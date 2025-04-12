@@ -129,9 +129,9 @@ const { title, description } = Astro.props;
               // Show log area for debugging
               log(`Attempting to subscribe: ${email}`);
               
-              // Submit to our Netlify function
-              log(`POST request to /.netlify/functions/subscribe`);
-              const response = await fetch('/.netlify/functions/subscribe', {
+              // Submit to our new Netlify function
+              log(`POST request to /.netlify/functions/newsletter-subscribe`);
+              const response = await fetch('/.netlify/functions/newsletter-subscribe', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ const { title, description } = Astro.props;
                 formContainer.classList.add('hidden');
                 successMessage.classList.remove('hidden');
                 
-                // Keep the log visible
+                // Show the log for debugging
                 logArea.style.display = 'block';
               } else {
                 log(`Submission failed: ${result ? (result.error || 'Unknown error') : 'No result'}`);
