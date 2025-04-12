@@ -53,11 +53,11 @@ const { title, description } = Astro.props;
                   id="email-input"
                   placeholder="Your email address" 
                   required 
-                  class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  class="w-full flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
                 <button 
                   type="submit"
-                  class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-3 rounded-lg transition-colors"
+                  class="md:w-auto md:whitespace-nowrap md:flex-shrink-0 bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-3 rounded-lg transition-colors"
                 >
                   Subscribe
                 </button>
@@ -65,9 +65,9 @@ const { title, description } = Astro.props;
             </form>
           </div>
           
-          <div id="success-message" class="hidden bg-white p-6 rounded-lg shadow-sm">
-            <p class="text-dark font-medium">Thank you for signing up!</p>
-            <p class="text-mid-gray text-sm mt-2">We've sent a confirmation email to your inbox.</p>
+          <div id="success-message" class="hidden bg-white p-8 rounded-lg shadow-sm max-w-md w-full mx-auto">
+            <h3 class="text-xl text-dark font-bold mb-3">Thank you for signing up!</h3>
+            <p class="text-mid-gray text-base mt-2">We've sent a confirmation email to your inbox.</p>
           </div>
         </div>
       </div>
@@ -98,34 +98,8 @@ const { title, description } = Astro.props;
             
             if (!email) return;
             
-            // Create a diagnostic log area
-            let logArea = document.getElementById('diagnostic-log');
-            if (!logArea) {
-              logArea = document.createElement('div');
-              logArea.id = 'diagnostic-log';
-              logArea.style.display = 'none';
-              logArea.style.marginTop = '20px';
-              logArea.style.padding = '10px';
-              logArea.style.backgroundColor = '#f0f0f0';
-              logArea.style.borderRadius = '4px';
-              logArea.style.fontSize = '12px';
-              logArea.style.fontFamily = 'monospace';
-              logArea.style.whiteSpace = 'pre-wrap';
-              logArea.style.color = '#333';
-              logArea.style.maxHeight = '200px';
-              logArea.style.overflow = 'auto';
-              logArea.innerHTML = '<h4>Submission Log</h4>';
-              formContainer.parentNode.appendChild(logArea);
-            }
-            
-            // Log helper function
-            const log = (message) => {
-              console.log(message);
-              logArea.innerHTML += `<div>${message}</div>`;
-            };
-            
             try {
-              log('Submitting to Netlify function...');
+              console.log('Submitting to Netlify function...');
               
               // Display submission attempt
               const submitBtn = form.querySelector('button[type="submit"]');
@@ -133,12 +107,8 @@ const { title, description } = Astro.props;
               submitBtn.innerHTML = 'Submitting...';
               submitBtn.disabled = true;
               
-              // Show log area for debugging
-              log(`Attempting to subscribe: ${email}`);
-              
               // Add cache busting parameter to request URL
               const functionUrl = `/.netlify/functions/newsletter-subscribe?_=${timestamp}`;
-              log(`POST request to ${functionUrl}`);
               
               const response = await fetch(functionUrl, {
                 method: 'POST',
@@ -153,56 +123,25 @@ const { title, description } = Astro.props;
                 }),
               });
               
-              log(`Response status: ${response.status} ${response.statusText}`);
-              
-              let responseText;
-              try {
-                responseText = await response.text();
-                log(`Raw response: ${responseText}`);
-              } catch (textError) {
-                log(`Error getting response text: ${textError.message}`);
-                throw new Error('Could not read response');
-              }
-              
-              let result;
-              try {
-                result = JSON.parse(responseText);
-                log(`Parsed response: ${JSON.stringify(result, null, 2)}`);
-              } catch (jsonError) {
-                log(`Error parsing JSON: ${jsonError.message}`);
-                log(`Raw text: ${responseText}`);
-                throw new Error('Invalid JSON response');
-              }
+              let responseText = await response.text();
+              let result = JSON.parse(responseText);
               
               if (result && result.success) {
                 // Show success message
-                log('Subscription successful!');
+                console.log('Subscription successful!');
                 formContainer.classList.add('hidden');
                 successMessage.classList.remove('hidden');
-                
-                // Show the log for debugging
-                logArea.style.display = 'block';
               } else {
-                log(`Submission failed: ${result ? (result.error || 'Unknown error') : 'No result'}`);
-                if (result && result.details) {
-                  log(`Details: ${JSON.stringify(result.details)}`);
-                }
-                
-                alert('There was an error subscribing. Please try again and check the diagnostic log below.');
-                
-                // Show the log
-                logArea.style.display = 'block';
+                console.log(`Submission failed: ${result ? (result.error || 'Unknown error') : 'No result'}`);
+                alert('There was an error subscribing. Please try again.');
                 
                 // Reset button
                 submitBtn.innerHTML = originalBtnText;
                 submitBtn.disabled = false;
               }
             } catch (error) {
-              log(`Submission error: ${error.message}`);
+              console.log(`Submission error: ${error.message}`);
               alert(`Error: ${error.message || 'There was a problem with your subscription.'}`);
-              
-              // Show the log
-              logArea.style.display = 'block';
               
               // Reset form if there was an error
               const submitBtn = form.querySelector('button[type="submit"]');
