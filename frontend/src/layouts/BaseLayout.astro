@@ -93,6 +93,13 @@ const { title, description } = Astro.props;
             
             try {
               console.log('Submitting to Netlify function...');
+              
+              // Display submission attempt
+              const submitBtn = form.querySelector('button[type="submit"]');
+              const originalBtnText = submitBtn.innerHTML;
+              submitBtn.innerHTML = 'Submitting...';
+              submitBtn.disabled = true;
+              
               // Submit to our Netlify function
               const response = await fetch('/.netlify/functions/subscribe', {
                 method: 'POST',
@@ -104,17 +111,22 @@ const { title, description } = Astro.props;
               
               console.log('Response status:', response.status);
               
-              if (!response.ok) {
-                throw new Error(`Server returned ${response.status}`);
+              let responseText;
+              try {
+                responseText = await response.text();
+                console.log('Raw response:', responseText);
+              } catch (textError) {
+                console.error('Error getting response text:', textError);
+                throw new Error('Could not read response');
               }
               
               let result;
               try {
-                result = await response.json();
-                console.log('Response data:', result);
+                result = JSON.parse(responseText);
+                console.log('Parsed response:', result);
               } catch (jsonError) {
-                console.error('Error parsing JSON response:', jsonError);
-                throw new Error('Invalid response from server');
+                console.error('Error parsing JSON:', jsonError, 'Raw text:', responseText);
+                throw new Error('Invalid JSON response');
               }
               
               if (result && result.success) {
@@ -122,12 +134,23 @@ const { title, description } = Astro.props;
                 formContainer.classList.add('hidden');
                 successMessage.classList.remove('hidden');
               } else {
-                console.error('Subscription failed:', result ? result.error : 'Unknown error');
+                console.error('Submission failed:', result ? (result.error || 'Unknown error') : 'No result');
                 alert('There was an error subscribing. Please try again.');
+                
+                // Reset button
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
               }
             } catch (error) {
               console.error('Submission error:', error);
               alert(`Error: ${error.message || 'There was a problem with your subscription.'}`);
+              
+              // Reset form if there was an error
+              const submitBtn = form.querySelector('button[type="submit"]');
+              if (submitBtn.disabled) {
+                submitBtn.innerHTML = 'Subscribe';
+                submitBtn.disabled = false;
+              }
             }
           });
         }
