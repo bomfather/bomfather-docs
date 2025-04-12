@@ -1,5 +1,5 @@
 // CommonJS syntax for Netlify Functions compatibility
-const fetch = require('node-fetch');
+const axios = require('axios');
 
 // Use CommonJS exports
 exports.handler = async (event) => {
@@ -72,12 +72,12 @@ exports.handler = async (event) => {
     // Your ConvertKit form ID
     const formId = '7903890';
     
-    // Prepare the request body
-    const requestBody = JSON.stringify({
+    // Prepare the request data
+    const requestData = {
       api_key: apiKey,
       email: email
-    });
-    console.log('ConvertKit request body:', requestBody);
+    };
+    console.log('ConvertKit request data:', JSON.stringify(requestData));
     
     // Make the request to ConvertKit
     console.log(`Sending subscription request to ConvertKit for email: ${email}`);
@@ -88,113 +88,112 @@ exports.handler = async (event) => {
       const formUrl = `https://api.convertkit.com/v3/forms/${formId}/subscribe`;
       console.log('Request URL:', formUrl);
       
-      const response = await fetch(formUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: requestBody,
-      });
-      
-      console.log('ConvertKit API response status:', response.status);
-      
-      // Get response text
-      const responseText = await response.text();
-      console.log('ConvertKit API response body:', responseText);
-      
-      // Parse JSON if possible
-      let data;
       try {
-        data = JSON.parse(responseText);
-        console.log('Parsed JSON response:', JSON.stringify(data));
-      } catch (err) {
-        console.error('Error parsing ConvertKit response:', err);
-        
-        // If we can't parse the response, try a different endpoint
-        if (response.status !== 200) {
-          console.log('Trying alternative subscriber endpoint');
-          
-          // Try the subscriber direct endpoint
-          const subscriberUrl = 'https://api.convertkit.com/v3/subscribers';
-          console.log('Alternative URL:', subscriberUrl);
-          
-          const altResponse = await fetch(subscriberUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              api_key: apiKey,
-              email: email,
-              first_name: ''
-            }),
-          });
-          
-          console.log('Alternative endpoint status:', altResponse.status);
-          const altText = await altResponse.text();
-          console.log('Alternative endpoint response:', altText);
-          
-          if (altResponse.ok) {
-            return {
-              statusCode: 200,
-              headers,
-              body: JSON.stringify({
-                success: true,
-                message: 'Subscription successful via alternative endpoint',
-                responseText: altText
-              })
-            };
+        const response = await axios.post(formUrl, requestData, {
+          headers: {
+            'Content-Type': 'application/json'
           }
-        }
+        });
         
-        return {
-          statusCode: 500,
-          headers,
-          body: JSON.stringify({
-            success: false,
-            error: 'Invalid response from ConvertKit',
-            details: responseText
-          })
-        };
-      }
-      
-      // Check if subscription was successful
-      if (response.ok) {
+        console.log('ConvertKit API response status:', response.status);
+        console.log('ConvertKit API response data:', JSON.stringify(response.data));
+        
         return {
           statusCode: 200,
           headers,
           body: JSON.stringify({
             success: true,
             message: 'Subscription successful',
-            subscriber: data.subscription ? data.subscription.subscriber : null
+            subscriber: response.data.subscription ? response.data.subscription.subscriber : null
           })
         };
-      } else {
-        console.error('ConvertKit API error:', data);
-        return {
-          statusCode: 400,
-          headers,
-          body: JSON.stringify({
-            success: false,
-            error: data.error || 'Error from ConvertKit API',
-            details: data
-          })
-        };
+      } catch (formError) {
+        console.error('Form endpoint error:', formError.message);
+        
+        // If form endpoint fails, try the subscriber endpoint
+        console.log('Trying alternative subscriber endpoint');
+        const subscriberUrl = 'https://api.convertkit.com/v3/subscribers';
+        console.log('Alternative URL:', subscriberUrl);
+        
+        try {
+          const altResponse = await axios.post(subscriberUrl, {
+            ...requestData,
+            first_name: ''
+          }, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          console.log('Alternative endpoint status:', altResponse.status);
+          console.log('Alternative endpoint data:', JSON.stringify(altResponse.data));
+          
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              success: true,
+              message: 'Subscription successful via alternative endpoint',
+              subscriber: altResponse.data.subscriber
+            })
+          };
+        } catch (altError) {
+          console.error('Alternative endpoint error:', altError.message);
+          
+          // If we have response data from the original error, return that
+          if (formError.response) {
+            console.log('Original error response:', JSON.stringify(formError.response.data));
+            return {
+              statusCode: formError.response.status || 400,
+              headers,
+              body: JSON.stringify({
+                success: false,
+                error: 'Error from ConvertKit API',
+                details: formError.response.data
+              })
+            };
+          }
+          
+          // Otherwise return the alternative endpoint error
+          if (altError.response) {
+            return {
+              statusCode: altError.response.status || 400,
+              headers,
+              body: JSON.stringify({
+                success: false,
+                error: 'Error from ConvertKit API',
+                details: altError.response.data
+              })
+            };
+          }
+          
+          // If no response data is available, return a generic error
+          return {
+            statusCode: 500,
+            headers,
+            body: JSON.stringify({
+              success: false,
+              error: 'Error communicating with ConvertKit API',
+              formError: formError.message,
+              altError: altError.message
+            })
+          };
+        }
       }
-    } catch (fetchError) {
-      console.error('Network error calling ConvertKit API:', fetchError);
+    } catch (networkError) {
+      console.error('Network error calling ConvertKit API:', networkError.message);
       return {
         statusCode: 500,
         headers,
         body: JSON.stringify({
           success: false,
           error: 'Network error calling ConvertKit API',
-          details: fetchError.message
+          details: networkError.message
         })
       };
     }
   } catch (error) {
-    console.error('General function error:', error);
+    console.error('General function error:', error.message);
     return {
       statusCode: 500,
       headers,
