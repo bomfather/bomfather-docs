@@ -1,7 +1,0 @@
-{
-  "name": "bomfather-netlify-functions",
-  "version": "1.0.0",
-  "description": "Netlify functions for Bomfather",
-  "main": "subscribe.js",
-  "dependencies": {}
-} 
