@@ -1,8 +1,8 @@
-// ESM syntax for compatibility with node-fetch v3
-import fetch from 'node-fetch';
+// CommonJS syntax for Netlify Functions compatibility
+const fetch = require('node-fetch');
 
-// Export the handler function
-export const handler = async (event) => {
+// Use CommonJS exports
+exports.handler = async (event) => {
   // Set CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*',
