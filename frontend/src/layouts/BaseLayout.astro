@@ -7,9 +7,11 @@ import AnnouncementBanner from '../components/AnnouncementBanner.astro';
 export interface Props {
   title: string;
   description: string;
+  showHeader?: boolean; // whether to render the navigation header, default true
+  showAnnouncement?: boolean; // whether to render the announcement banner, default true
 }
 
-const { title, description } = Astro.props;
+const { title, description, showHeader = true, showAnnouncement = true } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -17,48 +19,50 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="color-scheme" content="dark">
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title} | Bomfather</title>
     
     <!-- Preload fonts -->
+    <!-- Google Fonts: DM Sans (headings & body) + JetBrains Mono for code -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- ConvertKit Form Script -->
     <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
   </head>
-  <body class="bg-white text-dark">
-    <AnnouncementBanner />
-    <Header />
+  <body class="bg-background text-mid-gray">
+    {showAnnouncement ? <AnnouncementBanner /> : null}
+    {showHeader ? <Header /> : null}
     
     <main>
       <slot />
     </main>
     
     <!-- Newsletter Subscription Form -->
-    <section class="bg-light-gray py-16">
+    <section class="bg-background py-12 border-t border-white/20">
       <div class="container mx-auto px-4 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4">Stay Informed on Supply Chain Security</h2>
-        <p class="text-lg text-mid-gray max-w-2xl mx-auto mb-8">Get updates on Bomfather, eBPF innovations, and security best practices directly to your inbox.</p>
+        <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4 text-white">Kernel → Sky Security Briefing</h2>
+        <p class="text-lg text-gray mx-auto mb-8 whitespace-nowrap">From TPM-sealed flight recorders to zero-trust builds: deep dives on eBPF, AI & supply-chain security.</p>
         
         <div class="max-w-xl mx-auto">
           <div id="form-container">
-            <form id="newsletter-form" class="bg-white p-6 rounded-lg shadow-sm">
-              <div class="flex flex-col md:flex-row gap-4">
+            <form id="newsletter-form" class="bg-background p-6 rounded-lg border border-white/20 shadow-xl">
+              <div class="flex flex-col md:flex-row gap-4 font-sans">
                 <input 
                   type="email" 
                   id="email-input"
                   placeholder="Your email address" 
                   required 
-                  class="w-full flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
+                  class="w-full flex-1 px-4 py-3 border border-white/20 bg-background text-white rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-base"
                   style="min-width: 280px;"
                 />
                 <button 
                   type="submit"
-                  class="md:w-auto md:whitespace-nowrap md:flex-shrink-0 bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-3 rounded-lg transition-colors"
+                  class="md:w-auto md:whitespace-nowrap md:flex-shrink-0 bg-primary hover:bg-accent text-white font-medium px-8 py-3 rounded-lg transition-colors"
                 >
                   Subscribe
                 </button>
@@ -66,9 +70,9 @@ const { title, description } = Astro.props;
             </form>
           </div>
           
-          <div id="success-message" class="hidden bg-white p-8 rounded-lg shadow-sm w-full mx-auto">
-            <h3 class="text-xl text-dark font-bold mb-3">Thank you for signing up!</h3>
-            <p class="text-mid-gray text-base mt-2">We've sent a confirmation email to your inbox.</p>
+          <div id="success-message" class="hidden bg-background p-8 rounded-lg border border-white/20 shadow-xl w-full mx-auto">
+            <h3 class="text-xl text-white font-bold mb-3">Thank you for signing up!</h3>
+            <p class="text-gray text-base mt-2">We've sent a confirmation email to your inbox.</p>
           </div>
         </div>
       </div>
@@ -152,6 +156,31 @@ const { title, description } = Astro.props;
               }
             }
           });
+        }
+      });
+    </script>
+    
+    <script>
+      // Add a class to body when announcement banner is visible
+      document.addEventListener('DOMContentLoaded', () => {
+        const banner = document.getElementById('announcement-banner');
+        
+        if (banner) {
+          // Initial check
+          if (banner.classList.contains('show')) {
+            document.body.classList.add('has-announcement');
+          }
+          
+          // Watch for changes
+          const observer = new MutationObserver(() => {
+            if (banner.classList.contains('show')) {
+              document.body.classList.add('has-announcement');
+            } else {
+              document.body.classList.remove('has-announcement');
+            }
+          });
+          
+          observer.observe(banner, { attributes: true, attributeFilter: ['class'] });
         }
       });
     </script>

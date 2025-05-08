@@ -11,15 +11,19 @@
     "deploy": "npm run build && netlify deploy"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.2.1",
-    "@astrojs/sitemap": "^3.3.0",
-    "@astrojs/tailwind": "^6.0.1",
-    "astro": "^5.5.4",
-    "axios": "^1.6.2",
+    "@astrojs/mdx": "^3.1.2",
+    "@astrojs/sitemap": "^3.1.6",
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "^4.11.5",
+    "axios": "^1.7.2",
     "d3": "^7.9.0",
-    "gsap": "^3.12.7",
+    "gsap": "^3.12.5",
     "node-fetch": "^3.3.2",
     "sharp": "^0.33.5",
-    "tailwindcss": "^3.3.5"
+    "tailwindcss": "^3.4.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "@types/node": "^20.12.12"
   }
 }

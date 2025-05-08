@@ -4,22 +4,32 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '#0B5FFF',
-        'secondary': '#224BC5',
-        'dark-blue': '#0A2463',
-        'dark': '#121212',
-        'mid-gray': '#505050',
+        'primary': '#006FEE',
+        'accent': '#006FEE',
+        'background': '#0A0A0A',
+        'surface': '#0A0A0A',
         'light-gray': '#F3F4F6',
+        'gray': '#CCCCCC',
+        'white': '#FFFFFF',
+        'mid-gray': '#959595',
+        'dark': '#0A0A0A',
         'accent-green': '#45C4B0',
         'accent-orange': '#FF6B35',
         'accent-red': '#E63946',
       },
+      backgroundImage: {
+        'heroDrone': "url('/img/drone.svg')",
+        'radial-at-center': 'radial-gradient(circle at center, var(--tw-gradient-stops))'
+      },
       fontFamily: {
-        'sans': ['Inter', 'sans-serif'],
-        'heading': ['Manrope', 'sans-serif'],
+        'sans': ['"DM Sans"', 'sans-serif'],
+        'heading': ['"DM Sans"', 'sans-serif'],
         'mono': ['JetBrains Mono', 'monospace'],
       },
     },
   },
   plugins: [],
+  safelist: [
+    'mix-blend-overlay',
+  ],
 }; 

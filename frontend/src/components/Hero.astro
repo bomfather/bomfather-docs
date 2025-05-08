@@ -1,219 +1,105 @@
 ---
-import Button from './Button.astro';
+// No frontmatter needed for this simplified version
 ---
 
-<section class="bg-gradient-to-r from-dark-blue to-primary py-20 text-white relative overflow-hidden">
-  <div class="container mx-auto px-4 relative z-10">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <div>
-        <h1 class="hero-title text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6">
-          Kernel-Level AI Protection
-        </h1>
-        <p class="hero-subtitle text-xl md:text-2xl mb-2 opacity-90">
-          "I am going to give him security he can't refuse"
-        </p>
-        <p class="text-lg md:text-xl mb-8 opacity-80 italic">
-          -The Bomfather
-        </p>
-        <div class="hero-cta flex flex-wrap gap-4">
-        </div>
-      </div>
-      
-      <div id="merkle-tree" class="merkle-visualization hidden lg:flex justify-center items-center">
-        <!-- SVG will be rendered here -->
+<section class="relative isolate overflow-hidden bg-[#0a0d14] text-white min-h-screen">
+
+  <!-- Animated glow dots -->
+  <!--
+  <div class="absolute w-full h-full pointer-events-none -z-10">
+    <span class="glow-dot" style="top:25%;left:55%;"></span>
+    <span class="glow-dot" style="top:35%;left:78%;"></span>
+    <span class="glow-dot" style="top:58%;left:65%;"></span>
+    <span class="glow-dot" style="top:68%;left:30%;"></span>
+    <span class="glow-dot" style="top:42%;left:40%;"></span>
+    <span class="glow-dot" style="top:15%;left:25%;"></span>
+    <span class="glow-dot" style="top:50%;left:10%;"></span>
+    <span class="glow-dot" style="top:75%;left:80%;"></span>
+    <span class="glow-dot" style="top:60%;left:50%;"></span>
+  </div>
+  -->
+
+  <!-- Hero copy -->
+  <div class="container relative z-10 flex flex-col justify-center min-h-screen" id="hero-content">
+    <div class="py-8 md:py-12">
+      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-heading font-extrabold leading-tight mb-8 max-w-4xl">
+       Stop AI attacks before they execute
+      </h1>
+      <p class="text-xl sm:text-2xl opacity-90 mb-4 max-w-2xl">
+      Bomfather embeds zero-trust defense inside the Linux kernel to block exploits in real time.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a href="/contact" class="inline-block bg-accent text-white font-semibold px-8 py-4 rounded-md hover:bg-accent/80 transition-colors">
+          See&nbsp;It&nbsp;In&nbsp;Action
+        </a>
+        <a href="/about" class="inline-block bg-transparent border border-white/30 text-white font-semibold px-8 py-4 rounded-md hover:bg-white/10 transition-colors">
+          Learn&nbsp;More
+        </a>
       </div>
     </div>
   </div>
-  
-  <!-- Background Decorative Elements -->
-  <div class="absolute top-0 left-0 w-full h-full opacity-10 overflow-hidden pointer-events-none">
-    <div class="absolute top-10 left-10 w-20 h-20 border-2 border-white rounded-full"></div>
-    <div class="absolute bottom-20 right-10 w-40 h-40 border-2 border-white rounded-full"></div>
-    <div class="absolute top-40 right-30 w-10 h-10 bg-white rounded-full"></div>
-    <div class="absolute bottom-40 left-20 w-5 h-5 bg-white rounded-full"></div>
+</section>
+
+<!-- What is Bomfather Section -->
+<section class="py-12 md:py-16 mt-12 md:mt-20 bg-[#0a0d14]">
+  <div class="container max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-heading font-bold mb-8 text-white">Why Bomfather Beats Traditional Runtime Security</h2>
+    <div class="max-w-3xl text-white/90">
+      <p class="text-lg mb-10">
+        Bomfather stops threats at the kernel—before they ever reach your files, models, or GPUs.
+      </p>
+
+      <h3 class="text-3xl font-bold mb-6 text-white">Universal Kernel Advantages</h3>
+      
+      <ul class="space-y-8">
+        <li>
+          <h4 class="text-xl font-semibold text-white block mb-1">Kills Attacks Before They Execute</h4>
+          <p class="text-lg">Kernel-level hooks deny authorized code the instant it requests access—no matter where it runs.</p>
+        </li>
+
+        <li>
+          <h4 class="text-xl font-semibold text-white block mb-1">Immutable, Signed Audit Logs</h4>
+          <p class="text-lg">Every event is cryptographically stamped—ideal for compliance and incident forensics in cloud, on-prem, or edge deployments.</p>
+        </li>
+
+        <li>
+          <h4 class="text-xl font-semibold text-white block mb-1">Drop-In Deployment</h4>
+          <p class="text-lg">No kernel rebuilds, no application changes. Install, protected.</p>
+        </li>
+      </ul>
+      <p class="text-lg mt-10">
+        Powered by eBPF, Bomfather enforces zero-trust policies across cloud, data-centre, workstations, and drones alike.
+      </p>
+    </div>
   </div>
 </section>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    renderMerkleTree();
-  });
-
-  function renderMerkleTree() {
-    // Define the Merkle tree structure based on Ollama's go.mod dependencies
-    // Improved spacing for better readability
-    const treeStructure = {
-      nodes: [
-        // Layer 0 (Root)
-        { id: 'ollama', layer: 0, x: 250, y: 50 },
-        
-        // Layer 1 - Main dependency categories (Wider spread)
-        { id: 'gin', layer: 1, x: 115, y: 120 },
-        { id: 'golang', layer: 1, x: 385, y: 120 },
-        
-        // Layer 2 - Specific libraries (Improved spacing)
-        { id: 'gin-gonic', layer: 2, x: 55, y: 190 },
-        { id: 'gin-contrib', layer: 2, x: 175, y: 190 },
-        { id: 'crypto', layer: 2, x: 325, y: 190 },
-        { id: 'sync', layer: 2, x: 445, y: 190 },
-        
-        // Layer 3 - Leaf nodes (specific packages with better distribution)
-        { id: 'sonic', layer: 3, x: 25, y: 270 },
-        { id: 'validator', layer: 3, x: 85, y: 270 },
-        { id: 'cors', layer: 3, x: 145, y: 270 },
-        { id: 'sse', layer: 3, x: 205, y: 270 },
-        { id: 'x509', layer: 3, x: 295, y: 270 },
-        { id: 'aes', layer: 3, x: 355, y: 270 },
-        { id: 'waitgroup', layer: 3, x: 415, y: 270 },
-        { id: 'errgroup', layer: 3, x: 475, y: 270 }
-      ],
-      
-      edges: [
-        // Root to Layer 1
-        { source: 'ollama', target: 'gin' },
-        { source: 'ollama', target: 'golang' },
-        
-        // Layer 1 to Layer 2
-        { source: 'gin', target: 'gin-gonic' },
-        { source: 'gin', target: 'gin-contrib' },
-        { source: 'golang', target: 'crypto' },
-        { source: 'golang', target: 'sync' },
-        
-        // Layer 2 to Layer 3
-        { source: 'gin-gonic', target: 'sonic' },
-        { source: 'gin-gonic', target: 'validator' },
-        { source: 'gin-contrib', target: 'cors' },
-        { source: 'gin-contrib', target: 'sse' },
-        { source: 'crypto', target: 'x509' },
-        { source: 'crypto', target: 'aes' },
-        { source: 'sync', target: 'waitgroup' },
-        { source: 'sync', target: 'errgroup' }
-      ]
-    };
-
-    // Set up SVG container
-    const width = 500;
-    const height = 380;
-    
-    const container = document.getElementById('merkle-tree');
-    container.innerHTML = '';
-    
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('width', width);
-    svg.setAttribute('height', height);
-    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-    container.appendChild(svg);
-    
-    // Draw connections first (they'll be behind the nodes)
-    treeStructure.edges.forEach((edge) => {
-      const source = treeStructure.nodes.find(n => n.id === edge.source);
-      const target = treeStructure.nodes.find(n => n.id === edge.target);
-      
-      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      line.setAttribute('x1', source.x);
-      line.setAttribute('y1', source.y);
-      line.setAttribute('x2', target.x);
-      line.setAttribute('y2', target.y);
-      line.setAttribute('stroke', '#FFFFFF');
-      line.setAttribute('stroke-width', '2');
-      line.classList.add('merkle-connection');
-      line.style.opacity = '0';
-      
-      svg.appendChild(line);
-      
-      // Animate connection
-      setTimeout(() => {
-        line.style.transition = 'opacity 0.5s ease';
-        line.style.opacity = '1';
-      }, 100);
-    });
-    
-    // Draw nodes with size based on layer
-    treeStructure.nodes.forEach((node) => {
-      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      
-      // Size based on layer
-      const radius = 20 - node.layer * 3;
-      
-      circle.setAttribute('cx', node.x);
-      circle.setAttribute('cy', node.y);
-      circle.setAttribute('r', radius);
-      circle.setAttribute('fill', '#FFFFFF');
-      circle.classList.add('merkle-node');
-      circle.style.opacity = '0';
-      
-      svg.appendChild(circle);
-      
-      // Animate node
-      setTimeout(() => {
-        circle.style.transition = 'opacity 0.5s ease';
-        circle.style.opacity = '1';
-      }, 300);
-    });
-    
-    // Add labels with a delay and proper positioning
-    setTimeout(() => {
-      treeStructure.nodes.forEach((node, index) => {
-        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        
-        // Position labels differently based on layer
-        let xOffset = 0;
-        let yOffset = 0;
-        let anchor = 'middle';
-        
-        if (node.layer === 0) {
-          // Root node - label below
-          yOffset = 30;
-        } else if (node.layer === 3) {
-          // Leaf nodes - label below
-          yOffset = 25;
-        } else if (node.layer === 2) {
-          // Layer 2 nodes - improved label positioning
-          // Make labels closer to nodes
-          if (node.id === 'gin-contrib') {
-            xOffset = 18;
-            anchor = 'start';
-          } else if (node.id === 'crypto') {
-            xOffset = -18;
-            anchor = 'end';
-          } else {
-            xOffset = node.x < width/2 ? 16 : -16;
-            anchor = node.x < width/2 ? 'start' : 'end';
-          }
-        } else {
-          // Layer 1 nodes - adjusted to be not too close
-          xOffset = node.x < width/2 ? 22 : -22;
-          anchor = node.x < width/2 ? 'start' : 'end';
-        }
-        
-        text.setAttribute('x', node.x + xOffset);
-        text.setAttribute('y', node.y + yOffset);
-        text.setAttribute('font-size', '10');
-        text.setAttribute('fill', '#FFFFFF');
-        text.setAttribute('text-anchor', anchor);
-        text.classList.add('merkle-node-label');
-        text.textContent = node.id;
-        text.style.opacity = '0';
-        
-        svg.appendChild(text);
-        
-        // Animate label with a cascade effect
-        setTimeout(() => {
-          text.style.transition = 'opacity 0.5s ease';
-          text.style.opacity = '1';
-        }, 500 + index * 50);
-      });
-    }, 500);
-
-    // Add attribution for Ollama
-    const attribution = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    attribution.setAttribute('x', width - 10);
-    attribution.setAttribute('y', height - 10);
-    attribution.setAttribute('font-size', '8');
-    attribution.setAttribute('fill', '#FFFFFF');
-    attribution.setAttribute('text-anchor', 'end');
-    attribution.setAttribute('opacity', '0.7');
-    attribution.textContent = 'Based on github.com/ollama/ollama dependencies';
-    svg.appendChild(attribution);
+<style is:global>
+  /* Blue flashing dots */
+  .glow-dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #3b82f6; /* Tailwind blue-500 */
+    border-radius: 9999px;
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.9);
+    animation: dot-flash 2.5s ease-in-out infinite;
   }
-</script> 
+
+  @keyframes dot-flash {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.8);
+      opacity: 0.2;
+    }
+  }
+
+  /* Removed pulse and slowZoom keyframes */
+
+</style>
+
+<!-- Removed the script for WebGL initialization and banner padding adjustment -->
+<!-- If banner padding is still needed, it should be handled elsewhere or re-added carefully --> 

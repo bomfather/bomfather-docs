@@ -1,63 +1,90 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ContactUs from '../components/ContactUs.astro';
+import DarkSection from '../components/DarkSection.astro';
+import SectionHeader from '../components/SectionHeader.astro';
 ---
 
 <BaseLayout 
   title="Contact Us"
   description="Get in touch with the Bomfather team for questions, support, or to schedule a demo."
 >
-  <div class="pt-12 pb-8 bg-primary/5">
-    <div class="container">
-      <h1 class="text-4xl md:text-5xl font-bold font-heading">Contact Us</h1>
-      <p class="mt-4 text-lg text-mid-gray max-w-2xl">
-        We're here to help you secure your software supply chain and answer any questions you might have about Bomfather.
-      </p>
+  <DarkSection id="contact-hero" labelledBy="contact-header" extraClasses="pb-8 md:pb-12">
+    <SectionHeader
+      id="contact-header"
+      title="Contact Us"
+      subtitle=""
+    />
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-xl md:text-2xl font-medium text-white mt-4">
+        Trusted by <b>Google</b>. Proven on <b>LF Stages</b>. Built by <b>3× OSS Maintainers</b>.
+      </h2>
+
+      <div class="mt-6 text-center">
+        <p class="text-lg text-stone-300 max-w-3xl mx-auto">
+          Talk directly with our engineers.
+        </p>
+        <p class="text-lg text-stone-300 max-w-3xl mx-auto mt-1">
+          They build the open source tools that secure the modern software supply chain.
+        </p>
+      </div>
+
+      <div class="flex justify-center gap-6 mt-6 md:mt-8">
+        <!-- Google SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" class="text-white" aria-label="Google Peer Bonus">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M12 2a9.96 9.96 0 0 1 6.29 2.226a1 1 0 0 1 .04 1.52l-1.51 1.362a1 1 0 0 1 -1.265 .06a6 6 0 1 0 2.103 6.836l.001 -.004h-3.66a1 1 0 0 1 -.992 -.883l-.007 -.117v-2a1 1 0 0 1 1 -1h6.945a1 1 0 0 1 .994 .89c.04 .367 .061 .737 .061 1.11c0 5.523 -4.477 10 -10 10s-10 -4.477 -10 -10s4.477 -10 10 -10z" />
+        </svg>
+
+        <!-- Linux Foundation SVG -->
+        <svg fill="currentColor" width="40" height="40" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" class="text-white" aria-label="Linux Foundation Speaker">
+          <path d="M6.401 12.802v12.797h12.797v6.401h-19.198v-19.198zM32 0v32h-9.599v-6.401h3.198v-19.198h-19.198v3.198h-6.401v-9.599z"/>
+        </svg>
+
+        <!-- GitHub SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white" aria-label="700-Star OSS Project">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+        </svg>
+      </div>
+
+      <a href="#contact-form" class="mt-8 inline-block text-accent hover:underline">
+        Jump to Form ↓
+      </a>
     </div>
-  </div>
-  
-  <ContactUs />
-  
-  <!-- FAQ Section -->
-  <section class="py-16 bg-light-gray">
-    <div class="container">
-      <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-      
-      <div class="max-w-3xl mx-auto space-y-6">
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-          <h3 class="text-xl font-bold mb-2">What is Bomfather?</h3>
-          <p class="text-mid-gray">
-            Bomfather is an eBPF-based kernel-level monitoring framework for accurate identification of unknown, unused, and dynamically loaded dependencies in modern software supply chains.
-          </p>
-        </div>
-        
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-          <h3 class="text-xl font-bold mb-2">How does Bomfather differ from other dependency scanning tools?</h3>
-          <p class="text-mid-gray">
-            Unlike traditional tools that analyze package manifests, Bomfather monitors actual runtime behavior at the kernel level, providing a complete and accurate picture of all dependencies actually used during builds and execution.
-          </p>
-        </div>
-        
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-          <h3 class="text-xl font-bold mb-2">Is Bomfather open source?</h3>
-          <p class="text-mid-gray">
-            Yes, Bomfather is an open source project. You can find the source code on our GitHub repository and contribute to its development.
-          </p>
-        </div>
-        
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-          <h3 class="text-xl font-bold mb-2">How can I deploy Bomfather in my organization?</h3>
-          <p class="text-mid-gray">
-            Bomfather can be deployed in various environments, from development workstations to CI/CD pipelines. Check our documentation for detailed deployment guides or contact us for personalized assistance.
-          </p>
-        </div>
-        
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-          <h3 class="text-xl font-bold mb-2">Do you offer commercial support?</h3>
-          <p class="text-mid-gray">
-            Yes, we offer commercial support options for organizations that need dedicated assistance, customizations, or enterprise features. Contact us to discuss your specific needs.
-          </p>
-        </div>
+  </DarkSection>
+
+  <section class="py-10 bg-background">
+    <div class="container mx-auto">      
+      <div class="max-w-3xl mx-auto">
+        <form name="contact" method="POST" data-netlify="true" class="p-8 border border-white/20 rounded-lg" id="contact-form">
+          <h3 class="text-2xl font-bold mb-6 text-white">Send us a Message</h3>
+          
+          <div class="mb-4">
+            <label for="name" class="block text-white mb-2">Name</label>
+            <input type="text" id="name" name="name" class="w-full p-2 bg-gray-800 border border-white/20 rounded text-white" required>
+          </div>
+          
+          <div class="mb-4">
+            <label for="email" class="block text-white mb-2">Email</label>
+            <input type="email" id="email" name="email" class="w-full p-2 bg-gray-800 border border-white/20 rounded text-white" required>
+          </div>
+          
+          <div class="mb-4">
+            <label for="subject" class="block text-white mb-2">Subject</label>
+            <input type="text" id="subject" name="subject" class="w-full p-2 bg-gray-800 border border-white/20 rounded text-white" required>
+          </div>
+          
+          <div class="mb-6">
+            <label for="message" class="block text-white mb-2">Message</label>
+            <textarea id="message" name="message" rows="5" class="w-full p-2 bg-gray-800 border border-white/20 rounded text-white" required></textarea>
+          </div>
+          
+          <p class="text-sm text-gray-400 mb-6">This form uses Netlify Forms. Your message will be securely delivered to the site administrators.</p>
+          
+          <button type="submit" class="w-full bg-accent text-white hover:bg-accent/90 font-semibold py-3 px-4 rounded transition duration-200">
+            Send Message
+          </button>
+        </form>
       </div>
     </div>
   </section>
