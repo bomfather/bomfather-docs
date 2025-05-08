@@ -1,0 +1,470 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="GrayBox: The Ultimate Solution for Drone Security and After-Action Reporting"
+  description="GrayBox provides mission-critical data integrity and forensic analysis for drones with tamper-proof logs and integrated after-action reporting."
+>
+  <div class="bg-[#0a0d14] text-white">
+    <!-- Hero Section with background element -->
+    <div class="relative pt-16 pb-8 md:pb-12 overflow-visible">
+      <!-- Simple, reliable drone background -->
+      <div class="absolute inset-0" style="z-index: 0;">
+        <svg width="256px" height="256px" viewBox="0 0 100.00 100.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--gis absolute right-0 top-0 w-[42%] max-w-none opacity-75 text-accent pointer-events-none hidden md:block" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" stroke-width="1.5">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" stroke-width="1.4">
+            <path d="M19.53 28.49a3.852 3.852 0 0 0-3.533 2.343C6.706 31.364-.029 32.257 0 32.955c.027.693 6.712.997 15.928.724c.32.862.936 1.58 1.738 2.027H16.17v2.742h-1.83a.874.874 0 0 0-.875.874v1.954c0 .483.391.874.874.874h12.316c3.103.73 3.45 1.843 5.774 3.88c-.38 2.113-.94 4.42-1.378 6.414v16.973a2.092 2.092 0 1 0 4.185 0V61.21c-.048-6.9 1.066-9.69 4.905-15.031l.965-.448c0 4.146 2.866 4.395 6.908 5.32h-3.036c-.924 0-1.674.75-1.674 1.675v10c0 .924.75 1.674 1.674 1.674h10.044c.924 0 1.674-.75 1.674-1.674v-10c0-.925-.75-1.674-1.674-1.674h-3.033c4.041-.928 6.905-1.176 6.905-5.321l.965.448c4.857 5.026 4.905 8.447 4.905 15.03v8.207a2.092 2.092 0 0 0 4.185 0V52.444c-.513-2.191-1.062-4.487-1.58-6.762c2.199-2.155 3.101-2.64 5.956-3.532h12.336a.874.874 0 0 0 .874-.874v-1.954a.874.874 0 0 0-.874-.874H83.83v-2.742h-1.496a3.852 3.852 0 0 0 1.738-2.027c9.216.273 15.901-.031 15.928-.724c.029-.698-6.706-1.59-15.997-2.122a3.852 3.852 0 0 0-6.943-.302c-9.307-.283-16.103.018-16.142.716c-.029.693 6.615 1.58 15.827 2.112a3.852 3.852 0 0 0 1.839 2.347h-1.496v2.742C67.654 38.426 60.352 33.685 50 33.49c-10.003.212-18.38 4.958-27.088 4.958v-2.742h-1.496a3.852 3.852 0 0 0 1.839-2.347c9.212-.532 15.856-1.42 15.827-2.112c-.039-.698-6.835-1-16.142-.716a3.852 3.852 0 0 0-3.41-2.04zM50 53.503c2.347 0 4.276 1.929 4.276 4.276c0 2.347-1.929 4.277-4.276 4.277c-2.347 0-4.278-1.93-4.278-4.277c0-2.347 1.93-4.276 4.278-4.276zm0 2.51c-.99 0-1.767.776-1.767 1.766s.777 1.766 1.767 1.766c.99 0 1.765-.776 1.765-1.766S50.99 56.013 50 56.013z" fill="none"></path>
+          </g>
+          <g id="SVGRepo_iconCarrier">
+            <path d="M19.53 28.49a3.852 3.852 0 0 0-3.533 2.343C6.706 31.364-.029 32.257 0 32.955c.027.693 6.712.997 15.928.724c.32.862.936 1.58 1.738 2.027H16.17v2.742h-1.83a.874.874 0 0 0-.875.874v1.954c0 .483.391.874.874.874h12.316c3.103.73 3.45 1.843 5.774 3.88c-.38 2.113-.94 4.42-1.378 6.414v16.973a2.092 2.092 0 0 0 4.185 0V61.21c-.048-6.9 1.066-9.69 4.905-15.031l.965-.448c0 4.146 2.866 4.395 6.908 5.32h-3.036c-.924 0-1.674.75-1.674 1.675v10c0 .924.75 1.674 1.674 1.674h10.044c.924 0 1.674-.75 1.674-1.674v-10c0-.925-.75-1.674-1.674-1.674h-3.033c4.041-.928 6.905-1.176 6.905-5.321l.965.448c4.857 5.026 4.905 8.447 4.905 15.03v8.207a2.092 2.092 0 0 0 4.185 0V52.444c-.513-2.191-1.062-4.487-1.58-6.762c2.199-2.155 3.101-2.64 5.956-3.532h12.336a.874.874 0 0 0 .874-.874v-1.954a.874.874 0 0 0-.874-.874H83.83v-2.742h-1.496a3.852 3.852 0 0 0 1.738-2.027c9.216.273 15.901-.031 15.928-.724c.029-.698-6.706-1.59-15.997-2.122a3.852 3.852 0 0 0-6.943-.302c-9.307-.283-16.103.018-16.142.716c-.029.693 6.615 1.58 15.827 2.112a3.852 3.852 0 0 0 1.839 2.347h-1.496v2.742C67.654 38.426 60.352 33.685 50 33.49c-10.003.212-18.38 4.958-27.088 4.958v-2.742h-1.496a3.852 3.852 0 0 0 1.839-2.347c9.212-.532 15.856-1.42 15.827-2.112c-.039-.698-6.835-1-16.142-.716a3.852 3.852 0 0 0-3.41-2.04zM50 53.503c2.347 0 4.276 1.929 4.276 4.276c0 2.347-1.929 4.277-4.276 4.277c-2.347 0-4.278-1.93-4.278-4.277c0-2.347 1.93-4.276 4.278-4.276zm0 2.51c-.99 0-1.767.776-1.767 1.766s.777 1.766 1.767 1.766c.99 0 1.765-.776 1.765-1.766S50.99 56.013 50 56.013z" fill="none"></path>
+          </g>
+        </svg>
+      </div>
+      <div class="container mx-auto px-4 relative" style="z-index: 1;">
+        <h1 class="text-5xl sm:text-6xl font-heading font-bold mb-4 text-white max-w-3xl">GrayBox: The <span class="whitespace-nowrap">Tamper-Proof</span> "BlackBox" for Drones</h1>
+        <h2 class="text-2xl text-white/90 font-light max-w-[60ch]">
+          Aircraft have black boxes. Why are your drones flying blind?
+        </h2>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 max-w-5xl">
+      <!-- Why GrayBox Section -->
+      <section class="pt-8 pb-12 md:pt-12 md:pb-16">
+        <h2 class="text-3xl font-bold mb-8 text-white">Why GrayBox</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="flex flex-col">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cube-plus text-white mb-2 md:w-8 md:h-8 w-7 h-7" style="margin-bottom:0.5rem;"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M21 12.5v-4.509a1.98 1.98 0 0 0 -1 -1.717l-7 -4.008a2.016 2.016 0 0 0 -2 0l-7 4.007c-.619 .355 -1 1.01 -1 1.718v8.018c0 .709 .381 1.363 1 1.717l7 4.008a2.016 2.016 0 0 0 2 0" /><path d="M12 22v-10" /><path d="M12 12l8.73 -5.04" /><path d="M3.27 6.96l8.73 5.04" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
+            <h3 class="text-xl font-bold text-white mb-2">Tamper-Proof Log</h3>
+            <p class="text-white/90">Your drone's BlackBox.</p>
+            <p class="text-white/90">Cryptographically signed logs.</p>
+            <p class="text-white/90"><span class="tooltip">Hardware-sealed<span class="tooltiptext">TPM hardware encrypts logs with keys that never leave the chip, making data completely unreadable even if an adversary physically captures the drone</span></span>: drone lost, data untouchable.</p>
+          </div>
+          <div class="flex flex-col">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-shield-half text-white mb-2 md:w-8 md:h-8 w-7 h-7" style="margin-bottom:0.5rem;"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.998 2l.032 .002l.086 .005a1 1 0 0 1 .342 .104l.105 .062l.097 .076l.016 .015l.247 .21a11 11 0 0 0 7.189 2.537l.342 -.01a1 1 0 0 1 1.005 .717a13 13 0 0 1 -9.208 16.25a1 1 0 0 1 -.502 0a13 13 0 0 1 -9.209 -16.25a1 1 0 0 1 1.005 -.717a11 11 0 0 0 7.791 -2.75l.046 -.036l.053 -.041a1 1 0 0 1 .217 -.112l.075 -.023l.036 -.01a1 1 0 0 1 .12 -.022l.086 -.005zm.002 2.296l-.176 .135a13 13 0 0 1 -7.288 2.572l-.264 .006l-.064 .31a11 11 0 0 0 1.064 7.175l.17 .314a11 11 0 0 0 6.49 5.136l.068 .019z" /></svg>
+            <h3 class="text-xl font-bold text-white mb-2">Proactive Defense Shield</h3>
+            <p class="text-white/90">Detects threats instantly.</p>
+            <p class="text-white/90">Blocks rogue camera usage.</p>
+            <p class="text-white/90">Prevents unauthorized modifications to GPU and Files.</p>
+          </div>
+          <div class="flex flex-col">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-notebook text-white mb-2 md:w-8 md:h-8 w-7 h-7" style="margin-bottom:0.5rem;"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18" /><path d="M13 8l2 0" /><path d="M13 12l2 0" /></svg>
+            <h3 class="text-xl font-bold mb-3 text-white">Seamless Accountability</h3>
+            <p class="text-white/90">One-click <span class="tooltip">AAR<span class="tooltiptext">After-Action Report — a detailed post-flight analysis and summary of mission data</span></span> export.</p>
+            <p class="text-white/90">BlackBox-quality evidence.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="border-white/10">
+
+      <!-- We Capture Section -->
+      <section class="py-12 md:py-16">
+        <h2 class="text-3xl font-bold mb-8 text-white">Full-Stack <span class="tooltip">Kernel<span class="tooltiptext">The core part of an operating system that controls everything in the computer, like hardware and software communication</span></span> Defense - From Files to <span class="code-style">/dev/video<span class="slashed-zero">0</span></span></h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div class="bg-[#0f1319] p-6 rounded-lg border border-white/10 text-base">
+            <span class="text-lg font-bold text-white block mb-2">Files & Models</span>
+            <span class="text-white/80 block">Monitors <span class="tooltip">model weights<span class="tooltiptext">The learned parameters in AI models that determine how the model makes decisions</span></span> and binaries so adversaries can't swap weights in flight.</span>
+            <button class="text-sky-400 text-sm mt-2 flex items-center hover:text-sky-300 code-toggle" data-target="files-code">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="m15 18-6-6 6-6"></path></svg>
+              See permission inheritance
+            </button>
+            <div id="files-code" class="hidden mt-3 pt-3 border-t border-white/10 font-mono text-sm text-white/90 code-block">
+              <div class="p-3 bg-[#0a0d14] rounded">
+                <p class="mb-3 text-base">Our hierarchical permission system provides cascade protection:</p>
+                <ul class="list-disc pl-5 space-y-2">
+                  <li>Child processes <span class="text-amber-300 font-semibold">automatically inherit</span> parent security context</li>
+                  <li>New processes follow the same access restrictions as their parent</li>
+                  <li>Prevents <span class="text-rose-400 font-semibold">privilege escalation</span> through process forking</li>
+                  <li>Tracks entire process trees for complete audit capability</li>
+                </ul>
+                <p class="mt-3 text-sm text-white/70">This approach ensures adversaries can't bypass protection by spawning new processes with different security contexts.</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-[#0f1319] p-6 rounded-lg border border-white/10 text-base">
+            <span class="text-lg font-bold text-white block mb-2">GPU Access Control</span>
+            <span class="text-white/80 block">Records GPU access.</span>
+            <span class="text-white/80 block">Enforces policy-based usage controls.</span>
+            <button class="text-sky-400 text-sm mt-2 flex items-center hover:text-sky-300 code-toggle" data-target="gpu-code">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="m15 18-6-6 6-6"></path></svg>
+              See kernel-level protection
+            </button>
+            <div id="gpu-code" class="hidden mt-3 pt-3 border-t border-white/10 font-mono text-sm text-white/90 code-block">
+              <div class="p-3 bg-[#0a0d14] rounded">
+                <p class="mb-3 text-base">Our kernel-level protection operates at the Linux Security Module (LSM) layer:</p>
+                <ul class="list-disc pl-5 space-y-2">
+                  <li>Intercepts file access to GPU devices (<span class="text-amber-300 font-semibold">deviceID 195</span> for NVIDIA, <span class="text-amber-300 font-semibold">226</span> for AMD)</li>
+                  <li>Blocks unauthorized processes from accessing GPU drivers</li>
+                  <li>Returns <span class="text-rose-400 font-semibold">-EPERM</span> permission denied at the kernel level</li>
+                  <li>Logs all access attempts with process details</li>
+                </ul>
+                <p class="mt-3 text-sm text-white/70">This approach prevents adversaries from loading unauthorized ML models on GPU, ensuring trusted inference.</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-[#0f1319] p-6 rounded-lg border border-white/10 text-base">
+            <span class="text-lg font-bold text-white block mb-2">Camera Security</span>
+            <span class="text-white/80 block">Records who accessed cameras.</span>
+            <span class="text-white/80 block">Restricts <span class="tooltip code-style">/dev/video<span class="slashed-zero">0</span><span class="tooltiptext">The primary camera device in Linux systems - like the main video feed from your drone</span></span> to authorized <span class="tooltip">PIDs<span class="tooltiptext">Process IDs - unique identifiers assigned to each running program</span></span>.</span>
+            <button class="text-sky-400 text-sm mt-2 flex items-center hover:text-sky-300 code-toggle" data-target="camera-code">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="m15 18-6-6 6-6"></path></svg>
+              See executable whitelisting
+            </button>
+            <div id="camera-code" class="hidden mt-3 pt-3 border-t border-white/10 font-mono text-sm text-white/90 code-block">
+              <div class="p-3 bg-[#0a0d14] rounded">
+                <p class="mb-3 text-base">Camera device protection:</p>
+                <ul class="list-disc pl-4 space-y-1.5">
+                  <li>Access limited to <span class="text-amber-300 font-semibold">whitelisted executables</span></li>
+                  <li><span class="text-amber-300 font-semibold">Kernel-level</span> enforcement (not userspace)</li>
+                  <li><span class="text-rose-400 font-semibold">Microsecond</span> blocking speed</li>
+                  <li>Complete video feed isolation from malware</li>
+                </ul>
+                <p class="mt-2 text-sm text-white/70">Prevents any unauthorized frame capture attempts.</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-[#0f1319] p-6 rounded-lg border border-white/10 text-base">
+            <span class="text-lg font-bold text-white block mb-2">Network Enforcement</span>
+            <span class="text-white/80 block">Tracks all connection endpoints.</span>
+            <span class="text-white/80 block">Restricts connection based on policies.</span>
+            <button class="text-sky-400 text-sm mt-2 flex items-center hover:text-sky-300 code-toggle" data-target="network-code">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="m15 18-6-6 6-6"></path></svg>
+              See connection control
+            </button>
+            <div id="network-code" class="hidden mt-3 pt-3 border-t border-white/10 font-mono text-sm text-white/90 code-block">
+              <div class="p-2 bg-[#0a0d14] rounded">
+                <ul class="list-disc pl-4 space-y-1">
+                  <li><span class="text-amber-300 font-semibold">eBPF</span> intercepts all connection attempts</li>
+                  <li>Enforces <span class="text-amber-300 font-semibold">IP/port</span> access control lists</li>
+                  <li>Prevents <span class="text-rose-400 font-semibold">C2</span> communication channels</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="bg-[#0f1319] p-6 rounded-lg border border-white/10 text-base">
+            <span class="text-lg font-bold text-white block mb-2">Storage Protection</span>
+            <span class="text-white/80 block">Controls device access.</span>
+            <span class="text-white/80 block">Logs every device <span class="tooltip">mount/unmount<span class="tooltiptext">Mounting means making a storage device (like a USB drive) accessible to the system; unmounting means safely disconnecting it.</span></span> like USB.</span>
+            <button class="text-sky-400 text-sm mt-2 flex items-center hover:text-sky-300 code-toggle" data-target="storage-code">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="m15 18-6-6 6-6"></path></svg>
+              See USB protection
+            </button>
+            <div id="storage-code" class="hidden mt-3 pt-3 border-t border-white/10 font-mono text-sm text-white/90 code-block">
+              <div class="p-2 bg-[#0a0d14] rounded">
+                <ul class="list-disc pl-4 space-y-1">
+                  <li><span class="text-amber-300 font-semibold">Blocks</span> unauthorized USB devices</li>
+                  <li><span class="text-amber-300 font-semibold">Kernel-level</span> USB bus monitoring</li>
+                  <li>Prevents data <span class="text-rose-400 font-semibold">exfiltration</span> attempts</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="bg-[#0f1319] p-6 rounded-lg border border-white/10 text-base">
+            <span class="text-lg font-bold text-white block mb-2">Tamper Detection</span>
+            <span class="text-white/80 block">Flags and Records deviations instantly.</span>
+            <span class="text-white/80 block">Terminates malicious <span class="tooltip">syscalls<span class="tooltiptext">System calls - ways for programs to request services from the operating system</span></span>.</span>
+            <button class="text-sky-400 text-sm mt-2 flex items-center hover:text-sky-300 code-toggle" data-target="tamper-code">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="m15 18-6-6 6-6"></path></svg>
+              See cryptographic verification
+            </button>
+            <div id="tamper-code" class="hidden mt-3 pt-3 border-t border-white/10 font-mono text-sm text-white/90 code-block">
+              <div class="p-2 bg-[#0a0d14] rounded">
+                <ul class="list-disc pl-4 space-y-1">
+                  <li><span class="text-amber-300 font-semibold">TPM</span> hardware secures measurements</li>
+                  <li><span class="text-amber-300 font-semibold">Merkle Tree</span> chains all events</li>
+                  <li>Modifications break <span class="text-rose-400 font-semibold">crypto integrity</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="border-white/10">
+
+      <!-- Merkle-Tree Section -->
+      <section class="py-12 md:py-16">
+        <div class="md:grid md:grid-cols-5 gap-8 items-center">
+          <div class="md:col-span-3">
+            <h2 class="text-3xl font-bold mb-6 text-white">Merkle-Tree Ledger</h2>
+            <p class="text-lg text-white/90 mb-6 max-w-prose">
+            Our system employs a "Merkle tree" architecture that creates a cryptographic seal for each flight record. This advanced structure mathematically connects all entries, making tampering impossible to hide. If anyone alters even one character, the Merkle tree immediately identifies what changed. It's like an intelligent security network constantly verifying data integrity across your entire flight history.
+            </p>
+          </div>
+          <div class="md:col-span-2 bg-[#0f1319] rounded-lg px-6 py-4 my-6 md:my-0 font-mono text-sm text-white/80 overflow-auto">
+            <pre class="whitespace-pre leading-relaxed">
+<code>
+<span class="text-sky-400">$ graybox replay flight-20240615 --verify --source=onboard</span>
+<span class="text-lime-300">✓ 1 283 events parsed (ledger height #1283)</span>
+<span class="text-lime-300">✓ TPM attestation OK  (PCR[7]=86a4…e09b)</span>
+<span class="text-lime-300">✓ Merkle root d6c1…b9af matches flight-signature.sig</span>
+
+12:03:04 | <span class="text-emerald-400">CAM.0</span>  | /dev/video0 opened by main (PID 321)
+12:03:08 | <span class="text-amber-300">FILE</span>   | /models/detect.pb   sha256 5f12…4c31
+12:04:35 | <span class="text-indigo-300">GPU.0</span>  | inference job #26   latency 14 ms
+12:05:28 | <span class="text-purple-400">SENSOR</span> | imu-driver:read()   832 bytes
+<span class="text-rose-400 font-semibold">12:06:51 | !!! TAMPER ALERT !!!</span>
+         | FILE   | /models/detect.pb   <span class="text-rose-400 font-semibold">hash mismatch</span>
+         | expected 5f12…4c31, got a97c…b11e
+12:06:51 | <span class="text-pink-300">LSM</span>    | block open()  /models/detect.pb
+12:06:52 | <span class="text-cyan-300">AUTON</span>  | emergency-land initiated
+</code>
+</pre>
+          </div>
+        </div>
+      </section>
+
+      <hr class="border-white/10">
+
+      <!-- Key Features Section -->
+      <section class="py-12 md:py-16">
+        <h2 class="text-3xl font-bold mb-8 text-white">Key Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-[#0f1319] p-6 rounded-lg border border-white/10">
+            <h3 class="text-xl font-bold mb-3 text-white">Instant AARs</h3>
+            <p class="text-white/90 mb-2">Zero-click auto-sync.</p>
+            <p class="text-white/90 text-sm">Auto-transmits secure flight logs the moment wheels touch down.</p>
+          </div>
+          
+          <div class="bg-[#0f1319] p-6 rounded-lg border border-white/10">
+            <h3 class="text-xl font-bold mb-3 text-white">Air-Gap Proof</h3>
+            <p class="text-white/90 mb-2">Encrypted on-board, <span class="tooltip">TPM<span class="tooltiptext">Trusted Platform Module - a secure cryptographic processor that provides hardware-based security functions</span></span>-sealed</p>
+            <p class="text-white/90 text-sm">Operates 100% offline—even in GPS-denied zones.</p>
+          </div>
+          
+          <div class="bg-[#0f1319] p-6 rounded-lg border border-white/10">
+            <h3 class="text-xl font-bold mb-3 text-white">Deep-Dive Forensics</h3>
+            <p class="text-white/90 mb-2">Who did what, when and for how long.</p>
+            <p class="text-white/90 text-sm">Precise audit trails for incident investigation and compliance.</p>
+          </div>
+          
+          <div class="bg-[#0f1319] p-6 rounded-lg border border-white/10">
+            <h3 class="text-xl font-bold mb-3 text-white">Cryptographic Integrity</h3>
+            <p class="text-white/90 mb-2">Evidence-grade authenticity</p>
+            <p class="text-white/90 text-sm">Indisputable proof of data integrity</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="border-white/10">
+
+      <!-- Deployment Section -->
+      <section class="py-12 md:py-16">
+        <h2 class="text-3xl font-bold mb-6 text-white">Deployment</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-[#0f1319] p-5 rounded-lg border border-white/10 text-center">
+            <span class="text-xl font-bold text-white block mb-1">Defense</span>
+            <span class="text-white/80">Military & tactical flights</span>
+          </div>
+          <div class="bg-[#0f1319] p-5 rounded-lg border border-white/10 text-center">
+            <span class="text-xl font-bold text-white block mb-1">Commercial</span>
+            <span class="text-white/80">Inspections & surveillance</span>
+          </div>
+          <div class="bg-[#0f1319] p-5 rounded-lg border border-white/10 text-center">
+            <span class="text-xl font-bold text-white block mb-1">Edge AI</span>
+            <span class="text-white/80">Research & development</span>
+          </div>
+        </div>
+        
+        <p class="text-center text-lg text-white/90 mx-auto max-w-2xl">
+          Drones keep evolving. Your evidence should too.
+        </p>
+      </section>
+
+      <hr class="border-white/10">
+
+      <!-- Final CTA Section -->
+      <div class="text-center py-12 md:py-16">
+        <h2 class="text-3xl font-bold mb-4 text-white">GrayBox – Your Mission, Verified.</h2>
+        <p class="text-xl font-semibold mb-4 text-white">Tamper-Proof. Offline. Cryptographically Verified.</p>
+        <a href="/contact" class="inline-block bg-accent text-white font-semibold px-8 py-4 rounded-md hover:bg-accent/80 transition-colors mt-4">
+          Request a Demo
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  /* Additional styles if needed */
+  /* Utility to hide scrollbars */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+  @media (min-width: 768px) {
+    .max-w-prose {
+      max-width: 65ch;
+    }
+  }
+  
+  /* Card animation styles */
+  .card-animate {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.2s ease;
+  }
+  
+  .card-animate.in-view {
+    transform: translateY(-15px);
+    box-shadow: 0 10px 25px -5px rgba(0, 150, 255, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Hover effect for all cards */
+  .bg-\[\#0f1319\]:hover {
+    background-color: #171e27;
+    box-shadow: 0 0 15px rgba(0, 120, 255, 0.1);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  /* Code block animations */
+  .code-block {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease-out;
+  }
+  
+  .code-block-visible {
+    max-height: 200px;
+    transition: all 0.5s ease-in;
+  }
+
+  .code-toggle svg {
+    transition: transform 0.3s ease;
+  }
+
+  /* Tooltip styles */
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.5);
+    cursor: help;
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 240px;
+    background-color: rgba(15, 23, 42, 0.95);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 0.85rem;
+    position: absolute;
+    z-index: 10;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(15, 23, 42, 0.95) transparent transparent transparent;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  /* Slashed zero style */
+  .slashed-zero {
+    position: relative;
+    font-family: monospace;
+  }
+  
+  .slashed-zero::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: rotate(45deg);
+  }
+  
+  /* Code style */
+  .code-style {
+    font-family: monospace;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 2px 5px;
+    border-radius: 4px;
+    color: #77d8ff;
+    font-size: 0.9em;
+  }
+</style>
+
+<script>
+  // Animation for cards on scroll
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.bg-\\[\\#0f1319\\]');
+    
+    // Add animation class to all cards
+    cards.forEach(card => {
+      card.classList.add('card-animate');
+    });
+    
+    // Set up intersection observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Add class when card is in view
+          entry.target.classList.add('in-view');
+        } else {
+          // Optional: remove class when card is out of view
+          // entry.target.classList.remove('in-view');
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.2 // Trigger when 20% of card is visible
+    });
+    
+    // Observe all cards
+    cards.forEach(card => {
+      observer.observe(card);
+    });
+    
+    // Code toggle functionality
+    const codeToggles = document.querySelectorAll('.code-toggle');
+    codeToggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const targetId = toggle.getAttribute('data-target');
+        const codeBlock = document.getElementById(targetId);
+        
+        if (codeBlock.classList.contains('hidden')) {
+          // Show code block with animation
+          codeBlock.classList.remove('hidden');
+          codeBlock.classList.add('code-block-visible');
+          
+          // Change arrow direction
+          const arrow = toggle.querySelector('svg');
+          arrow.style.transform = 'rotate(-90deg)';
+        } else {
+          // Hide code block
+          codeBlock.classList.add('hidden');
+          codeBlock.classList.remove('code-block-visible');
+          
+          // Reset arrow direction
+          const arrow = toggle.querySelector('svg');
+          arrow.style.transform = 'rotate(0deg)';
+        }
+      });
+    });
+  });
+</script>

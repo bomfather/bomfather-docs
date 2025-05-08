@@ -9,29 +9,38 @@
   --color-dark-blue: #0A2463;
   
   /* Neutral colors */
-  --color-dark: #121212;
+  --color-dark: #0A0A0A;
   --color-mid-gray: #505050;
   --color-light-gray: #F3F4F6;
   --color-white: #FFFFFF;
+
+  /* New palette colors */
+  --color-background: #0d1117;
+  --color-surface: #0A0A0A;
+  --color-accent: #14F195;
   
   /* Accent colors */
   --color-green: #45C4B0;
   --color-orange: #FF6B35;
   --color-red: #E63946;
+
+  /* Default fonts */
+  --font-sans: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  color: var(--color-dark);
+  font-family: var(--font-sans);
+  color: var(--color-mid-gray);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 700;
 }
 
 code, pre {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 /* Custom component classes */
@@ -41,17 +50,25 @@ code, pre {
   }
   
   .btn-primary {
-    @apply bg-primary text-white hover:bg-secondary;
+    @apply bg-primary text-white hover:bg-accent;
   }
   
   .btn-secondary {
-    @apply bg-white text-primary border border-primary hover:bg-light-gray;
+    @apply bg-transparent border border-primary text-primary hover:bg-primary/10;
   }
   
   .container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
   }
-} 
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
 
 /* Override any ConvertKit styles */
 .formkit-alert svg,
@@ -67,4 +84,103 @@ code, pre {
 .formkit-alert.formkit-alert-success,
 .formkit-success {
   display: none !important;
+}
+
+/* Global styles */
+
+/* Add smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+/* Code blocks */
+code, pre {
+  font-family: var(--font-mono);
+}
+
+/* Utilities */
+.font-heading {
+  font-family: var(--font-sans);
+}
+
+/* Dark Mode Theme */
+:root {
+  --color-bg: #0A0A0A;
+  --color-surface: #0A0A0A;
+  --color-primary: #006FEE;
+  --color-accent: #9353D3;
+  --color-text: #FFFFFF;
+  --color-text-muted: #CCCCCC;
+}
+
+/* Tailwind Utilities */
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-accent;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent border border-primary text-primary hover:bg-primary/10;
+  }
+}
+
+/* Animated background for code blocks */
+pre {
+  position: relative;
+  background-color: #0A0A0A;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+pre code {
+  display: block;
+  position: relative;
+  z-index: 2;
+}
+
+pre::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(120deg, rgba(9, 9, 9, 0.8) 0%, rgba(18, 18, 18, 0.8) 50%, rgba(9, 9, 9, 0.8) 100%);
+}
+
+/* Global transitions */
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Header styles */
+.header-nav {
+  /* transition: background-color 0.3s ease, border 0.3s ease, backdrop-filter 0.3s ease, top 0.3s ease; */
+  /* Removed transition related to floating behavior */
+}
+
+/* Hero pulse animation */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes sway {
+  0%   { transform: rotate(-1deg); }
+  50%  { transform: rotate(1deg); }
+  100% { transform: rotate(-1deg); }
+}
+
+.hero-drone {
+  animation: sway 18s ease-in-out infinite;
 } 

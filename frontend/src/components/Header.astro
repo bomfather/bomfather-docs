@@ -2,44 +2,131 @@
 // Header component for site navigation
 ---
 
-<header class="sticky top-0 z-50 bg-white shadow-sm">
-  <div class="container py-4 flex justify-between items-center">
-    <a href="/" class="flex items-center">
-      <img src="/images/logos/bitbom-long-logo.png" alt="Bomfather Logo" class="h-12" />
-    </a>
-    <nav class="hidden md:flex space-x-6">
-      <a href="/about" class="hover:text-primary">About</a>
-    </nav>
-    <div class="md:hidden">
-      <!-- Mobile menu button -->
-      <button id="mobile-menu-button" class="text-dark">Menu</button>
-      
-      <!-- Mobile menu (hidden by default) -->
-      <div id="mobile-menu" class="fixed inset-0 bg-dark-blue bg-opacity-95 z-50 flex flex-col justify-center items-center hidden">
-        <button id="mobile-menu-close" class="absolute top-4 right-4 text-white text-2xl">&times;</button>
-        <nav class="flex flex-col space-y-6 text-center">
-          <a href="/about" class="text-white text-xl hover:text-primary">About</a>
-        </nav>
+<header class="header-nav bg-transparent z-50">
+  <div class="container mx-auto flex justify-between items-center py-4 md:py-2 text-white">
+    <div class="flex justify-between items-center w-full">
+      <a href="/" class="flex items-center">
+        <img src="/images/logos/Bitbom-long-white-logo.png" alt="Bomfather Logo" class="h-20 md:h-16" />
+      </a>
+      <nav class="hidden md:flex items-center space-x-8 text-base font-medium">
+        <a href="/about" class="opacity-80 hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">About</a>
+
+        <!-- Products dropdown -->
+        <div class="relative group" id="products-dropdown">
+          <button id="products-button" class="opacity-80 hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent flex items-center cursor-pointer">
+            Products
+            <!-- Downward caret icon -->
+            <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+          <!-- Gap for hover transition -->
+          <div class="absolute w-full h-4 top-full"></div>
+          <!-- Dropdown panel -->
+          <div id="products-menu" class="absolute left-0 top-[calc(100%+16px)] w-48 bg-[#0a0d14] border border-white/10 rounded-md shadow-lg z-50 hidden">
+            <a href="/graybox" class="block px-4 py-3 text-sm text-white hover:bg-white/10">GrayBox</a>
+          </div>
+        </div>
+
+        <a href="/contact" class="inline-block px-6 py-3 md:px-8 md:py-4 bg-transparent border border-accent text-accent rounded-md hover:bg-accent hover:text-surface transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">Contact Us</a>
+      </nav>
+      <div class="md:hidden">
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-button" class="text-white">Menu</button>
+        
+        <!-- Mobile menu (hidden by default) -->
+        <div id="mobile-menu" class="fixed inset-0 bg-surface/95 z-50 flex flex-col justify-center items-center hidden">
+          <button id="mobile-menu-close" class="absolute top-4 right-4 text-white text-2xl">&times;</button>
+          <nav class="flex flex-col space-y-6 text-center">
+            <a href="/about" class="text-white text-xl hover:text-primary">About</a>
+            <a href="/graybox" class="text-white text-xl hover:text-primary">GrayBox</a>
+            <a href="/contact" class="text-white text-xl hover:text-accent">Contact Us</a>
+          </nav>
+        </div>
       </div>
     </div>
   </div>
 </header>
 
 <script>
-  // Mobile menu functionality
+  // Mobile menu functionality only
   document.addEventListener('DOMContentLoaded', () => {
+    // // Header scroll integration - REMOVED
+    // const header = document.querySelector('.header-nav');
+    // const banner = document.getElementById('announcement-banner');
+    // 
+    // function onScroll() {
+    //   if (window.scrollY > 50) {
+    //     header.classList.add('bg-background');
+    //     header.classList.add('fixed');
+    //     header.classList.remove('absolute');
+    //     
+    //     // If banner is visible, keep header below it
+    //     if (banner && banner.classList.contains('show')) {
+    //       header.style.top = banner.offsetHeight + 'px';
+    //     }
+    //   } else {
+    //     header.classList.remove('bg-background');
+    //     header.classList.remove('fixed');
+    //     header.classList.add('absolute');
+    //     
+    //     // If banner is visible, keep header below it when at top
+    //     if (banner && banner.classList.contains('show')) {
+    //       header.style.top = banner.offsetHeight + 'px';
+    //     } else {
+    //       header.style.top = '0';
+    //     }
+    //   }
+    // }
+    // 
+    // window.addEventListener('scroll', onScroll);
+    // onScroll();
+
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileMenuClose = document.getElementById('mobile-menu-close');
     
     mobileMenuButton?.addEventListener('click', () => {
       mobileMenu?.classList.remove('hidden');
-      document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+      document.body.style.overflow = 'hidden';
     });
     
     mobileMenuClose?.addEventListener('click', () => {
       mobileMenu?.classList.add('hidden');
-      document.body.style.overflow = 'auto'; // Re-enable scrolling
+      document.body.style.overflow = 'auto';
+    });
+
+    // Products dropdown functionality
+    const productsButton = document.getElementById('products-button');
+    const productsMenu = document.getElementById('products-menu');
+    const productsDropdown = document.getElementById('products-dropdown');
+    
+    // Toggle menu on button click
+    productsButton?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      productsMenu?.classList.toggle('hidden');
+    });
+    
+    // Keep menu open on menu click
+    productsMenu?.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', () => {
+      productsMenu?.classList.add('hidden');
+    });
+    
+    // Also support hover functionality
+    productsDropdown?.addEventListener('mouseenter', () => {
+      productsMenu?.classList.remove('hidden');
+    });
+    
+    productsDropdown?.addEventListener('mouseleave', () => {
+      // Only hide if not actively clicking within the dropdown
+      if (!productsMenu?.contains(document.activeElement)) {
+        productsMenu?.classList.add('hidden');
+      }
     });
   });
 </script> 

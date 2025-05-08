@@ -2,14 +2,13 @@
 // AnnouncementBanner.astro - A dismissible announcement banner with local storage persistence
 ---
 
-<div id="announcement-banner" class="announcement-banner bg-primary text-white py-3 px-4 relative hidden">
+<div id="announcement-banner" class="announcement-banner bg-primary text-white py-3 px-4 fixed top-0 left-0 w-full z-[60] hidden">
   <div class="container mx-auto flex items-center justify-between">
     <div class="flex items-center">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-      </svg>
-      <p class="font-medium text-sm md:text-base">
-        <span class="font-bold">Exciting News!</span> Bomfather will be open-sourced soon!
+      <span class="text-lg mr-2">🎉</span>
+      <span class="text-lg mr-2">👉</span>
+      <p class="font-medium text-sm md:text-base flex items-center">
+        <span class="font-bold">Exciting news!</span>&nbsp;Bomfather will be open-sourced soon!
       </p>
     </div>
     <button id="close-banner" class="ml-4 text-white hover:text-gray-200 focus:outline-none" aria-label="Close banner">
@@ -39,8 +38,18 @@
   document.addEventListener('DOMContentLoaded', () => {
     const banner = document.getElementById('announcement-banner');
     const closeButton = document.getElementById('close-banner');
+    const header = document.querySelector('.header-nav');
     
     if (!banner || !closeButton) return;
+    
+    // Function to update banner height CSS variable
+    function updateBannerHeightVar() {
+      if (banner.classList.contains('show')) {
+        document.documentElement.style.setProperty('--banner-height', `${banner.offsetHeight}px`);
+      } else {
+        document.documentElement.style.setProperty('--banner-height', '0px');
+      }
+    }
     
     // Check if this version of the banner has been dismissed
     const storedBanner = localStorage.getItem(BANNER_KEY);
@@ -52,6 +61,12 @@
       // Animate banner in
       setTimeout(() => {
         banner.classList.add('show');
+        updateBannerHeightVar();
+        
+        // Adjust the header position when banner is showing
+        if (header) {
+          header.style.top = banner.offsetHeight + 'px';
+        }
       }, 100);
     }
     
@@ -62,11 +77,20 @@
       
       // Animate banner out
       banner.classList.remove('show');
+      updateBannerHeightVar();
+      
+      // Reset header position when banner is hidden
+      if (header) {
+        header.style.top = '0';
+      }
       
       // Hide banner after animation completes
       setTimeout(() => {
         banner.classList.add('hidden');
       }, 300);
     });
+    
+    // Handle window resize for responsive adjustments
+    window.addEventListener('resize', updateBannerHeightVar);
   });
 </script> 

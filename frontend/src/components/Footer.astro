@@ -1,28 +1,24 @@
 ---
-// Footer component for site footer
+ // Footer component for site footer
 ---
 
-<footer class="bg-dark-blue text-white py-12">
-  <div class="container">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div>
-        <div class="mb-4">
-          <img src="/images/logos/Bitbom-long-white-logo.png" alt="Bomfather Logo" class="h-12" />
-        </div>
-        <p class="text-sm opacity-80">
-          An eBPF-based kernel-level monitoring framework for software supply chains.
-        </p>
+<footer class="bg-background text-white py-6">
+  <!-- Full-width divider line -->
+  <div class="w-full border-t border-white/20 mb-6"></div>
+  
+  <div class="max-w-6xl mx-auto px-4">
+    <!-- Quote and copyright -->
+    <div class="flex flex-col md:flex-row justify-between items-start mb-4">
+      <!-- Quote section with blue vertical line -->
+      <blockquote class="border-l-4 border-[#006FEE] pl-4">
+        <p class="italic text-lg">"I am going to give him security he can't refuse"</p>
+        <p class="font-semibold mt-2">—The Bomfather</p>
+      </blockquote>
+      
+      <!-- Copyright -->
+      <div class="text-sm opacity-70 mt-8 md:mt-0">
+        <p>© 2025 Bomfather. All rights reserved.</p>
       </div>
-      <div>
-        <h4 class="font-bold mb-4">Community</h4>
-        <ul class="space-y-2">
-          <!-- <li><a href="https://github.com/bitbomdev/bomfather" class="opacity-80 hover:opacity-100">GitHub</a></li> -->
-          <li><a href="/about" class="opacity-80 hover:opacity-100">About</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="border-t border-white/20 mt-8 pt-8 text-center text-sm opacity-70">
-      <p>© {new Date().getFullYear()} Bomfather. All rights reserved.</p>
     </div>
   </div>
 </footer> 

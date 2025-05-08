@@ -1,0 +1,22 @@
+---
+/**
+ * Props:
+ *  - id?: string
+ *  - class?: string
+ *  - labelledBy?: string (id of internal SectionHeader for a11y)
+ */
+export interface Props {
+  id?: string;
+  class?: string;
+  labelledBy?: string;
+}
+const { id = '', class: extra = '', labelledBy = '' } = Astro.props;
+---
+<section
+  class={`py-24 bg-background text-white ${extra}`}
+  {id && {id}}
+  {labelledBy && {'aria-labelledby': labelledBy}}>
+  <div class="container space-y-12">
+    <slot />
+  </div>
+</section>

@@ -2,20 +2,20 @@
 // Features.astro - Display the key features of Bomfather with horizontal scroll effect
 ---
 
-<section id="features-section" class="relative bg-light-gray py-12">
-  <div class="features-container">
-    <!-- Sticky container that stays in place during scroll -->
-    <div id="features-sticky-container" class="sticky top-0 left-0 w-full min-h-screen flex flex-col justify-center items-center">
-      <!-- Fixed header at the top -->
-      <div id="features-header" class="text-center mb-16 w-full max-w-4xl mx-auto px-4">
-        <h2 class="text-3xl md:text-4xl font-bold font-heading mb-6">Key Features</h2>
-        <p class="text-lg text-mid-gray max-w-3xl mx-auto">
-          Bomfather offers unique capabilities to secure your AI systems through kernel-level monitoring, Runtime-AIBOM creation, and active protection.
-        </p>
-      </div>
-      
+<section id="features-section" class="relative bg-background py-24 text-white">
+  <div class="features-container container">
+    <!-- Section Header - Now outside the sticky container -->
+    <div id="features-header" class="text-center mb-20 w-full max-w-4xl mx-auto px-4 text-white">
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mb-6">Key Features</h2>
+      <p class="text-lg text-gray max-w-3xl mx-auto">
+        Bomfather offers unique capabilities to secure your AI systems through kernel-level monitoring, Runtime-AIBOM creation, and active protection.
+      </p>
+    </div>
+    
+    <!-- Sticky container - Adjust positioning and height -->
+    <div id="features-sticky-container" class="sticky top-24 left-0 w-full flex flex-col justify-center items-center pt-16 pb-16">
       <!-- Single feature display container - features will be moved in and out of this area -->
-      <div id="feature-display-container" class="w-full max-w-3xl mx-auto px-4 relative h-64 md:h-48 overflow-hidden mt-15">
+      <div id="feature-display-container" class="w-full max-w-3xl mx-auto px-4 relative h-64 md:h-48 overflow-hidden">
         <!-- Feature wrapper to allow horizontal positioning -->
         <div id="feature-slider" class="absolute w-[600%] flex">
           <!-- Feature 1 -->
@@ -25,7 +25,7 @@
             </div>
             <div class="feature-content">
               <h3 class="text-2xl md:text-3xl font-bold mb-4">Kernel-Level Monitoring</h3>
-              <p class="text-lg text-mid-gray">
+              <p class="text-lg text-gray">
                 Continuous monitoring at the kernel level using eBPF, ensuring complete visibility of all AI system activities at runtime.
               </p>
             </div>
@@ -38,7 +38,7 @@
             </div>
             <div class="feature-content">
               <h3 class="text-2xl md:text-3xl font-bold mb-4">Runtime-AIBOM Creation</h3>
-              <p class="text-lg text-mid-gray">
+              <p class="text-lg text-gray">
                 Generates Runtime AI Bills of Materials with Merkle tree hashing for tamper-evident records while protecting sensitive data and model parameters.
               </p>
             </div>
@@ -51,7 +51,7 @@
             </div>
             <div class="feature-content">
               <h3 class="text-2xl md:text-3xl font-bold mb-4">Active Threat Prevention</h3>
-              <p class="text-lg text-mid-gray">
+              <p class="text-lg text-gray">
                 Block malicious accesses in real-time with a trust-based model where users define trusted files and all other accesses are automatically prevented.
               </p>
             </div>
@@ -64,7 +64,7 @@
             </div>
             <div class="feature-content">
               <h3 class="text-2xl md:text-3xl font-bold mb-4">GPU Monitoring</h3>
-              <p class="text-lg text-mid-gray">
+              <p class="text-lg text-gray">
                 Track CUDA activities, data transfers between CPU and GPU memory, execution patterns, and unusual resource allocation that could indicate tampering.
               </p>
             </div>
@@ -77,7 +77,7 @@
             </div>
             <div class="feature-content">
               <h3 class="text-2xl md:text-3xl font-bold mb-4">Minimal Overhead</h3>
-              <p class="text-lg text-mid-gray">
+              <p class="text-lg text-gray">
                 Optimized eBPF-based implementation with only 2-3% performance impact, ensuring AI workflows remain efficient while being secured.
               </p>
             </div>
@@ -90,15 +90,15 @@
             </div>
             <div class="feature-content">
               <h3 class="text-2xl md:text-3xl font-bold mb-4">No Workflow Changes</h3>
-              <p class="text-lg text-mid-gray">
-                Runtime-AIBOM operates at the kernel level, so existing AI workflows don't need to be modified to gain runtime security benefits.
+              <p class="text-lg text-gray">
+                Bomfather operates at the kernel level, so existing AI workflows don't need to be modified to gain runtime security benefits.
               </p>
             </div>
           </div>
         </div>
       </div>
       
-      <!-- Progress indicator - now inside the sticky container for better visibility -->
+      <!-- Progress indicator - remains inside the sticky container -->
       <div id="features-progress" class="w-full flex justify-center gap-3 mt-10">
         <div class="progress-dot h-3 w-3 rounded-full bg-primary cursor-pointer" data-index="0"></div>
         <div class="progress-dot h-3 w-3 rounded-full bg-primary/30 cursor-pointer" data-index="1"></div>
@@ -109,14 +109,14 @@
       </div>
     </div>
     
-    <!-- Segments with consistent heights -->
+    <!-- Segments to trigger scroll animations - Adjust height if needed -->
     <div id="features-segments">
-      <div class="feature-segment h-[40vh]" data-index="0"></div>
-      <div class="feature-segment h-[40vh]" data-index="1"></div>
-      <div class="feature-segment h-[40vh]" data-index="2"></div>
-      <div class="feature-segment h-[40vh]" data-index="3"></div>
-      <div class="feature-segment h-[40vh]" data-index="4"></div>
-      <div class="feature-segment h-[40vh]" data-index="5"></div>
+      <div class="feature-segment h-[35vh]" data-index="0"></div>
+      <div class="feature-segment h-[35vh]" data-index="1"></div>
+      <div class="feature-segment h-[35vh]" data-index="2"></div>
+      <div class="feature-segment h-[35vh]" data-index="3"></div>
+      <div class="feature-segment h-[35vh]" data-index="4"></div>
+      <div class="feature-segment h-[35vh]" data-index="5"></div>
     </div>
   </div>
 </section>
@@ -136,7 +136,7 @@
         ScrollTrigger = (await import('gsap/ScrollTrigger')).ScrollTrigger;
         gsap.registerPlugin(ScrollTrigger);
         
-        // Animate the header
+        // Animate the header (now scrolls normally)
         gsap.from("#features-header", {
           opacity: 0,
           y: -20,
@@ -148,7 +148,7 @@
           }
         });
         
-        // Get all progress dots
+        // Get elements needed for scroll animation
         const progressDots = document.querySelectorAll('.progress-dot');
         const featureSlider = document.querySelector('#feature-slider');
         const featureItems = document.querySelectorAll('.feature-item');
