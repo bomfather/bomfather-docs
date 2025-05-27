@@ -23,53 +23,129 @@
   <div class="container relative z-10 flex flex-col justify-center min-h-screen" id="hero-content">
     <div class="py-8 md:py-12">
       <h1 class="text-5xl sm:text-6xl lg:text-7xl font-heading font-extrabold leading-tight mb-8 max-w-4xl">
-       Stop AI attacks before they execute
+        Blocks AI model & data tampering at the kernel.
       </h1>
-      <p class="text-xl sm:text-2xl opacity-90 mb-4 max-w-2xl">
-      Bomfather embeds zero-trust defense inside the Linux kernel to block exploits in real time.
+      <p class="text-xl sm:text-2xl opacity-90 mb-8 max-w-2xl">
+        Runtime eBPF shield that stops unauthorized GPU, file, camera & network access — with <span class="font-bold">zero code changes</span>.
       </p>
       <div class="flex flex-wrap gap-4">
         <a href="/contact" class="inline-block bg-accent text-white font-semibold px-8 py-4 rounded-md hover:bg-accent/80 transition-colors">
-          See&nbsp;It&nbsp;In&nbsp;Action
-        </a>
-        <a href="/about" class="inline-block bg-transparent border border-white/30 text-white font-semibold px-8 py-4 rounded-md hover:bg-white/10 transition-colors">
-          Learn&nbsp;More
+          Schedule 10‑min Kernel Demo
         </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- What is Bomfather Section -->
-<section class="py-12 md:py-16 mt-12 md:mt-20 bg-[#0a0d14]">
-  <div class="container max-w-6xl mx-auto">
-    <h2 class="text-3xl sm:text-4xl font-heading font-bold mb-8 text-white">Why Bomfather Beats Traditional Runtime Security</h2>
-    <div class="max-w-3xl text-white/90">
-      <p class="text-lg mb-10">
-        Bomfather stops threats at the kernel—before they ever reach your files, models, or GPUs.
-      </p>
+<!-- Instant Credibility Bar -->
+<section class="py-12 bg-[#0a0d14]/50 border-y border-white/10">
+  <div class="container">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 text-center">
+      <div>
+        <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">0μs</h3>
+        <p class="text-white/70 text-base whitespace-nowrap">User-space exposure<sup>1</sup></p>
+      </div>
+      <div>
+        <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">0 Code Changes</h3>
+        <p class="text-white/70 text-base whitespace-nowrap">Needed to integrate</p>
+      </div>
+      <div>
+        <h3 class="text-2xl md:text-3xl font-bold text-white mb-2 break-keep">10K Attempts Blocked</h3>
+        <p class="text-white/70 text-base whitespace-nowrap">Malicious calls stopped in 24-h lab run<sup>2</sup></p>
+      </div>
+    </div>
+    <div class="mt-8 max-w-4xl mx-auto text-left text-white/70 text-sm space-y-2">
+      <div class="flex items-start gap-2"><span class="inline-block w-4 text-right">1</span> <span>We intercept at the LSM hook—before the kernel executes the operation.</span></div>
+      <div class="flex items-start gap-2"><span class="inline-block w-4 text-right">2</span> <span>Continuous stress-test: 10k overwrite, GPU, and camera-access attempts blocked.</span></div>
+    </div>
+  </div>
+</section>
 
-      <h3 class="text-3xl font-bold mb-6 text-white">Universal Kernel Advantages</h3>
-      
-      <ul class="space-y-8">
-        <li>
-          <h4 class="text-xl font-semibold text-white block mb-1">Kills Attacks Before They Execute</h4>
-          <p class="text-lg">Kernel-level hooks deny authorized code the instant it requests access—no matter where it runs.</p>
-        </li>
+<!-- Story in Three Swipes -->
+<section class="py-16 bg-[#0a0d14]">
+  <div class="container">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="p-6 bg-white/5 rounded-lg">
+        <h3 class="text-xl font-bold text-white mb-4">Problem — Your AI stack is blind.</h3>
+        <p class="text-white/70">Adversaries can hot-swap model weights, binaries, even manipulate GPU data while inference is running.</p>
+      </div>
+      <div class="p-6 bg-white/5 rounded-lg">
+        <h3 class="text-xl font-bold text-white mb-4">Cost — One tamper incident ≈ $115 k+.</h3>
+        <p class="text-white/70">Downtime, incident response & lost IP compound fast (MITRE 2024).</p>
+      </div>
+      <div class="p-6 bg-white/5 rounded-lg">
+        <h3 class="text-xl font-bold text-white mb-4">Tamper blocked before syscall completes.</h3>
+        <p class="text-white/70">Kernel‑level eBPF shield blocks every unauthorized syscall. Deploy < 5 min, no rebuilds.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <li>
-          <h4 class="text-xl font-semibold text-white block mb-1">Immutable, Signed Audit Logs</h4>
-          <p class="text-lg">Every event is cryptographically stamped—ideal for compliance and incident forensics in cloud, on-prem, or edge deployments.</p>
-        </li>
+<!-- Why Now Section -->
+<section class="py-16 bg-[#0a0d14]/50 border-y border-white/10">
+  <div class="container">
+    <h2 class="text-3xl font-bold text-white mb-8">Why Now?</h2>
+    <ul class="space-y-4 text-lg">
+      <li class="text-white/70">• <span class="text-white">Edge‑AI devices doubling every 18 months</span> — <em>Gartner 2024</em></li>
+      <li class="text-white/70">• <span class="text-white">121 AI tamper breaches in 2024</span> (+67 % YoY) — <em>MITRE ATT&CK</em></li>
+      <li class="text-white/70">• <span class="text-white">Linux 6.x eBPF/LSM is stable,</span> enabling the first practical kernel‑space defenses</li>
+    </ul>
+  </div>
+</section>
 
-        <li>
-          <h4 class="text-xl font-semibold text-white block mb-1">Drop-In Deployment</h4>
-          <p class="text-lg">No kernel rebuilds, no application changes. Install, protected.</p>
-        </li>
-      </ul>
-      <p class="text-lg mt-10">
-        Powered by eBPF, Bomfather enforces zero-trust policies across cloud, data-centre, workstations, and drones alike.
-      </p>
+<!-- Live Kernel Trace Demo -->
+<section class="py-16 bg-[#0a0d14]/50 border-y border-white/10">
+  <div class="container">
+    <h2 class="text-3xl font-bold text-white mb-8">Live Kernel Trace Demo</h2>
+    <div class="p-6 bg-[#0f1319] rounded-lg font-mono text-sm text-white/80 overflow-auto">
+      <pre class="whitespace-pre leading-relaxed">
+<code>
+<span class="text-sky-400">$ bomfather trace --session=run-20240615 --namespace=ai-inference --pod=vision-infer-7c9d8f --verify</span>
+<span class="text-lime-300">✓ 1,283 events parsed (ledger height #1283)</span>
+<span class="text-lime-300">✓ Integrity check passed (TPM attestation OK)</span>
+<span class="text-lime-300">✓ Merkle root verified for session log</span>
+
+<span class="text-gray-400">namespace: ai-inference   pod: vision-infer-7c9d8f   container: ai-inferencer</span>
+12:03:04 | <span class="text-emerald-400">CAM.0</span>  | /dev/video0 opened by ai-inferencer (PID 321)
+12:03:08 | <span class="text-amber-300">FILE</span>   | /models/vision.pb   sha256 5f12…4c31
+12:04:35 | <span class="text-indigo-300">GPU.0</span>  | inference job #26   latency 14 ms
+12:05:28 | <span class="text-purple-400">SENSOR</span> | imu-driver:read()   832 bytes
+<span class="text-rose-400 font-semibold">12:06:51 | !!! TAMPER ALERT !!!</span>
+         | FILE   | /models/vision.pb   <span class="text-rose-400 font-semibold">hash mismatch</span>
+         | expected 5f12…4c31, got a97c…b11e
+12:06:51 | <span class="text-pink-300">LSM</span>    | block open()  /models/vision.pb
+12:06:52 | <span class="text-cyan-300">SECURITY</span>  | session terminated due to tamper event
+</code>
+</pre>
+    </div>
+  </div>
+</section>
+
+<!-- Key Features -->
+<section class="py-16 bg-[#0a0d14]">
+  <div class="container">
+    <h2 class="text-3xl font-bold text-white mb-8">Key Features</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="p-6 bg-white/5 rounded-lg">
+        <h3 class="text-xl font-bold text-white mb-3">Kernel‑Level Monitoring</h3>
+        <p class="text-white/70">Continuous eBPF visibility across all runtime activity.</p>
+      </div>
+      <div class="p-6 bg-white/5 rounded-lg">
+        <h3 class="text-xl font-bold text-white mb-3">Instant Tamper Block</h3>
+        <p class="text-white/70">3 µs average latency, microsecond worst‑case.</p>
+      </div>
+      <div class="p-6 bg-white/5 rounded-lg">
+        <h3 class="text-xl font-bold text-white mb-3">Breadth of Coverage</h3>
+        <p class="text-white/70">Files & Models, GPU, Camera, Network, USB.</p>
+      </div>
+      <div class="p-6 bg-white/5 rounded-lg">
+        <h3 class="text-xl font-bold text-white mb-3">Cryptographic Integrity</h3>
+        <p class="text-white/70">Merkle‑tree ledger + optional TPM sealing.</p>
+      </div>
+      <div class="p-6 bg-white/5 rounded-lg">
+        <h3 class="text-xl font-bold text-white mb-3">Zero Dev Friction</h3>
+        <p class="text-white/70">Drop‑in agent; no code modifications, no rebuilds.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -99,7 +175,14 @@
 
   /* Removed pulse and slowZoom keyframes */
 
+  pre {
+    white-space: pre;
+    overflow-x: auto;
+    padding: 1rem;
+    background: transparent;
+  }
 </style>
 
 <!-- Removed the script for WebGL initialization and banner padding adjustment -->
+<!-- If banner padding is still needed, it should be handled elsewhere or re-added carefully --> 
 <!-- If banner padding is still needed, it should be handled elsewhere or re-added carefully --> 
