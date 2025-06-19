@@ -2,5 +2,15 @@ import { defineCollection, z } from 'astro:content';
 
 // Define collections schema
 export const collections = {
-  // No collections defined after cleanup
+  blog: defineCollection({
+    type: 'content',
+    schema: z.object({
+      title: z.string(),
+      description: z.string(),
+      publishedAt: z.date(),
+      author: z.string(),
+      featuredImage: z.string().optional(),
+      draft: z.boolean().default(false),
+    }),
+  }),
 }; 

@@ -9,14 +9,14 @@
   --color-dark-blue: #0A2463;
   
   /* Neutral colors */
-  --color-dark: #0A0A0A;
+  --color-dark: #0a0d15;
   --color-mid-gray: #505050;
   --color-light-gray: #F3F4F6;
   --color-white: #FFFFFF;
 
   /* New palette colors */
-  --color-background: #0d1117;
-  --color-surface: #0A0A0A;
+  --color-background: #0a0d15;
+  --color-surface: #0a0d15;
   --color-accent: #14F195;
   
   /* Accent colors */
@@ -109,8 +109,8 @@ code, pre {
 
 /* Dark Mode Theme */
 :root {
-  --color-bg: #0A0A0A;
-  --color-surface: #0A0A0A;
+  --color-bg: #0a0d15;
+  --color-surface: #0a0d15;
   --color-primary: #006FEE;
   --color-accent: #9353D3;
   --color-text: #FFFFFF;
@@ -131,7 +131,7 @@ code, pre {
 /* Animated background for code blocks */
 pre {
   position: relative;
-  background-color: #0A0A0A;
+  background-color: #0a0d15;
   border-radius: 0.5rem;
   overflow: hidden;
 }

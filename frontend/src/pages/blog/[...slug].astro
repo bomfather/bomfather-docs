@@ -1,0 +1,611 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageSection from '../../components/ui/PageSection.astro';
+import { getCollection } from 'astro:content';
+
+// Generate static paths for all blog posts
+export async function getStaticPaths() {
+  const blogPosts = await getCollection('blog', ({ data }) => {
+    return !data.draft;
+  });
+
+  return blogPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Format date for display
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+};
+---
+
+<BaseLayout 
+  title={post.data.title}
+  description={post.data.description}
+>
+  <!-- Blog Post Header -->
+  <PageSection 
+    id="blog-post-header"
+    variant="dark"
+    size="md"
+    className="blog-post-header-section"
+  >
+    <div class="blog-post-header animate-on-scroll">
+      <h1 class="blog-post-title">{post.data.title}</h1>
+      <p class="blog-post-description">{post.data.description}</p>
+      
+      <div class="blog-post-breadcrumb">
+        <a href="/blog" class="breadcrumb-link">← Back to Blog</a>
+      </div>
+      
+      <div class="blog-post-meta">
+        <time class="blog-post-date">{formatDate(post.data.publishedAt)}</time>
+        <span class="blog-post-author">by {post.data.author}</span>
+      </div>
+    </div>
+  </PageSection>
+
+  <!-- Featured Image (if present) -->
+  {post.data.featuredImage && (
+    <PageSection 
+      id="blog-post-image"
+      variant="dark"
+      size="lg"
+      className="blog-post-image-section"
+    >
+      <div class="blog-post-image-container animate-on-scroll">
+        <img 
+          src={post.data.featuredImage} 
+          alt={post.data.title}
+          class="blog-post-featured-image"
+        />
+      </div>
+    </PageSection>
+  )}
+
+  <!-- Blog Post Content -->
+  <PageSection 
+    id="blog-post-content"
+    variant="dark"
+    size="lg"
+    className="blog-post-content-section"
+  >
+    <article class="blog-post-article animate-on-scroll">
+      <div class="prose prose-invert prose-lg">
+        <Content />
+      </div>
+    </article>
+  </PageSection>
+
+  <!-- Related Posts Call-to-Action -->
+  <PageSection 
+    id="blog-post-cta"
+    variant="dark"
+    size="md"
+    className="blog-post-cta-section"
+  >
+    <div class="blog-post-cta animate-on-scroll">
+      <div class="cta-content">
+        <div class="cta-text">
+          <h3 class="cta-title">Keep Reading</h3>
+          <p class="cta-description">Explore more insights on AI security, eBPF technology, and kernel-level protection.</p>
+        </div>
+        <div class="cta-actions">
+          <a href="/blog" class="cta-button secondary">View All Articles</a>
+        </div>
+      </div>
+    </div>
+  </PageSection>
+</BaseLayout>
+
+<style is:global>
+  .blog-post-header-section {
+    background: linear-gradient(135deg, #0a0d14 0%, #1a1d23 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 120px; /* Prevent overlap on mobile */
+  }
+
+  .blog-post-header {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .blog-post-breadcrumb {
+    margin-bottom: 24px;
+  }
+
+  .breadcrumb-link {
+    color: #60a5fa;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.15s ease;
+    text-decoration: none;
+  }
+
+  .breadcrumb-link:hover {
+    color: #93c5fd;
+  }
+
+  .blog-post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: #71717a;
+  }
+
+  .blog-post-date {
+    color: #a1a1aa;
+  }
+
+  .blog-post-author {
+    color: #71717a;
+  }
+
+  .blog-post-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.25;
+    background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @media (min-width: 768px) {
+    .blog-post-title {
+      font-size: 3rem;
+    }
+    .blog-post-header-section {
+      padding-top: 80px;
+    }
+  }
+
+  .blog-post-description {
+    font-size: 1.25rem;
+    color: #d1d5db;
+    line-height: 1.625;
+    margin-bottom: 2rem;
+    max-width: 600px;
+  }
+
+  .blog-post-image-section {
+    background: #0a0d14;
+    padding-top: 0;
+  }
+
+  .blog-post-image-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .blog-post-featured-image {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  .blog-post-content-section {
+    background: #0a0d14;
+  }
+
+  .blog-post-article {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  /* Prose styling for blog content */
+  .prose {
+    color: #e2e8f0;
+    line-height: 1.75;
+    font-size: 1rem;
+    max-width: none;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    color: #ffffff;
+    font-weight: 700;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+    line-height: 1.3;
+  }
+
+  .prose h1:first-child,
+  .prose h2:first-child,
+  .prose h3:first-child {
+    margin-top: 0;
+  }
+
+  .prose h1 {
+    font-size: 2.25rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose h2 {
+    font-size: 1.875rem;
+    line-height: 1.3;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .prose h3 {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .prose h4 {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .prose h5 {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .prose h6 {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+    color: #cbd5e1;
+  }
+
+  .prose p {
+    margin-bottom: 1.5em;
+    line-height: 1.75;
+  }
+
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  .prose strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .prose em {
+    font-style: italic;
+    color: #cbd5e1;
+  }
+
+  .prose a {
+    color: #60a5fa;
+    text-decoration: underline;
+    text-decoration-color: rgba(96, 165, 250, 0.3);
+    transition: all 0.2s ease;
+    font-weight: 500;
+  }
+
+  .prose a:hover {
+    color: #93c5fd;
+    text-decoration-color: rgba(147, 197, 253, 0.5);
+  }
+
+  .prose ul,
+  .prose ol {
+    margin: 1.5em 0;
+    padding-left: 1.75em;
+  }
+
+  .prose ul {
+    list-style-type: disc;
+  }
+
+  .prose ol {
+    list-style-type: decimal;
+  }
+
+  .prose li {
+    margin: 0.75em 0;
+    line-height: 1.6;
+  }
+
+  .prose li p {
+    margin: 0.5em 0;
+  }
+
+  .prose li:first-child {
+    margin-top: 0;
+  }
+
+  .prose li:last-child {
+    margin-bottom: 0;
+  }
+
+  .prose ul ul,
+  .prose ol ol,
+  .prose ul ol,
+  .prose ol ul {
+    margin: 0.75em 0;
+  }
+
+  .prose pre {
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5em;
+    overflow-x: auto;
+    margin: 2em 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .prose code {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    padding: 0.25em 0.5em;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875em;
+    color: #e2e8f0;
+    font-weight: 500;
+  }
+
+  .prose pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #e2e8f0;
+    border-radius: 0;
+  }
+
+  .prose blockquote {
+    border-left: 4px solid #60a5fa;
+    padding-left: 1.5em;
+    margin: 2em 0;
+    font-style: italic;
+    color: #cbd5e1;
+    background: rgba(96, 165, 250, 0.05);
+    padding: 1em 1.5em;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .prose blockquote p {
+    margin: 0;
+  }
+
+  .prose hr {
+    border: none;
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+    margin: 3em 0;
+  }
+
+  .prose table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 2em 0;
+    font-size: 0.875rem;
+  }
+
+  .prose th,
+  .prose td {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75em 1em;
+    text-align: left;
+  }
+
+  .prose th {
+    background: rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .prose img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 2em 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .prose figure {
+    margin: 2em 0;
+  }
+
+  .prose figcaption {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    text-align: center;
+    margin-top: 0.5em;
+    font-style: italic;
+  }
+
+  .blog-post-cta-section {
+    background: linear-gradient(135deg, #1a1d23 0%, #0a0d14 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .blog-post-cta {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .cta-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .cta-text {
+    flex: 1;
+    text-align: left;
+  }
+
+  .cta-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-description {
+    font-size: 1.125rem;
+    color: #d1d5db;
+    line-height: 1.625;
+    margin-bottom: 0;
+  }
+
+  .cta-actions {
+    flex-shrink: 0;
+  }
+
+  .cta-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    text-align: center;
+    min-width: 160px;
+  }
+
+  .cta-button.secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .cta-button.secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .blog-post-title {
+      font-size: 1.875rem;
+    }
+    
+    .blog-post-description {
+      font-size: 1.125rem;
+    }
+    
+    .prose {
+      font-size: 16px;
+    }
+    
+    .prose h1 {
+      font-size: 1.75rem;
+    }
+    
+    .prose h2 {
+      font-size: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .prose h3 {
+      font-size: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .prose h4 {
+      font-size: 1.125rem;
+      margin-top: 1.25rem;
+    }
+
+    .prose pre {
+      padding: 1rem;
+      font-size: 0.8rem;
+      border-radius: 8px;
+    }
+
+    .prose ul,
+    .prose ol {
+      padding-left: 1.25em;
+    }
+
+    .prose blockquote {
+      padding: 0.75em 1em;
+      margin: 1.5em 0;
+    }
+    
+    .cta-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .cta-text {
+      text-align: center;
+    }
+
+    .cta-actions {
+      align-self: center;
+    }
+  }
+
+  /* Animation */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUpFade 0.6s ease forwards;
+  }
+
+  @keyframes slideUpFade {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  // Animate elements on scroll
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -10% 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-on-scroll');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animatable elements
+    document.querySelectorAll('.blog-post-header, .blog-post-image-container, .blog-post-article, .blog-post-cta').forEach(element => {
+      observer.observe(element);
+    });
+  });
+</script> 
