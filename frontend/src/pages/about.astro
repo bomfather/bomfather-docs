@@ -25,23 +25,41 @@ import SectionHeader from '../components/SectionHeader.astro';
             Creators of 
             <a href="https://github.com/bitbomdev/minefield" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
               Minefield
-            </a>, the 700-star SBOM graph trusted for one-click "am I affected?" checks — and the engineers behind <span class="font-medium text-[#e6eaff]">3× Google Peer Bonus awards</span>, leading open source security projects, and keynote talks at
-            Linux Foundation events.
+            </a>, a lightning-fast SBOM graphing tool that has become the go-to solution for vulnerability impact analysis in enterprise security stacks.
           </p>
         </div>
 
-        <h2 class="text-2xl md:text-3xl font-bold mb-6 mt-12">Our Story — Building Runtime Trust for AI 🇺🇸</h2>
+        <div class="text-lg mb-6">
+          <p>
+            We are top contributors and maintainers to critical open source security projects that power the modern software supply chain:
+          </p>
+          <ul class="list-disc list-inside mt-4 space-y-2 text-[#e6eaff]">
+            <li><span class="font-medium">OpenSSF Scorecard</span> — Security health metrics for open source projects</li>
+            <li><span class="font-medium">OpenSSF Criticality Score</span> — Risk assessment for critical dependencies</li>
+            <li><span class="font-medium">GUAC</span> — Graph for Understanding Artifact Composition</li>
+            <li><span class="font-medium">gittuf</span> — Secure software distribution</li>
+            <li><span class="font-medium">Sigstore</span> — Software signing and verification infrastructure</li>
+          </ul>
+        </div>
+
+        <div class="text-lg mb-6">
+          <p>
+            Our expertise is trusted by the industry. We've presented at major security conferences including <span class="font-medium text-[#e6eaff]">Linux Foundation conferences</span>, <span class="font-medium text-[#e6eaff]">RSA</span>, and <span class="font-medium text-[#e6eaff]">DEF CON</span>.
+          </p>
+        </div>
+
+        <div class="text-lg mb-6">
+          <p>
+            Our contributions to open source security have been recognized with <span class="font-medium text-[#e6eaff]">3× Google Peer Bonus awards</span> — a testament to the impact of our work on the broader security ecosystem.
+          </p>
+        </div>
+
+        <h2 class="text-2xl md:text-3xl font-bold mb-6 mt-12">Our Story — Building Runtime Trust for AI</h2>
         <p class="text-lg mb-6">
-          A critical red-team exercise revealed what others missed: attackers could silently swap model weights post-deployment without detection. While traditional security stops at code review, we discovered the real threats emerge during runtime.
+          A critical red-team exercise of ours revealed what others missed, attackers could silently swap model weights post-deployment without detection. While traditional security stops at code review, we discovered the real threats emerge during runtime.
         </p>
         <p class="text-lg mb-6">
           Bomfather was born from this revelation. Our proprietary technology leverages eBPF within the Linux kernel to create a Merkle tree security architecture that monitors, protects, and comprehensively logs every file access, GPU call, and system interaction in real-time. This cryptographic chain not only detects unauthorized changes—to models, data, or libraries—but actively protects against them while maintaining immutable records of all system activities.
-        </p>
-        <p class="text-lg mb-6">
-          Currently in private beta with elite defense and autonomous-systems teams, Bomfather delivers tamper-proof runtime verification with minimal overhead (under 3%) and zero code modifications. Our partners rely on us when security compromises aren't acceptable and complete operational logging is essential.
-        </p>
-        <p class="text-lg">
-          Our mission: ensure every AI system operates with verifiable security throughout its entire lifecycle—before deployment, during execution, and after completion—with protection and logging that creates indisputable evidence of system integrity.
         </p>
       </div>
     </div>
