@@ -1,7 +1,7 @@
 ---
 title: "GPUs are insecure, and your AI data is waiting to be stolen"
 description: "AI has dramatically increased data value, but GPU security hasn't kept pace. Learn about the critical vulnerabilities in AI workloads that put your most valuable assets at risk."
-publishedAt: 2024-01-15T00:00:00Z
+publishedAt: 2025-06-16T00:00:00Z
 author: "The Bomfather Team"
 # featuredImage: "/images/blog/gpu-security-risks.jpg"
 draft: false
