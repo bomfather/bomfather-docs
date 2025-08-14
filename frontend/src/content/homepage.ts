@@ -159,7 +159,7 @@ export const homepageContent: HomepageContent = {
         title: "Bomfather AI Protection",
         benefits: [
           "Blocks GPU theft at kernel level",
-          "Smart process inheritance",
+          "Unauthorized programs can't use IPCs to access the GPU",
           "SHA256 verification of all data",
           "Zero workflow changes needed"
         ],
@@ -219,25 +219,13 @@ export const homepageContent: HomepageContent = {
   },
 
   howItWorks: {
-    title: "The Magic: Process Intelligence at the Kernel",
-    subtitle: "Parent knows best. Default deny. Mathematical certainty.",
+    title: "Our Fundamentals",
+    subtitle: "",
     steps: [
       {
         step: 1,
-        title: "Parent-Aware Enforcement",
-        description: "Same augment.py file, different parent — legitimate training allowed, attacker blocked.",
-        code: `python train.py            ✓ (trusted)
-  └── dataloader.py       ✓ (inherits)
-       └── augment.py     ✓ (inherits)
-
-malicious.sh              ✗ (unknown)
-  └── augment.py         ✗ (blocked - wrong parent!)`,
-        language: "bash"
-      },
-      {
-        step: 2,
         title: "Default Deny, Not Default Pray",
-        description: "Block everything except what you explicitly allow using human-readable policy YAML.",
+        description: "Block everything except what you explicitly allow using a human readable YAML policy file.",
         code: `default: DENY_ALL
 allow:
   - process: "go"
@@ -246,14 +234,18 @@ allow:
         language: "yaml"
       },
       {
-        step: 3,
-        title: "Cryptographic Proof",
-        description: "Every file access → SHA256 → Merkle tree. Can't fake it. Can't bypass it.",
-        code: `file_hash: 4f2c…
-merkle_root: 9a7d…
-status: tamper-evident ✅`,
+        step: 2,
+        title: "Parent-Aware Enforcement",
+        description: "Trust individual files or entire folders, it's your choice. When you trust a directory, all files within it and its subdirectories automatically inherit that trust. This means you can specify single programs when needed, or trust whole folder structures to avoid listing every file individually.",
+        code: `python train.py            ✓ (trusted)
+  └── dataloader.py       ✓ (inherits)
+       └── augment.py     ✓ (inherits)
+
+malicious.sh              ✗ (unknown)
+  └── augment.py         ✗ (blocked - wrong parent!)`,
         language: "bash"
       }
+
     ]
   },
 
@@ -267,7 +259,7 @@ status: tamper-evident ✅`,
         icon: "shield",
         benefits: [
           "Blocks GPU theft at kernel level",
-          "Smart process inheritance",
+          "Unauthorized programs can't use IPCs to access the GPU",
           "SHA256 verification of all data",
           "Zero workflow changes"
         ]

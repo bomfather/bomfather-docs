@@ -8,35 +8,51 @@
   --color-secondary: #224BC5;
   --color-dark-blue: #0A2463;
   
-  /* Neutral colors */
-  --color-dark: #0a0d15;
-  --color-mid-gray: #505050;
-  --color-light-gray: #F3F4F6;
+  /* Light theme neutral colors */
+  --color-background: #f9f8f4;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #f9f8f4;
+  --color-surface-tertiary: #FFFFFF;
+  
+  /* Text colors for light theme */
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #64748B;
+  --color-text-muted: #94A3B8;
+  
+  /* Border colors */
+  --color-border-light: #E2E8F0;
+  --color-border-medium: #CBD5E1;
+  --color-border-strong: #94A3B8;
+  
+  /* Legacy colors for compatibility */
+  --color-dark: #0F172A;
+  --color-mid-gray: #475569;
+  --color-light-gray: #F1F5F9;
   --color-white: #FFFFFF;
-
-  /* New palette colors */
-  --color-background: #0a0d15;
-  --color-surface: #0a0d15;
-  --color-accent: #14F195;
+  --color-accent: #0B5FFF;
   
   /* Accent colors */
-  --color-green: #45C4B0;
-  --color-orange: #FF6B35;
-  --color-red: #E63946;
+  --color-green: #059669;
+  --color-orange: #EA580C;
+  --color-red: #DC2626;
 
-  /* Default fonts */
-  --font-sans: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  /* Professional fonts: Fira Code for body, Inter for headings */
+  --font-sans: 'Fira Code', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Fira Code', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
 }
 
 body {
   font-family: var(--font-sans);
-  color: var(--color-mid-gray);
+  background-color: var(--color-background);
+  color: var(--color-text-secondary);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-sans);
+  font-family: var(--font-heading);
   font-weight: 700;
+  color: var(--color-text-primary);
 }
 
 code, pre {
@@ -107,17 +123,14 @@ code, pre {
   font-family: var(--font-sans);
 }
 
-/* Dark Mode Theme */
+/* Light Theme Variables */
 :root {
-  --color-bg: #0a0d15;
-  --color-surface: #0a0d15;
-  --color-primary: #006FEE;
-  --color-accent: #9353D3;
-  --color-text: #FFFFFF;
-  --color-text-muted: #CCCCCC;
+  --color-bg: var(--color-background);
+  --color-text: var(--color-text-primary);
+  --color-text-muted: var(--color-text-muted);
 }
 
-/* Tailwind Utilities */
+/* Professional Components */
 @layer components {
   .btn-primary {
     @apply bg-primary text-white hover:bg-accent;
@@ -126,12 +139,207 @@ code, pre {
   .btn-secondary {
     @apply bg-transparent border border-primary text-primary hover:bg-primary/10;
   }
+  
+  /* Professional Table Styling */
+  .data-table {
+    width: 100%;
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .data-table-header {
+    background-color: #f9f8f4;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .data-table-row {
+    border-bottom: 2px solid #e5e7eb;
+    transition: background-color 0.2s ease;
+  }
+  
+  .data-table-row:hover {
+    background-color: #f9f8f4;
+  }
+  
+  .data-table-row:last-child {
+    border-bottom: 2px solid #e5e7eb;
+  }
+  
+  .data-table-cell {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: #111827;
+    font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+    line-height: 1.5;
+  }
+  
+  .data-table-header-cell {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Color coding for comparison columns */
+  .data-table-cell.traditional-approach {
+    background-color: #fef2f2;
+    border-left: 4px solid #dc2626;
+    color: #7f1d1d;
+    font-weight: 500;
+  }
+
+  .data-table-cell.bomfather-solution {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a;
+    color: #14532d;
+    font-weight: 500;
+  }
+
+  .data-table-cell.aspect-cell {
+    background-color: #f8f9fa;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  /* Color coding for column headers */
+  .data-table-header-cell.traditional-header {
+    background-color: #fef2f2;
+    color: #7f1d1d;
+    border-left: 4px solid #dc2626;
+    font-weight: 600;
+  }
+
+  .data-table-header-cell.bomfather-header {
+    background-color: #f0fdf4;
+    color: #14532d;
+    border-left: 4px solid #16a34a;
+    font-weight: 600;
+  }
+
+  .data-table-header-cell.aspect-header {
+    background-color: #f8f9fa;
+    color: #374151;
+    font-weight: 600;
+  }
+  
+  /* Professional Card Styling */
+  .professional-card {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+  
+  .professional-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #F3F4F6;
+  }
+  
+  .professional-card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+  }
+  
+  .professional-card-subtitle {
+    font-size: 0.875rem;
+    color: #6B7280;
+    margin-top: 0.25rem;
+  }
+  
+  /* Status Badges */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  
+  .status-badge-success {
+    background-color: #D1FAE5;
+    color: #065F46;
+  }
+  
+  .status-badge-warning {
+    background-color: #FEF3C7;
+    color: #92400E;
+  }
+  
+  .status-badge-error {
+    background-color: #FEE2E2;
+    color: #991B1B;
+  }
+  
+  .status-badge-info {
+    background-color: #DBEAFE;
+    color: #1E40AF;
+  }
+  
+  /* Professional Form Controls */
+  .form-input {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    font-size: 0.875rem;
+    background-color: white;
+  }
+  
+  .form-input::placeholder {
+    color: #9CA3AF;
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  .form-select {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #D1D5DB;
+    background-color: white;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    font-size: 0.875rem;
+  }
+  
+  .form-select:focus {
+    outline: none;
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  .form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
 }
 
-/* Animated background for code blocks */
+/* Light theme code blocks */
 pre {
   position: relative;
-  background-color: #0a0d15;
+  background-color: var(--color-surface-tertiary);
+  border: 1px solid var(--color-border-light);
   border-radius: 0.5rem;
   overflow: hidden;
 }
@@ -140,6 +348,7 @@ pre code {
   display: block;
   position: relative;
   z-index: 2;
+  color: var(--color-text-primary);
 }
 
 pre::before {
@@ -149,7 +358,7 @@ pre::before {
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(120deg, rgba(9, 9, 9, 0.8) 0%, rgba(18, 18, 18, 0.8) 50%, rgba(9, 9, 9, 0.8) 100%);
+  background: linear-gradient(120deg, rgba(248, 250, 252, 0.8) 0%, rgba(241, 245, 249, 0.8) 50%, rgba(248, 250, 252, 0.8) 100%);
 }
 
 /* Global transitions */

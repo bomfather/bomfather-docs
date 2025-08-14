@@ -20,18 +20,17 @@ const { title, description, showHeader = true, showAnnouncement = true, showNews
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark">
+    <meta name="color-scheme" content="light">
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title} | Bomfather</title>
     
     <!-- Preload fonts -->
-    <!-- Google Fonts: DM Sans (headings & body) + JetBrains Mono for code -->
+    <!-- Professional fonts: Inter for headings, Fira Code for body text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <!-- ConvertKit Form Script -->
     <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
@@ -46,7 +45,7 @@ const { title, description, showHeader = true, showAnnouncement = true, showNews
       gtag('config', 'G-DK3MD3RFN4');
     </script>
   </head>
-  <body class="bg-background text-mid-gray">
+  <body class="bg-background text-text-secondary">
     {showAnnouncement ? <AnnouncementBanner /> : null}
     {showHeader ? <Header /> : null}
     
@@ -59,7 +58,7 @@ const { title, description, showHeader = true, showAnnouncement = true, showNews
       <div class="newsletter-container">
         <div class="newsletter-content">
           <div class="newsletter-header">
-            <h2 class="newsletter-title">The Bomfather Brief</h2>
+            <h2 class="newsletter-title">REMOVED</h2>
             <p class="newsletter-subtitle">From TPM-sealed flight recorders to zero-trust builds: deep dives on eBPF, AI & supply-chain security.</p>
           </div>
           
@@ -217,7 +216,8 @@ const { title, description, showHeader = true, showAnnouncement = true, showNews
     {showNewsletter && (
       <style>
       .newsletter-section {
-        background: #0a0d15;
+        background: var(--color-surface-secondary);
+        border-top: 1px solid var(--color-border-light);
         padding: 4rem 0;
         position: relative;
       }
@@ -253,16 +253,13 @@ const { title, description, showHeader = true, showAnnouncement = true, showNews
         font-size: clamp(2rem, 4vw, 3rem);
         font-weight: 700;
         margin-bottom: 1rem;
-        background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: var(--color-text-primary);
         line-height: 1.2;
       }
       
       .newsletter-subtitle {
         font-size: clamp(1rem, 2vw, 1.25rem);
-        color: #a1a1aa;
+        color: var(--color-text-secondary);
         line-height: 1.6;
         max-width: 600px;
         margin: 0 auto;
@@ -295,24 +292,23 @@ const { title, description, showHeader = true, showAnnouncement = true, showNews
       .email-input {
         width: 100%;
         padding: 1rem 1.25rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        background: rgba(255, 255, 255, 0.05);
-        color: #ffffff;
+        border: 1px solid var(--color-border-medium);
+        background: var(--color-background);
+        color: var(--color-text-primary);
         border-radius: 0.75rem;
         font-size: 1rem;
         transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
       }
       
       .email-input::placeholder {
-        color: #71717a;
+        color: var(--color-text-muted);
       }
       
       .email-input:focus {
         outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.1);
+        background: var(--color-background);
       }
       
       .subscribe-button {
@@ -322,7 +318,7 @@ const { title, description, showHeader = true, showAnnouncement = true, showNews
         gap: 0.5rem;
         width: 100%;
         padding: 1rem 1.25rem;
-        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        background: var(--color-primary);
         color: white;
         border: none;
         border-radius: 0.75rem;
@@ -330,12 +326,12 @@ const { title, description, showHeader = true, showAnnouncement = true, showNews
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+        box-shadow: 0 4px 14px rgba(11, 95, 255, 0.3);
       }
       
       .subscribe-button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        box-shadow: 0 6px 20px rgba(11, 95, 255, 0.4);
       }
       
       .subscribe-button:active {

@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DataTable from '../components/ui/DataTable.astro';
+import StatusBadge from '../components/ui/StatusBadge.astro';
+
+// Example data matching the format in your screenshots
+const columns = [
+  { key: 'timestamp', label: 'Timestamp', width: '200px' },
+  { key: 'operation', label: 'Operation', width: '150px' },
+  { key: 'path', label: 'Path', width: '300px' },
+  { key: 'process', label: 'Process', width: '120px' },
+  { key: 'container', label: 'Container', width: '150px' },
+  { key: 'node', label: 'Node', width: '120px' },
+];
+
+const sampleData = [
+  {
+    timestamp: '7/30/2025 1:37:10 PM',
+    operation: 'Type: 0',
+    path: '/home/ubuntu/bomfather-private/agent/example/prot...',
+    process: 'PID: 77962',
+    container: 'Not Implemented',
+    node: 'test-ebpf'
+  },
+  {
+    timestamp: '7/30/2025 1:37:10 PM',
+    operation: 'Type: 0',
+    path: '/home/ubuntu/bomfather-private/agent/example/prot...',
+    process: 'PID: 77959',
+    container: 'Not Implemented',
+    node: 'test-ebpf'
+  },
+  {
+    timestamp: '7/30/2025 1:34:31 PM',
+    operation: 'Type: 0',
+    path: '/home/ubuntu/bomfather-private/agent/example/prot...',
+    process: 'PID: 74210',
+    container: 'Not Implemented',
+    node: 'test-ebpf'
+  }
+];
+---
+
+<BaseLayout 
+  title="Professional Table Demo"
+  description="Demonstration of professional table formatting matching your screenshots"
+  showNewsletter={false}
+>
+  <div style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
+    <h1 style="margin-bottom: 2rem; color: #111827; font-size: 2rem; font-weight: 600;">Security Violations</h1>
+    
+    <!-- Professional Data Table -->
+    <DataTable 
+      title="Security Violations"
+      subtitle="Monitor and investigate security policy violations"
+      columns={columns}
+      data={sampleData}
+      showPagination={true}
+    />
+    
+    <!-- Additional professional elements -->
+    <div style="margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+      <div class="professional-card">
+        <div class="professional-card-header">
+          <h3 class="professional-card-title">Total Violations</h3>
+          <StatusBadge status="warning" text="Active" size="sm" />
+        </div>
+        <div style="font-size: 2rem; font-weight: 700; color: #ef4444;">1,247</div>
+        <p class="professional-card-subtitle">In the last 24 hours</p>
+      </div>
+      
+      <div class="professional-card">
+        <div class="professional-card-header">
+          <h3 class="professional-card-title">Processes Monitored</h3>
+          <StatusBadge status="success" text="Healthy" size="sm" />
+        </div>
+        <div style="font-size: 2rem; font-weight: 700; color: #10b981;">8,432</div>
+        <p class="professional-card-subtitle">Currently active</p>
+      </div>
+      
+      <div class="professional-card">
+        <div class="professional-card-header">
+          <h3 class="professional-card-title">Containers</h3>
+          <StatusBadge status="info" text="Running" size="sm" />
+        </div>
+        <div style="font-size: 2rem; font-weight: 700; color: #3b82f6;">156</div>
+        <p class="professional-card-subtitle">Across 12 nodes</p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

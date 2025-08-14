@@ -93,8 +93,8 @@ const {
 <style>
 .hero-section {
   position: relative;
-  background: #0a0d15;
-  color: white;
+  background: var(--color-background);
+  color: var(--color-text-secondary);
   padding: 8rem 0 6rem;
   overflow: hidden;
   min-height: 100vh;
@@ -109,7 +109,7 @@ const {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #0a0d15;
+  background: var(--color-background);
   pointer-events: none;
 }
 
@@ -171,7 +171,7 @@ const {
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+  background: linear-gradient(135deg, #111827 0%, #9CA3AF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -180,7 +180,7 @@ const {
 .hero-subtitle {
   font-size: clamp(1.25rem, 2.5vw, 1.5rem);
   line-height: 1.6;
-  color: #a1a1aa;
+  color: var(--color-text-secondary);
   margin-bottom: 2.5rem;
   max-width: 700px;
 }
@@ -205,26 +205,25 @@ const {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  background: var(--color-primary);
   color: white;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 14px rgba(11, 95, 255, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 6px 20px rgba(11, 95, 255, 0.4);
 }
 
 .btn-secondary {
   background: transparent;
-  color: white;
-  border-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-medium);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: var(--color-surface-secondary);
+  border-color: var(--color-border-strong);
 }
 
 .hero-metrics {
@@ -240,13 +239,13 @@ const {
 .metric-value {
   font-size: 2rem;
   font-weight: 700;
-  color: #3b82f6;
+  color: var(--color-primary);
   margin-bottom: 0.5rem;
 }
 
 .metric-label {
   font-size: 0.875rem;
-  color: #71717a;
+  color: var(--color-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -264,17 +263,17 @@ const {
   align-items: center;
   gap: 0.75rem;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
   border-radius: 2rem;
   padding: 0.75rem 1.5rem;
-  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   white-space: nowrap;
   overflow-x: auto;
 }
 
 .toc-link {
-  color: #d1d5db;
+  color: var(--color-text-secondary);
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
@@ -288,13 +287,13 @@ const {
 }
 
 .toc-link:hover {
-  color: #60a5fa;
-  background: rgba(96, 165, 250, 0.1);
+  color: var(--color-primary);
+  background: rgba(11, 95, 255, 0.1);
   transform: translateY(-2px);
 }
 
 .toc-separator {
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--color-text-muted);
   font-weight: bold;
   user-select: none;
 }

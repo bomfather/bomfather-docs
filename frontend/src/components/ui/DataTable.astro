@@ -1,0 +1,518 @@
+---
+// Professional Data Table Component - matches screenshots format
+interface Column {
+  key: string;
+  label: string;
+  width?: string;
+  align?: 'left' | 'center' | 'right';
+}
+
+interface Props {
+  columns: Column[];
+  data: Record<string, any>[];
+  title?: string;
+  subtitle?: string;
+  className?: string;
+  showPagination?: boolean;
+  itemsPerPage?: number;
+  expandable?: boolean;
+  expandedContent?: (row: Record<string, any>) => string;
+  hasContentBelow?: boolean;
+}
+
+const {
+  columns,
+  data,
+  title,
+  subtitle,
+  className = '',
+  showPagination = false,
+  itemsPerPage = 10,
+  expandable = false,
+  expandedContent,
+  hasContentBelow = false
+} = Astro.props;
+---
+
+<div class={`professional-data-table ${className} ${hasContentBelow ? 'has-content-below' : ''}`}>
+  {(title || subtitle) && (
+    <div class="table-header">
+      {title && <h3 class="table-title">{title}</h3>}
+      {subtitle && <p class="table-subtitle">{subtitle}</p>}
+    </div>
+  )}
+  
+  <div class="table-container">
+    <table class="data-table">
+      <thead class="data-table-header">
+        <tr>
+          {expandable && (
+            <th class="data-table-header-cell" style="width: 40px;"></th>
+          )}
+                      {columns.map((column) => (
+              <th 
+                class={`data-table-header-cell text-${column.align || 'left'} ${
+                  column.key === 'traditional' ? 'traditional-header' : 
+                  column.key === 'bomfather' ? 'bomfather-header' : 
+                  column.key === 'aspect' ? 'aspect-header' : ''
+                }`}
+                style={column.width ? `width: ${column.width}` : undefined}
+              >
+                {column.label}
+              </th>
+            ))}
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((row, index) => (
+          <Fragment>
+            <tr class="data-table-row" data-expandable={expandable ? 'true' : 'false'}>
+              {expandable && (
+                <td class="data-table-cell expand-cell">
+                  <button class="expand-btn" data-row={index}>
+                    <svg class="expand-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M4.427 9.573L8 6l3.573 3.573a.5.5 0 0 0 .854-.353V4.5A.5.5 0 0 0 11.927 4H7.207a.5.5 0 0 0-.354.854L10.426 8.427 8 10.854 5.574 8.427 9.147 4.854A.5.5 0 0 0 8.793 4H4.073a.5.5 0 0 0-.5.5v4.72a.5.5 0 0 0 .854.353z"/>
+                    </svg>
+                  </button>
+                </td>
+              )}
+              {columns.map((column) => (
+                <td class={`data-table-cell text-${column.align || 'left'} ${
+                  column.key === 'traditional' ? 'traditional-approach' : 
+                  column.key === 'bomfather' ? 'bomfather-solution' : 
+                  column.key === 'aspect' ? 'aspect-cell' : ''
+                }`}>
+                  {row[column.key]}
+                </td>
+              ))}
+            </tr>
+            {expandable && (
+              <tr class="data-table-expanded-row" data-row={index} style="display: none;">
+                <td colspan={columns.length + 1} class="expanded-content">
+                  <div class="expanded-details">
+                    {/* Expanded content will be populated via JavaScript */}
+                    <div class="expanded-placeholder" data-row={index}></div>
+                  </div>
+                </td>
+              </tr>
+            )}
+          </Fragment>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  
+  {showPagination && (
+    <div class="table-pagination">
+      <span class="pagination-info">Page 1 of 10</span>
+      <div class="pagination-controls">
+        <button class="pagination-btn" disabled>Previous</button>
+        <button class="pagination-btn">Next</button>
+      </div>
+    </div>
+  )}
+</div>
+
+<style>
+.professional-data-table {
+  background: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #E2E8F0;
+}
+
+.professional-data-table.has-content-below {
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+}
+
+.table-header {
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.table-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 4px;
+  line-height: 1.4;
+}
+
+.table-subtitle {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table-header {
+  background-color: #f9f8f4;
+}
+
+.data-table-header-cell {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 12px 24px;
+  font-size: 14px; /* more prominent */
+  font-weight: 700; /* stronger emphasis */
+  color: #111827; /* darker heading */
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.data-table-row {
+  border-bottom: 2px solid #e5e7eb;
+  transition: background-color 0.15s ease;
+}
+
+.data-table-row:hover {
+  background-color: #f9f8f4;
+}
+
+.data-table-row:last-child {
+  border-bottom: none;
+}
+
+.data-table-cell {
+  padding: 16px 24px;
+  font-size: 14px;
+  color: #111827;
+  line-height: 1.4;
+  vertical-align: top;
+}
+
+/* Color coding for comparison columns */
+.data-table-cell.traditional-approach {
+  background-color: #fef2f2;
+  border-left: 4px solid #dc2626;
+  color: #7f1d1d;
+  font-weight: 500;
+}
+
+.data-table-cell.bomfather-solution {
+  background-color: #f0fdf4;
+  border-left: 4px solid #16a34a;
+  color: #14532d;
+  font-weight: 500;
+}
+
+.data-table-cell.aspect-cell {
+  background-color: #f8f9fa;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* Color coding for column headers */
+.data-table-header-cell.traditional-header {
+  background-color: #fef2f2;
+  color: #7f1d1d;
+  border-left: 4px solid #dc2626;
+  font-weight: 700;
+}
+
+.data-table-header-cell.bomfather-header {
+  background-color: #f0fdf4;
+  color: #14532d;
+  border-left: 4px solid #16a34a;
+  font-weight: 700;
+}
+
+.data-table-header-cell.aspect-header {
+  background-color: #f8f9fa;
+  color: #111827;
+  font-weight: 800; /* slightly stronger to anchor first column */
+}
+
+.table-pagination {
+  display: flex;
+  justify-content: between;
+  align-items: center;
+  padding: 16px 24px;
+  border-top: 1px solid #f3f4f6;
+  background-color: #fafafa;
+}
+
+.pagination-info {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.pagination-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .table-header {
+    padding: 16px;
+  }
+  
+  .data-table-header-cell,
+  .data-table-cell {
+    padding: 12px 16px;
+  }
+  
+  .table-pagination {
+    padding: 12px 16px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .pagination-controls {
+    justify-content: center;
+  }
+}
+
+/* Text alignment utilities */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* Expandable row styles */
+.expand-cell {
+  width: 40px;
+  padding: 12px 8px !important;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  color: #6b7280;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expand-btn:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.expand-icon {
+  transition: transform 0.15s ease;
+}
+
+.expand-btn.expanded .expand-icon {
+  transform: rotate(90deg);
+}
+
+.data-table-expanded-row {
+  background-color: #fafafa;
+}
+
+.expanded-content {
+  padding: 0 !important;
+}
+
+.expanded-details {
+  padding: 20px 24px;
+  border-top: 1px solid #e5e7eb;
+  background-color: #fafafa;
+}
+
+.expanded-section {
+  margin-bottom: 16px;
+}
+
+.expanded-section:last-child {
+  margin-bottom: 0;
+}
+
+.expanded-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.expanded-section-title .icon {
+  width: 16px;
+  height: 16px;
+  color: #6b7280;
+}
+
+.expanded-section-content {
+  font-size: 14px;
+  color: #111827;
+  line-height: 1.5;
+}
+
+.expanded-key-value {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.expanded-key-value:last-child {
+  border-bottom: none;
+}
+
+.expanded-key {
+  font-weight: 500;
+  color: #374151;
+  min-width: 120px;
+}
+
+.expanded-value {
+  color: #111827;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 13px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Handle expandable rows
+  const expandButtons = document.querySelectorAll('.expand-btn');
+  
+  expandButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const rowIndex = this.getAttribute('data-row');
+      const expandedRow = document.querySelector(`.data-table-expanded-row[data-row="${rowIndex}"]`);
+      const isExpanded = this.classList.contains('expanded');
+      
+      if (isExpanded) {
+        // Collapse
+        this.classList.remove('expanded');
+        expandedRow.style.display = 'none';
+      } else {
+        // Expand
+        this.classList.add('expanded');
+        expandedRow.style.display = 'table-row';
+        
+        // Generate expanded content if not already done
+        const placeholder = expandedRow.querySelector(`.expanded-placeholder[data-row="${rowIndex}"]`);
+        if (placeholder && !placeholder.hasAttribute('data-populated')) {
+          generateExpandedContent(placeholder, rowIndex);
+          placeholder.setAttribute('data-populated', 'true');
+        }
+      }
+    });
+  });
+});
+
+function generateExpandedContent(placeholder, rowIndex) {
+  // This would be populated with actual data in a real application
+  // For demo purposes, we'll create a sample expanded view
+  const content = `
+    <div class="expanded-section">
+      <div class="expanded-section-title">
+        <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        Violation Details
+      </div>
+      <div class="expanded-section-content">
+        <div class="expanded-key-value">
+          <span class="expanded-key">ID:</span>
+          <span class="expanded-value">197</span>
+        </div>
+        <div class="expanded-key-value">
+          <span class="expanded-key">Timestamp:</span>
+          <span class="expanded-value">7/30/2025, 1:37:10 PM</span>
+        </div>
+        <div class="expanded-key-value">
+          <span class="expanded-key">Path:</span>
+          <span class="expanded-value">/home/ubuntu/bomfather-private/agent/example/protected/protected1</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="expanded-section">
+      <div class="expanded-section-title">
+        <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+        </svg>
+        Process Information
+      </div>
+      <div class="expanded-section-content">
+        <div class="expanded-key-value">
+          <span class="expanded-key">PID:</span>
+          <span class="expanded-value">77962</span>
+        </div>
+        <div class="expanded-key-value">
+          <span class="expanded-key">Start:</span>
+          <span class="expanded-value">7/30/2025, 1:37:10 PM</span>
+        </div>
+        <div class="expanded-key-value">
+          <span class="expanded-key">End:</span>
+          <span class="expanded-value">12/31/1, 6:09:24 PM</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="expanded-section">
+      <div class="expanded-section-title">
+        <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+        </svg>
+        Container Information
+      </div>
+      <div class="expanded-section-content">
+        <div class="expanded-key-value">
+          <span class="expanded-key">Status:</span>
+          <span class="expanded-value">Not Implemented</span>
+        </div>
+        <div class="expanded-key-value">
+          <span class="expanded-key">ID:</span>
+          <span class="expanded-value">1</span>
+        </div>
+        <div class="expanded-key-value">
+          <span class="expanded-key">CGroup:</span>
+          <span class="expanded-value">0</span>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  placeholder.innerHTML = content;
+}
+</script>
