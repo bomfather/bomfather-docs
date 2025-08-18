@@ -128,7 +128,7 @@ export interface CommunityContent {
 export const homepageContent: HomepageContent = {
   hero: {
     title: "Effortlessly Protect Your GPUs",
-    subtitle: "Today's GPUs Weren't Built for Security. Bomfather Enforces Zero-Trust at the Kernel to Stop Data Theft.",
+    subtitle: "Today's GPUs Weren't Built for Security. Bomfather Stops Data Theft From The Kernel.",
     primaryCTA: { text: "Protect Your AI", href: "/protect-ai" },
     secondaryCTA: { text: "Secure Your Builds", href: "/protect-builds" },
     metrics: []
