@@ -3,88 +3,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/sections/Hero.astro';
 import PageSection from '../components/ui/PageSection.astro';
 import Card from '../components/ui/Card.astro';
+import DataTable from '../components/ui/DataTable.astro';
 
+// AI Security content structured like homepage
 const pageContent = {
   hero: {
     title: "Your Models Are One File Descriptor Away From Theft",
     subtitle: "You spent millions training your model. Months perfecting it. Your entire competitive advantage condensed into a weights file. It takes 30 seconds to steal it all.",
-    metrics: [
-    ]
+    primaryCTA: { text: "Contact Us", href: "/contact" },
+    secondaryCTA: { text: "Learn More", href: "/blog/gpus-insecure-ai-data-theft" },
+    metrics: []
   },
-  problem: {
+
+  attackVectors: {
     title: "How AI Data Gets Stolen (And Why Current Security Can't Stop It)",
-    sections: [
-      {
-        title: "The GPU Memory Backdoor",
-        description: "Any process with the same UID can <strong>steal</strong> or <strong>tamper</strong> with your model weights directly from GPU memory using simple Linux commands.",
-        blogLink: {
-          text: "Learn How This Attack Works",
-          href: "/blog/gpus-insecure-ai-data-theft"
-        },
+    ai: {
+      header: "The GPU Memory Backdoor",
+      headerDescription: "Any process with the same UID can steal or tamper with your model weights directly from GPU memory using simple Linux commands.",
+      traditional: {
+        title: "Traditional \"AI Security\"",
+        description: "Your GPU memory is wide open. Any process with the same UID can steal your models through file descriptors. Training data worth millions? Gone in seconds.",
         problems: [
           "IPC 'pins' memory and creates readable file descriptors",
-          "Kubernetes isolation means nothing at the GPU level", 
+          "Kubernetes isolation means nothing at the GPU level",
           "Containers share the same UID for GPU access",
           "No visibility into who accesses GPU memory"
         ]
       },
-      {
-        title: "The Supply Chain Time Bomb", 
-        description: "Your training pipeline pulls from multiple untrusted sources, and you have no idea what actually touched your model.",
-        problems: [
-          "Public datasets could be poisoned",
-          "Pre-trained models might be backdoored",
-          "Open source libraries could be compromised",
-          "No cryptographic verification of training data"
-        ]
-      }
-    ]
-  },
-  solution: {
-    title: "Bomfather: Kernel-Level AI Security",
-    subtitle: "The only security solution that protects AI at the kernel level where attacks actually happen",
-    features: [
-      {
-        title: "🔒 GPU Memory Lockdown",
-        description: "We intercept every GPU access at the kernel level and block unauthorized access before it happens.",
+      bomfather: {
+        title: "Bomfather AI Protection",
         benefits: [
           "Block unauthorized GPU access instantly",
-          "Prevent IPC memory theft via file descriptor control",
           "Stop container escapes from reaching GPU resources",
           "Zero-trust enforcement at the hardware level"
-        ]
-      },
-      {
-        title: "🧬 Intelligent Process Inheritance", 
-        description: "Trusted processes automatically pass permissions to their children—but ONLY their legitimate children.",
-        benefits: [
-          "Same file runs or gets blocked based on parent process",
-          "Zero workflow changes for complex ML pipelines",
-          "No allowlist maintenance required",
-          "Kernel-enforced lineage tracking"
-        ]
-      },
-      {
-        title: "📊 Training Provenance You Can Trust",
-        description: "Track every file, dataset, and model weight with cryptographic proof and tamper-evident logs.",
-        benefits: [
-          "Complete training audit with SHA256 verification",
-          "Process attribution for every file access",
-          "Merkle tree proof of entire training run", 
-          "Nanosecond timestamps with GPU correlation"
-        ]
-      },
-      {
-        title: "🔐 Proprietary Data is Proprietary",
-        description: "Prove your AI's integrity without exposing sensitive training data. Zero-knowledge verification that keeps your competitive advantage secure.",
-        benefits: [
-          "We never see your training data or model weights",
-          "Merkle root proves integrity without data exposure",
-          "Cryptographic verification maintains privacy",
-          "Compliance proof without revealing IP"
-        ]
+        ],
+        tagline: "The same augment.py file can be run for legitimate training, while blocked for attackers."
       }
-    ]
+    }
   },
 
   scenarios: {
@@ -98,38 +53,16 @@ const pageContent = {
         bomfather: "Blocks the unauthorized GPU access instantly. Attack never succeeds."
       },
       {
-        title: "The Poisoned Dataset",
-        attack: "Attacker modifies training data to inject backdoor triggers before your training run.",
-        traditional: "Training completes successfully with compromised model.",
-        bomfather: "SHA256 mismatch detected immediately. Training blocked before poisoned data loads."
-      },
-      {
         title: "The Model Swap",
-        attack: "Malicious actor replaces your production model with a backdoored version.",
+        attack: "Malicious actor attempts to replace your production model with a backdoored version.",
         traditional: "Model serves predictions including attacker's backdoor logic.",
-        bomfather: "Production model SHA256 monitored continuously. Deployment blocked on hash mismatch."
+        bomfather: "Malicious actor blocked from accessing GPU resources. Cannot deploy backdoored model."
       },
       {
         title: "The Process Injection Attack",
         attack: "Attacker compromises data loading script and spawns GPU-accessing subprocess to steal weights.",
         traditional: "If subprocess has valid credentials, it gets GPU access.",
         bomfather: "Subprocess blocked—wrong parent process. Kernel denies access despite valid credentials."
-      }
-    ]
-  },
-
-  getStarted: {
-    title: "Ready to Protect Your AI?",
-    subtitle: "Your models are too valuable to leave exposed. Deploy kernel-level AI security in minutes.",
-    options: [
-      {
-        title: "Contact Us",
-        description: "Get in touch to learn how Bomfather can protect your AI infrastructure.",
-        type: "primary",
-        cta: {
-          text: "Contact Us",
-          href: "https://bomfather.dev/contact"
-        }
       }
     ]
   }
@@ -140,92 +73,48 @@ const pageContent = {
   title="Protect AI - Kernel-Level Security for AI Models | Bomfather"
   description="Stop AI model theft and data poisoning with kernel-level security. GPU memory protection, training provenance, and cryptographic verification for your AI."
   showAnnouncement={false}
+  showNewsletter={false}
 >
   <!-- Hero Section -->
   <Hero 
     title={pageContent.hero.title}
     subtitle={pageContent.hero.subtitle}
+    primaryCTA={pageContent.hero.primaryCTA}
+    secondaryCTA={pageContent.hero.secondaryCTA}
     metrics={pageContent.hero.metrics}
   />
 
-  <!-- Problem Section -->
+  <!-- GPU Memory Backdoor Section -->
   <PageSection 
-    id="problem"
+    id="gpu-memory-backdoor"
     variant="dark"
     size="lg"
-    title={pageContent.problem.title}
+    title={pageContent.attackVectors.ai.header}
+    subtitle={pageContent.attackVectors.ai.headerDescription}
+    headerLevel={2}
     centerHeader={true}
-    className="bg-gradient-dark problem-section"
+    className="attack-vectors-section"
   >
-    <div class="problems-container animate-stagger">
-      {pageContent.problem.sections.map((section, index) => (
-        <div class="problem-block animate-on-scroll" style={`--delay: ${index * 0.3}s`}>
-          <div class="problem-header">
-            <h3 class="problem-title animate-slide-up">{section.title}</h3>
-            <p class="problem-description animate-fade-in" style="--delay: 0.1s" set:html={section.description}></p>
-          </div>
-          
-          <div class="problem-content">
-            {index === 0 ? (
-              <!-- GPU Memory Backdoor - Special layout -->
-              <div class="explanation-content">
-                <p class="explanation-text">{section.explanation}</p>
-                <a href={section.blogLink.href} class="blog-link-button">
-                  {section.blogLink.text} <span class="arrow">→</span>
-                </a>
-              </div>
-            ) : (
-              <!-- Other sections - Standard layout -->
-              <>
-                {section.code && (
-                  <pre class="code-block animate-typing" data-code={section.code}><code class="language-bash" id={`problem-code-${index}`}></code></pre>
-                )}
-                
-                <div class="problem-list-section">
-                  <ul class="problem-list">
-                    {section.problems.map((problem, pIndex) => (
-                      <li class="problem-item animate-fade-in" style={`--delay: ${0.2 + pIndex * 0.1}s`}>
-                        ✗ {problem}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      ))}
-    </div>
-  </PageSection>
-
-  <!-- Solution Section -->
-  <PageSection 
-    id="solution"
-    variant="dark"
-    size="lg"
-    title={pageContent.solution.title}
-    subtitle={pageContent.solution.subtitle}
-    centerHeader={true}
-  >
-    <div class="solution-grid animate-stagger">
-      {pageContent.solution.features.map((feature, index) => (
-        <Card 
-          variant="glass"
-          padding="lg"
-          className="solution-card animate-slide-up hover-lift"
-          style={`--delay: ${index * 0.2}s`}
-        >
-          <h3 class="solution-card-title">{feature.title}</h3>
-          <p class="solution-card-description">{feature.description}</p>
-          <ul class="solution-benefits-list">
-            {feature.benefits.map((benefit, bIndex) => (
-              <li class="benefit-item animate-fade-in" style={`--delay: ${0.1 + bIndex * 0.1}s`}>
-                ✓ {benefit}
-              </li>
-            ))}
-          </ul>
-        </Card>
-      ))}
+    <div class="attack-vector-cards">
+      <div class="attack-vector-card">
+        <h4 class="attack-card-title">{pageContent.attackVectors.ai.traditional.title}</h4>
+        <p class="attack-card-description">{pageContent.attackVectors.ai.traditional.description}</p>
+        <ul class="attack-problems-list">
+          {pageContent.attackVectors.ai.traditional.problems.map((problem) => (
+            <li class="problem-item">{problem}</li>
+          ))}
+        </ul>
+      </div>
+      
+      <div class="attack-vector-card">
+        <h4 class="attack-card-title">{pageContent.attackVectors.ai.bomfather.title}</h4>
+        <ul class="attack-benefits-list">
+          {pageContent.attackVectors.ai.bomfather.benefits.map((benefit) => (
+            <li class="benefit-item">{benefit}</li>
+          ))}
+        </ul>
+        <p class="attack-card-tagline">{pageContent.attackVectors.ai.bomfather.tagline}</p>
+      </div>
     </div>
   </PageSection>
 
@@ -236,6 +125,7 @@ const pageContent = {
     size="lg"
     title="See Bomfather AI Protection In Action"
     subtitle="Watch how kernel-level security stops AI attacks that traditional solutions miss"
+    headerLevel={2}
     centerHeader={true}
     className="demo-video-section"
   >
@@ -250,15 +140,8 @@ const pageContent = {
           allowfullscreen
         ></iframe>
       </div>
-      <div class="demo-info animate-fade-in" style="--delay: 0.3s">
-        <p class="demo-description">
-          See how Bomfather blocks GPU memory theft, detects data poisoning, and provides cryptographic training provenance - all at the kernel level where attacks can't be bypassed.
-        </p>
-      </div>
     </div>
   </PageSection>
-
-
 
   <!-- Attack Scenarios Section -->
   <PageSection 
@@ -267,6 +150,7 @@ const pageContent = {
     size="lg"
     title={pageContent.scenarios.title}
     subtitle={pageContent.scenarios.subtitle}
+    headerLevel={2}
     centerHeader={true}
     className="scenarios-section"
   >
@@ -298,75 +182,78 @@ const pageContent = {
       ))}
     </div>
   </PageSection>
-
-
-
-  <!-- Get Started Section -->
-  <PageSection 
-    id="get-started"
-    variant="dark"
-    size="lg"
-    title={pageContent.getStarted.title}
-    subtitle={pageContent.getStarted.subtitle}
-    centerHeader={true}
-    className="bg-gradient-dark"
-  >
-    <div class="get-started-options animate-stagger">
-      {pageContent.getStarted.options.map((option, index) => (
-        <Card 
-          variant="glass"
-          padding="lg"
-          href={option.cta.href}
-          clickable={true}
-          className="get-started-card hover-glow"
-          style={`--delay: ${index * 0.2}s`}
-        >
-          <h3 class="animate-slide-up">{option.title}</h3>
-          <p class="animate-fade-in" style="--delay: 0.1s">{option.description}</p>
-          <div slot="footer">
-            <span class={`cta-button cta-button--${option.type} animate-slide-up`} style="--delay: 0.2s">
-              {option.cta.text} <span class="arrow animate-bounce-x">→</span>
-            </span>
-          </div>
-        </Card>
-      ))}
-    </div>
-  </PageSection>
 </BaseLayout>
 
 <style>
-/* Import base styles from homepage */
+/* Professional Theme Base - matching homepage */
 :root {
-  --bg-primary: #0a0d15;
-  --bg-secondary: #0a0d15;
-  --bg-tertiary: #0a0d15;
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
-  --text-tertiary: #71717a;
-  --accent-primary: #3b82f6;
-  --accent-secondary: #60a5fa;
-  --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  --border-color: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.15);
-  --success-color: #86efac;
-  --error-color: #fca5a5;
-  --warning-color: #fbbf24;
+  --bg-primary: #f9f8f4;
+  --bg-secondary: #f9f8f4;
+  --bg-tertiary: #FFFFFF;
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-tertiary: var(--color-text-tertiary);
+  --accent-primary: var(--color-primary);
+  --accent-secondary: #3b82f6;
+  --accent-gradient: linear-gradient(135deg, var(--color-primary) 0%, #1d4ed8 100%);
+  --border-color: var(--color-border-light);
+  --glass-bg: #FFFFFF;
+  --shadow-professional: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --success-color: #16a34a;
+  --error-color: #dc2626;
+  
+  /* Professional spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
 }
 
-/* Global dark theme */
+/* Professional Global Styles - matching homepage */
 * {
   box-sizing: border-box;
 }
 
 body {
-  background: #0a0d15 !important;
-  color: var(--text-primary);
+  background: var(--bg-primary) !important;
+  color: var(--text-secondary);
+  font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+  line-height: 1.6;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Keep Inter for hero titles and main headings */
+.hero-title,
+.hero-subtitle,
+.page-section h1,
+.page-section h2,
+.page-section h3,
+.section-title,
+.attack-card-title,
+.step-title,
+.scenario-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* Background gradients */
 .bg-gradient-dark {
-  background: #0a0d15;
+  background: var(--bg-primary);
   position: relative;
+}
+
+.bg-gradient-dark::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-primary);
+  pointer-events: none;
 }
 
 /* Animation Keyframes */
@@ -446,272 +333,151 @@ body {
 }
 
 .hover-glow:hover {
-  box-shadow: var(--shadow-glow);
+  box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
   border-color: var(--accent-secondary);
 }
 
-/* Problem Section */
-.problems-container {
-  display: flex;
-  flex-direction: column;
-  gap: 6rem;
-  max-width: 900px;
-  margin: 0 auto;
+/* Attack Vectors Section - simplified */
+
+.attack-vector-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
 }
 
-.problem-block {
-  text-align: center;
-}
-
-.problem-header {
-  margin-bottom: 3rem;
-}
-
-.problem-title {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #ffffff;
-}
-
-.problem-description {
-  color: #d1d5db;
-  font-size: 1.125rem;
-  line-height: 1.7;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.problem-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.code-block {
-  width: 100%;
-  background: rgba(0, 0, 0, 0.4);
+.attack-vector-card {
+  background: white;
   border: 1px solid var(--border-color);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-  position: relative;
-  overflow: hidden;
-}
-
-.code-block::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--accent-gradient);
-  border-radius: 0.75rem 0.75rem 0 0;
-}
-
-.code-block code {
-  color: #e5e7eb;
-  font-size: 0.875rem;
-  line-height: 1.6;
-  display: block;
-  white-space: pre;
-  height: 100%;
-  overflow: hidden;
-}
-
-.problem-list-section {
-  width: 100%;
-}
-
-.explanation-content {
-  width: 100%;
-  text-align: center;
+  border-radius: 8px;
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-professional);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  align-items: center;
+  transition: all 0.2s ease;
 }
 
-.explanation-text {
-  color: #d1d5db;
+.attack-vector-card:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.attack-card-title {
   font-size: 1.125rem;
-  line-height: 1.7;
-  max-width: 600px;
-  margin: 0;
-}
-
-.blog-link-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 2rem;
-  background: var(--accent-gradient);
-  color: white;
-  border-radius: 0.5rem;
   font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary) !important;
+  letter-spacing: -0.025em;
+  line-height: 1.4;
 }
 
-.blog-link-button:hover {
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
-  transform: translateY(-2px);
+.attack-card-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+  font-size: 0.875rem;
 }
 
-.blog-link-button .arrow {
-  transition: transform 0.3s ease;
-}
-
-.blog-link-button:hover .arrow {
-  transform: translateX(4px);
-}
-
-.problem-list {
+.attack-problems-list,
+.attack-benefits-list {
   list-style: none;
   padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
+  margin: 0 0 1.5rem 0;
+  flex: 1;
 }
 
-.problem-item {
-  padding: 1rem 1.5rem;
-  background: rgba(239, 68, 68, 0.05);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  border-radius: 0.5rem;
-  color: #fca5a5;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  text-align: left;
-  transition: all 0.3s ease;
-}
-
-.problem-item:hover {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: rgba(239, 68, 68, 0.3);
-  transform: translateY(-2px);
-}
-
-/* Solution Grid */
-.solution-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 2rem;
-}
-
-.solution-card {
-  border: 1px solid var(--border-color);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.solution-card-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #ffffff !important;
-}
-
-.solution-card-description {
-  color: #d1d5db;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-  flex-grow: 1;
-}
-
-.solution-benefits-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
+.problem-item,
 .benefit-item {
-  padding: 0.5rem 0;
-  color: var(--success-color);
+  padding: var(--spacing-sm) 0;
+  color: var(--text-secondary);
   line-height: 1.5;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.875rem;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
 }
 
+.problem-item:last-child,
 .benefit-item:last-child {
   border-bottom: none;
 }
 
-/* Steps Container */
-.steps-container {
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.step-item {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 3rem;
-  align-items: start;
-}
-
-.step-number {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  flex-shrink: 0;
-}
-
-.step-number-bg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: var(--accent-gradient);
-  border-radius: 50%;
-  animation: glow 3s ease-in-out infinite;
-}
-
-.step-number-text {
-  position: relative;
-  z-index: 1;
-  color: white;
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-.step-title {
-  font-size: 1.75rem;
+.problem-item::before {
+  content: '✗';
+  color: #ef4444;
   font-weight: 600;
-  margin-bottom: 1rem;
-  color: #ffffff;
+  margin-top: 1px;
 }
 
-.step-description {
-  color: #d1d5db;
-  margin-bottom: 1.5rem;
-  line-height: 1.7;
-  font-size: 1.125rem;
+.benefit-item::before {
+  content: '✓';
+  color: #10b981;
+  font-weight: 600;
+  margin-top: 1px;
 }
 
-/* Demo Video */
+.attack-card-tagline {
+  font-style: italic;
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+
+
+/* Features Grid - matching homepage */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.feature-card {
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.benefits-list {
+  margin-top: 1.5rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.benefits-list li {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.benefits-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent-primary);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Demo Video Section - matching homepage */
 .demo-video-container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
   text-align: center;
+  padding: 0 var(--spacing-lg);
 }
 
 .video-wrapper {
   position: relative;
   width: 100%;
   height: 0;
-  padding-bottom: 56.25%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
   margin-bottom: 2rem;
   border-radius: 1rem;
   overflow: hidden;
@@ -732,13 +498,13 @@ body {
 }
 
 .video-wrapper:hover {
-  box-shadow: var(--shadow-glow);
+  box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
   border-color: var(--accent-secondary);
   transform: translateY(-4px);
 }
 
 .demo-description {
-  color: #d1d5db;
+  color: var(--text-secondary);
   font-size: 1.125rem;
   line-height: 1.7;
   margin-bottom: 1.5rem;
@@ -747,9 +513,9 @@ body {
 /* Scenarios Grid */
 .scenarios-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -764,7 +530,7 @@ body {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
-  color: #ffffff !important;
+  color: var(--text-primary) !important;
 }
 
 .scenario-section {
@@ -798,9 +564,7 @@ body {
   margin: 0;
 }
 
-.attack-text {
-  color: #d1d5db;
-}
+.attack-text { color: var(--text-secondary); }
 
 .traditional-text {
   color: var(--error-color);
@@ -810,195 +574,43 @@ body {
   color: var(--success-color);
 }
 
-/* Comparison Table */
-.comparison-table-container {
-  max-width: 900px;
-  margin: 0 auto;
+
+
+/* Card title and text improvements - matching homepage */
+.card h1, .card h2, .card h3, .card h4, .card h5, .card h6,
+.card .title, .card .card-title, .card .heading,
+.feature-card h1, .feature-card h2, .feature-card h3, .feature-card h4, .feature-card h5, .feature-card h6,
+.get-started-card h1, .get-started-card h2, .get-started-card h3, .get-started-card h4, .get-started-card h5, .get-started-card h6 {
+  color: var(--text-primary) !important;
 }
 
-.comparison-table {
-  background: var(--glass-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 1rem;
-  overflow: hidden;
-  backdrop-filter: blur(10px);
+.card-title {
+  color: var(--text-primary) !important;
 }
 
-.comparison-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  background: rgba(59, 130, 246, 0.1);
-  border-bottom: 1px solid var(--border-color);
+.card-content {
+  color: var(--text-secondary) !important;
+  margin-bottom: 2rem !important;
 }
 
-.comparison-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.comparison-row:last-child {
-  border-bottom: none;
-}
-
-.comparison-col {
-  padding: 1rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-}
-
-.feature-col {
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.traditional-col {
-  color: var(--error-color);
-}
-
-.bomfather-col {
-  color: var(--success-color);
-}
-
-.comparison-header .comparison-col {
-  font-weight: 600;
-  color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 0.75rem;
-}
-
-/* Get Started */
-.get-started-options {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.get-started-options > * {
-  max-width: 400px;
-  flex: 0 0 auto;
-}
-
-.get-started-card {
-  border: 1px solid var(--border-color);
-  text-align: center;
-}
-
-.get-started-card h3 {
-  color: #ffffff !important;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.get-started-card p {
-  color: #d1d5db !important;
-  line-height: 1.6;
-}
-
-.cta-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 2rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.cta-button--primary {
-  background: var(--accent-gradient);
-  color: white;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
-}
-
-.cta-button--primary:hover {
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
-  transform: translateY(-2px);
-}
-
-.cta-button--secondary {
-  background: transparent;
-  color: var(--accent-primary);
-  border: 1px solid var(--accent-primary);
-}
-
-.cta-button--secondary:hover {
-  background: var(--glass-bg);
-  border-color: var(--accent-secondary);
-}
-
-.arrow {
-  transition: transform 0.3s ease;
-}
-
-.animate-bounce-x {
-  animation: bounceX 2s ease-in-out infinite;
-}
-
-/* Responsive Design */
+/* Responsive Design - matching homepage */
 @media (max-width: 768px) {
-  .step-item {
+  .attack-vector-cards {
     grid-template-columns: 1fr;
     gap: 1rem;
-    text-align: center;
   }
   
-  .solution-grid,
-  .scenarios-grid,
-  .get-started-options {
+  .attack-vector-card {
+    min-height: auto;
+  }
+  
+  .features-grid,
+  .scenarios-grid {
     grid-template-columns: 1fr;
-  }
-  
-  .comparison-header,
-  .comparison-row {
-    grid-template-columns: 1fr;
-  }
-  
-  .comparison-col {
-    padding: 0.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-  
-  .comparison-header .comparison-col {
-    background: rgba(59, 130, 246, 0.2);
-    font-size: 0.875rem;
   }
   
   .demo-video-container {
     margin: 0 1rem;
-  }
-  
-  .problems-container {
-    gap: 4rem;
-    padding: 0 1rem;
-  }
-  
-  .problem-header {
-    margin-bottom: 2rem;
-  }
-  
-  .problem-title {
-    font-size: 1.5rem;
-  }
-  
-  .problem-description {
-    font-size: 1rem;
-  }
-  
-  .problem-content {
-    gap: 1.5rem;
-  }
-  
-  .problem-list {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-  
-  .problem-item {
-    padding: 0.75rem 1rem;
-    font-size: 0.8125rem;
   }
 }
 
@@ -1017,7 +629,7 @@ body {
 </style>
 
 <script>
-// Intersection Observer for scroll animations
+// Intersection Observer for scroll animations - matching homepage
 const observerOptions = {
   threshold: 0.1,
   rootMargin: '0px 0px -50px 0px'

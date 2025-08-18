@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import DarkSection from '../components/DarkSection.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 ---
 
@@ -9,63 +8,322 @@ import SectionHeader from '../components/SectionHeader.astro';
   description="Get in touch with the Bomfather team for questions, support, or to schedule a demo."
   showNewsletter={false}
 >
-  <DarkSection id="contact-hero" labelledBy="contact-header" extraClasses="pb-8 md:pb-12">
-    <SectionHeader
-      id="contact-header"
-      title="Contact Us"
-      subtitle=""
-    />
-    <div class="container mx-auto px-4 text-center">
-      <h2 class="text-xl md:text-2xl font-medium text-white mt-4">
-        Trusted by <b>Google</b>. Proven on <b>LF Stages</b>. Built by <b>3× OSS Maintainers</b>.
-      </h2>
+  <!-- Hero Section -->
+  <section id="contact-hero" class="contact-hero-section" aria-labelledby="contact-header">
+    <div class="container space-y-12">
+      <SectionHeader
+        id="contact-header"
+        title="Contact Us"
+        subtitle=""
+        class="contact-header-override"
+      />
+      <div class="hero-content">
+        <h2 class="trust-statement">
+          Trusted by <span class="highlight">Google</span>. Proven on <span class="highlight">LF Stages</span>. Built by <span class="highlight">3× OSS Maintainers</span>.
+        </h2>
 
-      <div class="mt-6 text-center">
-        <p class="text-lg text-stone-300 max-w-3xl mx-auto">
-          Talk directly with our engineers.
-        </p>
-        <p class="text-lg text-stone-300 max-w-3xl mx-auto mt-1">
-          They build the open source tools that secure the modern software supply chain.
-        </p>
+        <div class="engineer-message">
+          <p class="message-line">
+            Talk directly with our engineers.
+          </p>
+          <p class="message-line">
+            They build the open source tools that secure the modern software supply chain.
+          </p>
+        </div>
       </div>
-
-
     </div>
-  </DarkSection>
+  </section>
 
-  <section class="py-10 bg-background">
+  <!-- Contact Form Section -->
+  <section class="contact-form-section">
     <div class="container mx-auto">      
-      <div class="max-w-3xl mx-auto">
-        <form name="contact" method="POST" data-netlify="true" class="p-8 border border-white/20 rounded-lg" id="contact-form">
-          <h3 class="text-2xl font-bold mb-6 text-white">Send us a Message</h3>
+      <div class="form-container">
+        <form name="contact" method="POST" data-netlify="true" class="contact-form" id="contact-form">
+          <h3 class="form-title">Send us a Message</h3>
           
-          <div class="mb-4">
-            <label for="name" class="block text-white mb-2">Name</label>
-            <input type="text" id="name" name="name" class="w-full p-2 bg-gray-800 border border-white/20 rounded text-white" required>
+          <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" name="name" class="form-input" required>
           </div>
           
-          <div class="mb-4">
-            <label for="email" class="block text-white mb-2">Email</label>
-            <input type="email" id="email" name="email" class="w-full p-2 bg-gray-800 border border-white/20 rounded text-white" required>
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-input" required>
           </div>
           
-          <div class="mb-4">
-            <label for="subject" class="block text-white mb-2">Subject</label>
-            <input type="text" id="subject" name="subject" class="w-full p-2 bg-gray-800 border border-white/20 rounded text-white" required>
+          <div class="form-group">
+            <label for="subject" class="form-label">Subject</label>
+            <input type="text" id="subject" name="subject" class="form-input" required>
           </div>
           
-          <div class="mb-6">
-            <label for="message" class="block text-white mb-2">Message</label>
-            <textarea id="message" name="message" rows="5" class="w-full p-2 bg-gray-800 border border-white/20 rounded text-white" required></textarea>
+          <div class="form-group">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" name="message" rows="5" class="form-input form-textarea" required></textarea>
           </div>
           
-
-          
-          <button type="submit" class="w-full bg-accent text-white hover:bg-accent/90 font-semibold py-3 px-4 rounded transition duration-200">
+          <button type="submit" class="form-submit">
             Send Message
           </button>
         </form>
       </div>
     </div>
   </section>
-</BaseLayout> 
+</BaseLayout>
+
+<style>
+/* Professional Theme Base - matching homepage */
+:root {
+  --bg-primary: #f9f8f4;
+  --bg-secondary: #f9f8f4;
+  --bg-tertiary: #FFFFFF;
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-tertiary: var(--color-text-tertiary);
+  --accent-primary: var(--color-primary);
+  --accent-secondary: #3b82f6;
+  --accent-gradient: linear-gradient(135deg, var(--color-primary) 0%, #1d4ed8 100%);
+  --border-color: var(--color-border-light);
+  --glass-bg: #FFFFFF;
+  --shadow-professional: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --success-color: #16a34a;
+  --error-color: #dc2626;
+  
+  /* Professional spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+}
+
+/* Professional Global Styles - matching homepage */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-primary) !important;
+  color: var(--text-secondary);
+  font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+  line-height: 1.6;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Keep Inter for hero titles and main headings */
+.hero-title,
+.hero-subtitle,
+.trust-statement,
+.form-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* Contact Hero Section */
+.contact-hero-section {
+  background: var(--bg-primary);
+  padding-top: calc(var(--spacing-2xl) + 4rem); /* Extra space for fixed header */
+  padding-bottom: var(--spacing-2xl);
+  text-align: center;
+}
+
+.hero-content {
+  margin-top: var(--spacing-xl);
+}
+
+.trust-statement {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.4;
+}
+
+.trust-statement .highlight {
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+.engineer-message {
+  margin-top: var(--spacing-lg);
+}
+
+.message-line {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-xs);
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.message-line:last-child {
+  margin-bottom: 0;
+}
+
+/* Contact Form Section */
+.contact-form-section {
+  background: var(--bg-primary);
+  padding: var(--spacing-2xl) 0;
+}
+
+.form-container {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.contact-form {
+  background: var(--glass-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-professional);
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--spacing-md);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-submit {
+  width: 100%;
+  background: var(--accent-primary);
+  color: white;
+  font-weight: 600;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: var(--spacing-md);
+}
+
+.form-submit:hover {
+  background: var(--accent-secondary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.form-submit:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-hero-section {
+    padding-top: calc(var(--spacing-xl) + 3rem); /* Adjust for mobile header */
+    padding-bottom: var(--spacing-xl);
+  }
+  
+  .trust-statement {
+    font-size: 1.125rem;
+  }
+  
+  .message-line {
+    font-size: 1rem;
+  }
+  
+  .contact-form {
+    padding: var(--spacing-xl);
+  }
+  
+  .form-container {
+    padding: 0 var(--spacing-sm);
+  }
+}
+
+@media (max-width: 640px) {
+  .trust-statement {
+    font-size: 1rem;
+  }
+  
+  .message-line {
+    font-size: 0.9rem;
+  }
+  
+  .contact-form {
+    padding: var(--spacing-lg);
+  }
+}
+</style>
+
+<style is:global>
+/* Override SectionHeader white text for contact page */
+.contact-header-override h2,
+header.contact-header-override h2,
+#contact-header h2 {
+  color: var(--text-primary, #0F172A) !important;
+  opacity: 1 !important;
+}
+
+.contact-header-override p,
+header.contact-header-override p,
+#contact-header p {
+  color: var(--text-secondary, #475569) !important;
+}
+</style>
+
+<script>
+  // Ensure contact page title has correct color
+  document.addEventListener('DOMContentLoaded', () => {
+    const titleElement = document.querySelector('#contact-header h2');
+    const subtitleElement = document.querySelector('#contact-header p');
+    
+    if (titleElement) {
+      titleElement.style.color = '#0F172A';
+      titleElement.style.opacity = '1';
+    }
+    
+    if (subtitleElement) {
+      subtitleElement.style.color = '#475569';
+    }
+  });
+</script> 

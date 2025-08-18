@@ -31,6 +31,7 @@ const formatDate = (date: Date) => {
 <BaseLayout 
   title={post.data.title}
   description={post.data.description}
+  showNewsletter={false}
 >
   <!-- Blog Post Header -->
   <PageSection 
@@ -108,10 +109,10 @@ const formatDate = (date: Date) => {
 </BaseLayout>
 
 <style is:global>
-  .blog-post-header-section {
-    background: linear-gradient(135deg, #0a0d14 0%, #1a1d23 100%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 120px; /* Prevent overlap on mobile */
+  .blog-post-header-section.page-section--md {
+    background: transparent;
+    border-bottom: 1px solid var(--color-border-light);
+    padding-top: 6rem !important; /* Override PageSection default and add space from the fixed header */
   }
 
   .blog-post-header {
@@ -157,10 +158,9 @@ const formatDate = (date: Date) => {
   .blog-post-title {
     font-size: 2.25rem;
     font-weight: 700;
-    color: white;
     margin-bottom: 1.5rem;
     line-height: 1.25;
-    background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+    background: linear-gradient(135deg, #111827 0%, #9CA3AF 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -170,23 +170,20 @@ const formatDate = (date: Date) => {
     .blog-post-title {
       font-size: 3rem;
     }
-    .blog-post-header-section {
-      padding-top: 80px;
+    .blog-post-header-section.page-section--md {
+      padding-top: 8rem !important;
     }
   }
 
   .blog-post-description {
     font-size: 1.25rem;
-    color: #d1d5db;
+    color: var(--color-text-secondary);
     line-height: 1.625;
     margin-bottom: 2rem;
     max-width: 600px;
   }
 
-  .blog-post-image-section {
-    background: #0a0d14;
-    padding-top: 0;
-  }
+  .blog-post-image-section { background: transparent; padding-top: 0; }
 
   .blog-post-image-container {
     max-width: 1000px;
@@ -200,9 +197,7 @@ const formatDate = (date: Date) => {
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
   }
 
-  .blog-post-content-section {
-    background: #0a0d14;
-  }
+  .blog-post-content-section { background: transparent; }
 
   .blog-post-article {
     max-width: 800px;
@@ -210,25 +205,14 @@ const formatDate = (date: Date) => {
   }
 
   /* Prose styling for blog content */
-  .prose {
-    color: #e2e8f0;
-    line-height: 1.75;
-    font-size: 1rem;
-    max-width: none;
-  }
+  .prose { color: var(--color-text-secondary); line-height: 1.75; font-size: 1rem; max-width: none; }
 
   .prose h1,
   .prose h2,
   .prose h3,
   .prose h4,
   .prose h5,
-  .prose h6 {
-    color: #ffffff;
-    font-weight: 700;
-    margin-top: 2.5em;
-    margin-bottom: 1em;
-    line-height: 1.3;
-  }
+  .prose h6 { color: var(--color-text-primary); font-weight: 700; margin-top: 2.5em; margin-bottom: 1em; line-height: 1.3; }
 
   .prose h1:first-child,
   .prose h2:first-child,
@@ -242,14 +226,7 @@ const formatDate = (date: Date) => {
     margin-bottom: 1.5rem;
   }
 
-  .prose h2 {
-    font-size: 1.875rem;
-    line-height: 1.3;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 0.75rem;
-    margin-bottom: 1.5rem;
-    margin-top: 3rem;
-  }
+  .prose h2 { font-size: 1.875rem; line-height: 1.3; border-bottom: 2px solid var(--color-border-light); padding-bottom: 0.75rem; margin-bottom: 1.5rem; margin-top: 3rem; }
 
   .prose h3 {
     font-size: 1.5rem;
@@ -289,28 +266,13 @@ const formatDate = (date: Date) => {
     margin-bottom: 0;
   }
 
-  .prose strong {
-    color: #ffffff;
-    font-weight: 600;
-  }
+  .prose strong { color: var(--color-text-primary); font-weight: 600; }
 
-  .prose em {
-    font-style: italic;
-    color: #cbd5e1;
-  }
+  .prose em { font-style: italic; color: #6b7280; }
 
-  .prose a {
-    color: #60a5fa;
-    text-decoration: underline;
-    text-decoration-color: rgba(96, 165, 250, 0.3);
-    transition: all 0.2s ease;
-    font-weight: 500;
-  }
+  .prose a { color: #2563eb; text-decoration: underline; text-decoration-color: rgba(37, 99, 235, 0.2); transition: all 0.2s ease; font-weight: 500; }
 
-  .prose a:hover {
-    color: #93c5fd;
-    text-decoration-color: rgba(147, 197, 253, 0.5);
-  }
+  .prose a:hover { color: #1d4ed8; text-decoration-color: rgba(29, 78, 216, 0.4); }
 
   .prose ul,
   .prose ol {
@@ -350,29 +312,9 @@ const formatDate = (date: Date) => {
     margin: 0.75em 0;
   }
 
-  .prose pre {
-    background: rgba(15, 23, 42, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1.5em;
-    overflow-x: auto;
-    margin: 2em 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
+  .prose pre { background: #f9fafb; border: 1px solid var(--color-border-light); border-radius: 12px; padding: 1.5em; overflow-x: auto; margin: 2em 0; font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; line-height: 1.6; box-shadow: none; }
 
-  .prose code {
-    background: rgba(15, 23, 42, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
-    padding: 0.25em 0.5em;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.875em;
-    color: #e2e8f0;
-    font-weight: 500;
-  }
+  .prose code { background: #f3f4f6; border: 1px solid var(--color-border-light); border-radius: 6px; padding: 0.25em 0.5em; font-family: 'JetBrains Mono', monospace; font-size: 0.875em; color: #111827; font-weight: 500; }
 
   .prose pre code {
     background: none;
@@ -382,26 +324,13 @@ const formatDate = (date: Date) => {
     border-radius: 0;
   }
 
-  .prose blockquote {
-    border-left: 4px solid #60a5fa;
-    padding-left: 1.5em;
-    margin: 2em 0;
-    font-style: italic;
-    color: #cbd5e1;
-    background: rgba(96, 165, 250, 0.05);
-    padding: 1em 1.5em;
-    border-radius: 0 8px 8px 0;
-  }
+  .prose blockquote { border-left: 4px solid #2563eb; padding-left: 1.5em; margin: 2em 0; font-style: italic; color: #374151; background: #eef2ff; padding: 1em 1.5em; border-radius: 0 8px 8px 0; }
 
   .prose blockquote p {
     margin: 0;
   }
 
-  .prose hr {
-    border: none;
-    border-top: 2px solid rgba(255, 255, 255, 0.1);
-    margin: 3em 0;
-  }
+  .prose hr { border: none; border-top: 2px solid var(--color-border-light); margin: 3em 0; }
 
   .prose table {
     border-collapse: collapse;
@@ -411,17 +340,9 @@ const formatDate = (date: Date) => {
   }
 
   .prose th,
-  .prose td {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 0.75em 1em;
-    text-align: left;
-  }
+  .prose td { border: 1px solid var(--color-border-light); padding: 0.75em 1em; text-align: left; }
 
-  .prose th {
-    background: rgba(255, 255, 255, 0.05);
-    font-weight: 600;
-    color: #ffffff;
-  }
+  .prose th { background: #f9fafb; font-weight: 600; color: #111827; }
 
   .prose img {
     max-width: 100%;
@@ -443,10 +364,7 @@ const formatDate = (date: Date) => {
     font-style: italic;
   }
 
-  .blog-post-cta-section {
-    background: linear-gradient(135deg, #1a1d23 0%, #0a0d14 100%);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
+  .blog-post-cta-section { background: transparent; border-top: 1px solid var(--color-border-light); }
 
   .blog-post-cta {
     max-width: 800px;
@@ -465,19 +383,9 @@ const formatDate = (date: Date) => {
     text-align: left;
   }
 
-  .cta-title {
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 0.5rem;
-  }
+  .cta-title { font-size: 1.875rem; font-weight: 700; color: var(--color-text-primary); margin-bottom: 0.5rem; }
 
-  .cta-description {
-    font-size: 1.125rem;
-    color: #d1d5db;
-    line-height: 1.625;
-    margin-bottom: 0;
-  }
+  .cta-description { font-size: 1.125rem; color: var(--color-text-secondary); line-height: 1.625; margin-bottom: 0; }
 
   .cta-actions {
     flex-shrink: 0;
@@ -493,11 +401,7 @@ const formatDate = (date: Date) => {
     min-width: 160px;
   }
 
-  .cta-button.secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
+  .cta-button.secondary { background: #fff; color: #111827; border: 1px solid var(--color-border-light); }
 
   .cta-button.secondary:hover {
     background: rgba(255, 255, 255, 0.2);

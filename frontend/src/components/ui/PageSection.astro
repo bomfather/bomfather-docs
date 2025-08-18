@@ -64,22 +64,22 @@ const HeadingTag = headerLevel ? `h${headerLevel}` as keyof JSX.IntrinsicElement
 
 /* Section variants */
 .page-section--default {
-  background: #ffffff;
-  color: #1f2937;
+  background: var(--color-background);
+  color: var(--color-text-secondary);
 }
 
 .page-section--dark {
-  background: #0a0d15;
-  color: #ffffff;
+  background: var(--color-surface-secondary);
+  color: var(--color-text-secondary);
 }
 
 .page-section--light {
-  background: #f8fafc;
-  color: #1f2937;
+  background: var(--color-surface-tertiary);
+  color: var(--color-text-secondary);
 }
 
 .page-section--accent {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  background: var(--color-primary);
   color: #ffffff;
 }
 
@@ -140,10 +140,34 @@ const HeadingTag = headerLevel ? `h${headerLevel}` as keyof JSX.IntrinsicElement
 }
 
 .section-title {
-  font-size: clamp(1.875rem, 4vw, 3rem);
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1rem;
+}
+
+/* Heading level specific sizes */
+h1.section-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+h2.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h3.section-title {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+h4.section-title {
+  font-size: clamp(1.25rem, 2.5vw, 1.875rem);
+}
+
+h5.section-title {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+}
+
+h6.section-title {
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
 }
 
 .section-subtitle {
@@ -157,12 +181,11 @@ const HeadingTag = headerLevel ? `h${headerLevel}` as keyof JSX.IntrinsicElement
   margin: 0 auto;
 }
 
-/* Dark variant adjustments */
-.page-section--dark .section-title {
-  background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Section title adjustments */
+.page-section--dark .section-title,
+.page-section--default .section-title,
+.page-section--light .section-title {
+  color: var(--color-text-primary);
 }
 
 .page-section--accent .section-title {
