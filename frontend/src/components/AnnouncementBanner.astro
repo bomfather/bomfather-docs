@@ -2,7 +2,7 @@
 // AnnouncementBanner.astro - A dismissible announcement banner with local storage persistence
 ---
 
-<div id="announcement-banner" class="announcement-banner bg-primary text-white py-3 px-4 fixed top-0 left-0 w-full z-[60] hidden">
+<div id="announcement-banner" class="announcement-banner bg-primary text-white py-3 px-4 fixed top-0 left-0 w-full z-[60] hidden" aria-hidden="true">
   <div class="container mx-auto flex items-center justify-between">
     <div class="flex items-center">
       <span class="text-lg mr-2">🎉</span>
@@ -33,7 +33,7 @@
 <script>
   // Constants for localStorage
   const BANNER_KEY = 'bomfather_announcement';
-  const BANNER_VERSION = 'open_source_2024'; // Update this when banner content changes
+  const BANNER_VERSION = 'disabled_2025';
   
   document.addEventListener('DOMContentLoaded', () => {
     const banner = document.getElementById('announcement-banner');
@@ -54,21 +54,8 @@
     // Check if this version of the banner has been dismissed
     const storedBanner = localStorage.getItem(BANNER_KEY);
     
-    // Show banner if it's never been dismissed or if it's a new version
-    if (!storedBanner || storedBanner !== BANNER_VERSION) {
-      // Make banner visible
-      banner.classList.remove('hidden');
-      // Animate banner in
-      setTimeout(() => {
-        banner.classList.add('show');
-        updateBannerHeightVar();
-        
-        // Adjust the header position when banner is showing
-        if (header) {
-          header.style.top = banner.offsetHeight + 'px';
-        }
-      }, 100);
-    }
+    // Do not auto-show the banner; keep it hidden by default
+    banner.classList.add('hidden');
     
     // Handle close button click
     closeButton.addEventListener('click', () => {

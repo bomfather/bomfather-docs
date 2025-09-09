@@ -12,7 +12,7 @@ export interface Props {
   showNewsletter?: boolean; // whether to render the newsletter subscription, default true
 }
 
-const { title, description, showHeader = true, showAnnouncement = true, showNewsletter = true } = Astro.props;
+const { title, description, showHeader = true, showAnnouncement = false, showNewsletter = true } = Astro.props;
 ---
 
 <!DOCTYPE html>

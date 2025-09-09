@@ -13,4 +13,18 @@ export const collections = {
       draft: z.boolean().default(false),
     }),
   }),
+  news: defineCollection({
+    type: 'content',
+    schema: z.object({
+      title: z.string(),
+      description: z.string().optional(),
+      publishedAt: z.date(),
+      category: z.string(),
+      author: z.string(),
+      tags: z.array(z.string()).default([]),
+      featuredImage: z.string().optional(),
+      draft: z.boolean().default(false),
+      externalLink: z.string().optional(),
+    }),
+  }),
 }; 
