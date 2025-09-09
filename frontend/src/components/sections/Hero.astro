@@ -10,6 +10,9 @@ interface Props {
   };
   metrics: Array<{ value: string; label: string }>;
   heroImage?: string;
+  investorBadge?: string;
+  investorHandle?: string;
+  investorHandleUrl?: string;
 }
 
 const {
@@ -19,8 +22,22 @@ const {
   secondaryCTA,
   tableOfContents,
   metrics,
-  heroImage
+  heroImage,
+  investorBadge,
+  investorHandle,
+  investorHandleUrl
 } = Astro.props;
+
+// Prepare parts so we can render a real <a> element (avoids scoped CSS issues with set:html)
+let badgeBefore = '';
+let badgeAfter = '';
+if (investorBadge && investorHandle && investorHandleUrl) {
+  const index = investorBadge.indexOf(investorHandle);
+  if (index !== -1) {
+    badgeBefore = investorBadge.slice(0, index);
+    badgeAfter = investorBadge.slice(index + investorHandle.length);
+  }
+}
 ---
 
 <section class="hero-section">
@@ -88,6 +105,15 @@ const {
       )}
     </div>
   </div>
+  {investorBadge && (
+    <div class="investor-badge" aria-label="Investor recognition">
+      {(investorHandle && investorHandleUrl && investorBadge.includes(investorHandle)) ? (
+        <>{badgeBefore}<a href={investorHandleUrl} class="investor-link" target="_blank" rel="noopener noreferrer">{investorHandle}</a>{badgeAfter}</>
+      ) : (
+        investorBadge
+      )}
+    </div>
+  )}
 </section>
 
 <style>
@@ -376,6 +402,59 @@ const {
   }
 }
 
+/* Investor badge (bottom-right, text-only) */
+.investor-badge {
+  position: absolute;
+  right: 3rem;
+  bottom: 3rem; /* squared with right */
+  display: inline-block;
+  color: var(--color-text-tertiary);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  opacity: 0; /* default hidden until hero fully fills viewport */
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  will-change: opacity, transform;
+  z-index: 2;
+}
+
+.investor-badge .investor-link {
+  color: var(--color-text-secondary);
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--color-text-tertiary);
+}
+
+.investor-badge .investor-link:hover {
+  color: var(--color-text-secondary);
+  text-decoration-color: var(--color-text-tertiary);
+  text-decoration-thickness: 2px;
+}
+
+.investor-badge .investor-link:visited {
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 768px) {
+  .investor-badge {
+    right: 2rem;
+    bottom: 2rem;
+  }
+  .investor-badge {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .investor-badge {
+    right: 4rem;
+    bottom: 4rem; /* squared with right */
+    font-size: 1.2rem;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-section {
     min-height: 90vh;
@@ -414,3 +493,39 @@ const {
   }
 }
 </style> 
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const badge = document.querySelector('.investor-badge');
+    const hero = document.querySelector('.hero-section');
+    if (!badge || !hero) return;
+
+    function heroFillsViewport() {
+      const rect = hero.getBoundingClientRect();
+      const viewportH = window.innerHeight || document.documentElement.clientHeight;
+      return rect.top <= 0 && rect.bottom >= viewportH;
+    }
+
+    function updateBadge() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+      if (scrollTop <= 0) {
+        // Keep visible during top overscroll to avoid flicker
+        badge.style.opacity = '1';
+        badge.style.transform = 'translateY(0)';
+        return;
+      }
+
+      if (heroFillsViewport()) {
+        badge.style.opacity = '1';
+        badge.style.transform = 'translateY(0)';
+      } else {
+        badge.style.opacity = '0';
+        badge.style.transform = 'translateY(8px)';
+      }
+    }
+
+    updateBadge();
+    window.addEventListener('scroll', updateBadge, { passive: true });
+    window.addEventListener('resize', updateBadge, { passive: true });
+  });
+</script>
