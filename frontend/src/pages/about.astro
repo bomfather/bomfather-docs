@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import DarkSection from '../components/DarkSection.astro';
-import SectionHeader from '../components/SectionHeader.astro';
+import PageSection from '../components/ui/PageSection.astro';
 ---
 
 <BaseLayout 
@@ -9,52 +8,58 @@ import SectionHeader from '../components/SectionHeader.astro';
   description="Learn about the Bomfather project, our mission to secure software supply chains, and the team behind this innovative tool."
   showNewsletter={false}
 >
-  <section id="about-hero" class="py-24 bg-background about-hero-section" aria-labelledby="about-hero-header">
-    <div class="container space-y-12">
-      <SectionHeader
-        id="about-hero-header"
-        title="About Bomfather"
-        subtitle="Our mission: Verify trust at its source - securing software supply chains through kernel-level truth."
-        class="about-header-override"
-      />
-    </div>
-  </section>
+  <!-- About Header -->
+  <PageSection 
+    id="about-header"
+    variant="dark"
+    size="lg"
+    title="About Bomfather"
+    subtitle="Our mission: Verify trust at its source - securing software supply chains through kernel-level truth."
+    headerLevel={1}
+    centerHeader={true}
+    className="about-header-section"
+  >
+  </PageSection>
 
-  <section class="about-content-section">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="section-title">Who We Are</h2>
-        <div class="content-block">
-          <p>
-            Creators of 
-            <a href="https://github.com/bitbomdev/minefield" target="_blank" rel="noopener noreferrer" class="accent-link">
-              Minefield
-            </a>, a lightning-fast SBOM graphing tool that has become the go-to solution for vulnerability impact analysis in enterprise security stacks.
-          </p>
-        </div>
-
-        <div class="content-block">
-          <p>
-            We're leading contributors to critical open source security projects that protect the modern software supply chain, including 
-            <a href="https://github.com/ossf/scorecard" target="_blank" rel="noopener noreferrer" class="accent-link">OpenSSF Scorecard</a>, 
-            <a href="https://github.com/ossf/criticality_score" target="_blank" rel="noopener noreferrer" class="accent-link">Criticality Score</a>, 
-            <a href="https://github.com/guacsec/guac" target="_blank" rel="noopener noreferrer" class="accent-link">GUAC</a>, 
-            <a href="https://github.com/gittuf/gittuf" target="_blank" rel="noopener noreferrer" class="accent-link">gittuf</a>, and 
-            <a href="https://github.com/sigstore" target="_blank" rel="noopener noreferrer" class="accent-link">Sigstore</a>. 
-            Our expertise is recognized across the industry through presentations at <span class="highlight-text">Linux Foundation conferences</span>, <span class="highlight-text">RSA</span>, and <span class="highlight-text">DEF CON</span>, along with <span class="highlight-text">3× Google Peer Bonus awards</span> for our impact on the security ecosystem.
-          </p>
-        </div>
-
-        <h2 class="section-title story-title">Our Story</h2>
-        <p class="content-block">
-          A critical red team exercise of ours revealed what others missed, attackers could silently swap model weights post-deployment without detection. While traditional security stops at code review, we discovered the real threats emerge during runtime.
-        </p>
-        <p class="content-block">
-          Bomfather was born from this revelation. Our proprietary technology leverages eBPF within the Linux kernel to create a Merkle tree security architecture that monitors, protects, and comprehensively logs every file access, GPU call, and system interaction in real-time. This cryptographic chain not only detects unauthorized changes—to models, data, or libraries—but actively protects against them while maintaining immutable records of all system activities.
+  <!-- About Content -->
+  <PageSection 
+    id="about-content"
+    variant="dark"
+    size="lg"
+    className="about-content-section"
+  >
+    <div class="about-content-container">
+      <h2 class="section-title">Who We Are</h2>
+      <div class="content-block">
+        <p>
+          Creators of 
+          <a href="https://github.com/bitbomdev/minefield" target="_blank" rel="noopener noreferrer" class="accent-link">
+            Minefield
+          </a>, a lightning-fast SBOM graphing tool that has become the go-to solution for vulnerability impact analysis in enterprise security stacks.
         </p>
       </div>
+
+      <div class="content-block">
+        <p>
+          We're leading contributors to critical open source security projects that protect the modern software supply chain, including 
+          <a href="https://github.com/ossf/scorecard" target="_blank" rel="noopener noreferrer" class="accent-link">OpenSSF Scorecard</a>, 
+          <a href="https://github.com/ossf/criticality_score" target="_blank" rel="noopener noreferrer" class="accent-link">Criticality Score</a>, 
+          <a href="https://github.com/guacsec/guac" target="_blank" rel="noopener noreferrer" class="accent-link">GUAC</a>, 
+          <a href="https://github.com/gittuf/gittuf" target="_blank" rel="noopener noreferrer" class="accent-link">gittuf</a>, and 
+          <a href="https://github.com/sigstore" target="_blank" rel="noopener noreferrer" class="accent-link">Sigstore</a>. 
+          Our expertise is recognized across the industry through presentations at <span class="highlight-text">Linux Foundation conferences</span>, <span class="highlight-text">RSA</span>, and <span class="highlight-text">DEF CON</span>, along with <span class="highlight-text">3× Google Peer Bonus awards</span> for our impact on the security ecosystem.
+        </p>
+      </div>
+
+      <h2 class="section-title story-title">Our Story</h2>
+      <p class="content-block">
+        A critical red team exercise of ours revealed what others missed, attackers could silently swap model weights post-deployment without detection. While traditional security stops at code review, we discovered the real threats emerge during runtime.
+      </p>
+      <p class="content-block">
+        Bomfather was born from this revelation. Our proprietary technology leverages eBPF within the Linux kernel to create a Merkle tree security architecture that monitors, protects, and comprehensively logs every file access, GPU call, and system interaction in real-time. This cryptographic chain not only detects unauthorized changes—to models, data, or libraries—but actively protects against them while maintaining immutable records of all system activities.
+      </p>
     </div>
-  </section>
+  </PageSection>
 </BaseLayout>
 
 <style>
@@ -104,34 +109,21 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 }
 
-/* About Hero Section - custom styling without DarkSection white text */
-.about-hero-section {
-  background: var(--bg-primary);
-}
-
-/* Override the About Bomfather title color to match other pages */
-/* Target the exact classes used by SectionHeader */
-#about-hero-header h2.text-white\/90,
-#about-hero-header h2.text-3xl,
-#about-hero-header h2,
-.about-hero-section header#about-hero-header h2,
-section#about-hero header#about-hero-header h2 {
-  color: var(--text-primary) !important;
-  opacity: 1 !important; /* Override the /90 opacity */
-}
-
-/* Also override the subtitle color */
-#about-hero-header p.text-mid-gray,
-#about-hero-header p,
-.about-hero-section header#about-hero-header p {
-  color: var(--text-secondary) !important;
+/* About Header Section */
+.about-header-section {
+  padding-top: 8rem !important;
+  padding-bottom: 2.5rem !important;
 }
 
 /* About Content Section */
 .about-content-section {
-  background: var(--bg-primary);
-  padding: var(--spacing-2xl) 0;
-  min-height: 60vh;
+  padding-top: 1rem !important;
+}
+
+.about-content-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .section-title {
@@ -200,66 +192,28 @@ section#about-hero header#about-hero-header h2 {
   }
 }
 
-/* Nuclear option - override with maximum specificity at the end */
-body section#about-hero div.container header#about-hero-header h2.text-3xl.md\:text-4xl.font-heading.font-bold.tracking-tight.text-white\/90 {
-  color: var(--text-primary) !important;
-  opacity: 1 !important;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-content-container {
+    padding: 0 0.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .content-block {
+    font-size: 0.9rem;
+  }
 }
 
-/* Simpler but still high specificity fallback */
-body #about-hero-header h2[class*="text-white"] {
-  color: var(--text-primary) !important;
-  opacity: 1 !important;
+@media (max-width: 640px) {
+  .section-title {
+    font-size: 1.25rem;
+  }
+  
+  .content-block {
+    font-size: 0.875rem;
+  }
 }
-</style>
-
-<style is:global>
-/* Global override for About page title - must override Tailwind's text-white/90 */
-.about-header-override h2,
-header.about-header-override h2,
-#about-hero-header h2 {
-  color: #0F172A !important;
-  opacity: 1 !important;
-}
-
-.about-header-override p,
-header.about-header-override p,
-#about-hero-header p {
-  color: #475569 !important;
-}
-
-/* Extra specific selector using the exact Tailwind classes */
-.about-header-override h2.text-white\/90 {
-  color: #0F172A !important;
-  opacity: 1 !important;
-}
-
-/* Ultimate nuclear option - target by all attributes */
-header[id="about-hero-header"] h2[class*="text-white"] {
-  color: #0F172A !important;
-  opacity: 1 !important;
-}
-
-/* Direct descendant selector */
-.container > header#about-hero-header > h2 {
-  color: #0F172A !important;
-  opacity: 1 !important;
-}
-</style>
-
-<script>
-  // Force the title color change on page load as a fallback
-  document.addEventListener('DOMContentLoaded', () => {
-    const titleElement = document.querySelector('#about-hero-header h2');
-    const subtitleElement = document.querySelector('#about-hero-header p');
-    
-    if (titleElement) {
-      titleElement.style.color = '#0F172A';
-      titleElement.style.opacity = '1';
-    }
-    
-    if (subtitleElement) {
-      subtitleElement.style.color = '#475569';
-    }
-  });
-</script> 
+</style> 
