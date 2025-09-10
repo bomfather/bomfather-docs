@@ -2,7 +2,7 @@
 // Header component for site navigation
 ---
 
-<header class="header-nav bg-transparent z-50 fixed top-0 left-0 right-0">
+<header class="header-nav bg-transparent z-50">
   <div class="container mx-auto px-6">
     <div class="header-content">
       <!-- Logo -->
@@ -108,12 +108,14 @@
 
 <style>
   .header-nav {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
     background: transparent;
     z-index: 50;
+    transition: transform 0.2s ease;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
 
   .header-content {
@@ -389,10 +391,13 @@
       transform: translateX(-50%) translateY(-8px);
     }
   }
+
+  /* Hide-on-scroll state (CSS fallback if JS style not applied) */
+  .header-nav.header-hidden { transform: translateY(-150%); }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  function initHeaderInteractions() {
     // Mobile menu functionality
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -503,5 +508,65 @@
         closeAllDropdowns();
       }
     });
-  });
+
+    // Hide header on scroll down, show on scroll up
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    function getNewsBannerHeight() { return 0; }
+
+    let headerEl = document.querySelector('.header-nav');
+    let headerHeight = headerEl?.offsetHeight || 0;
+
+    // Keep headerHeight fresh
+    if (headerEl && 'ResizeObserver' in window) {
+      const ro = new ResizeObserver(() => { headerHeight = headerEl.offsetHeight || 0; });
+      ro.observe(headerEl);
+    }
+
+    function updateHeaderOnScroll() {
+      const currentY = window.scrollY;
+      const header = document.querySelector('.header-nav');
+      const mobileMenuOpen = mobileMenu?.classList.contains('show');
+      if (!header || mobileMenuOpen) {
+        lastScrollY = currentY;
+        ticking = false;
+        return;
+      }
+
+      const delta = currentY - lastScrollY;
+      const threshold = 24;
+      const scrolledDown = delta > 2 && currentY > threshold;
+      const scrolledUp = delta < -2;
+
+      // Use inline transform for highest precedence
+      const hideY = -headerHeight;
+      if (scrolledDown) {
+        header.style.transform = `translateY(${hideY}px)`;
+        header.classList.add('header-hidden');
+      } else if (scrolledUp) {
+        header.style.transform = 'translateY(0)';
+        header.classList.remove('header-hidden');
+      }
+
+      lastScrollY = currentY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeaderOnScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Initialize state on load
+    window.requestAnimationFrame(updateHeaderOnScroll);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeaderInteractions);
+  } else {
+    initHeaderInteractions();
+  }
 </script> 

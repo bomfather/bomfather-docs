@@ -122,8 +122,11 @@ if (investorBadge && investorHandle && investorHandleUrl) {
   background: var(--color-background);
   color: var(--color-text-secondary);
   padding: 8rem 0 6rem;
+  /* Pull hero up only by banner height so it sits just below the header */
+  margin-top: calc(-1 * var(--latest-news-banner-height, 0px));
   overflow: hidden;
-  min-height: 100vh;
+  /* Fill the visible viewport area minus the sticky header */
+  min-height: calc(100vh - var(--header-height, 0px));
   display: flex;
   align-items: center;
 }
@@ -154,7 +157,7 @@ if (investorBadge && investorHandle && investorHandleUrl) {
   position: relative;
   z-index: 1;
   width: 100%;
-  min-height: calc(100vh - 16rem);
+  min-height: calc(100vh - 16rem - var(--header-height, 0px));
 }
 
 .hero-content--centered {
@@ -335,7 +338,7 @@ if (investorBadge && investorHandle && investorHandleUrl) {
 
 @media (max-width: 768px) {
   .hero-content {
-    min-height: calc(100vh - 12rem);
+    min-height: calc(100vh - 12rem - var(--header-height, 0px));
   }
   
   .toc-nav {
@@ -455,7 +458,7 @@ if (investorBadge && investorHandle && investorHandleUrl) {
 
 @media (max-width: 768px) {
   .hero-section {
-    min-height: 90vh;
+    min-height: calc(90vh - var(--header-height, 0px));
     padding: 6rem 0 4rem;
   }
   
@@ -495,24 +498,11 @@ if (investorBadge && investorHandle && investorHandleUrl) {
   document.addEventListener('DOMContentLoaded', () => {
     const badge = document.querySelector('.investor-badge');
     const hero = document.querySelector('.hero-section');
+    const banner = document.getElementById('latest-news-banner');
     if (!badge || !hero) return;
 
-    function heroFillsViewport() {
-      const rect = hero.getBoundingClientRect();
-      const viewportH = window.innerHeight || document.documentElement.clientHeight;
-      return rect.top <= 0 && rect.bottom >= viewportH;
-    }
-
-    function updateBadge() {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
-      if (scrollTop <= 0) {
-        // Keep visible during top overscroll to avoid flicker
-        badge.style.opacity = '1';
-        badge.style.transform = 'translateY(0)';
-        return;
-      }
-
-      if (heroFillsViewport()) {
+    function setBadgeVisible(visible) {
+      if (visible) {
         badge.style.opacity = '1';
         badge.style.transform = 'translateY(0)';
       } else {
@@ -521,8 +511,31 @@ if (investorBadge && investorHandle && investorHandleUrl) {
       }
     }
 
-    updateBadge();
-    window.addEventListener('scroll', updateBadge, { passive: true });
-    window.addEventListener('resize', updateBadge, { passive: true });
+    const update = () => {
+      const atTop = (window.scrollY || document.documentElement.scrollTop || 0) <= 0;
+      // Keep visible while the banner is still on-screen; hide once banner fully disappears
+      let bannerVisible = false;
+      if (banner) {
+        const b = banner.getBoundingClientRect();
+        bannerVisible = b.bottom > 0; // any part visible
+      }
+      setBadgeVisible(atTop || bannerVisible);
+    };
+
+    // Use scroll/resize to evaluate exact geometry; requestAnimationFrame for smoothness
+    let ticking = false;
+    function onScrollOrResize() {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          update();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    update();
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
   });
 </script>
