@@ -100,8 +100,8 @@ const formatDate = (date: Date) => {
 <style is:global>
 /* Professional Theme Base - matching homepage */
 :root {
-  --bg-primary: #f9f8f4;
-  --bg-secondary: #f9f8f4;
+  --bg-primary: var(--color-background);
+  --bg-secondary: var(--color-background);
   --bg-tertiary: #FFFFFF;
   --text-primary: var(--color-text-primary);
   --text-secondary: var(--color-text-secondary);
@@ -196,21 +196,29 @@ body {
   }
 
   .article-category {
-    color: var(--accent-primary);
-    background: transparent;
-    padding: 0;
-    border-radius: 0;
-    font-size: 0.875rem;
+    color: var(--color-background);
+    background: var(--brand-deep);
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
     grid-column: 1 / 2;
   }
 
   .article-date {
-    color: var(--text-secondary);
-    font-size: 1rem;
-    font-weight: 500;
+    color: var(--brand-deep);
+    background: var(--brand-border);
+    border: 1px solid var(--brand-border);
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
     justify-self: end;
   }
 
@@ -280,9 +288,14 @@ body {
   .featured-article .inline-text-link-icon { opacity: 0.85; }
 
   /* Ensure the arXiv external link uses accent color and underline on hover */
-  .featured-article .external-link-cta a { color: var(--accent-primary); text-decoration: none; }
+  /* arXiv CTA adopts warm brand accent and matches Balajis hover */
+  .featured-article .external-link-cta a {
+    color: #DA6A47; /* warm midpoint (banner red/orange) */
+    text-decoration: none;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
   .featured-article .external-link-cta a:hover {
-    color: var(--accent-secondary);
+    color: #f8af6e; /* same hover orange as @balajis */
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-thickness: 1px;

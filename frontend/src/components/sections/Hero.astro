@@ -234,24 +234,21 @@ if (investorBadge && investorHandle && investorHandleUrl) {
 .btn-primary {
   background: var(--color-primary);
   color: white;
-  box-shadow: 0 4px 14px rgba(11, 95, 255, 0.3);
+  box-shadow: 0 4px 14px rgba(27, 38, 59, 0.25);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(11, 95, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(27, 38, 59, 0.35);
 }
 
 .btn-secondary {
-  background: transparent;
-  color: var(--color-text-primary);
-  border-color: var(--color-border-medium);
+  background-color: var(--brand-border);
+  color: var(--color-primary);
+  border-color: var(--brand-border);
 }
 
-.btn-secondary:hover {
-  background: var(--color-surface-secondary);
-  border-color: var(--color-border-strong);
-}
+.btn-secondary:hover { filter: brightness(0.97); }
 
 .hero-metrics {
   display: flex;
@@ -315,7 +312,7 @@ if (investorBadge && investorHandle && investorHandleUrl) {
 
 .toc-link:hover {
   color: var(--color-primary);
-  background: rgba(11, 95, 255, 0.1);
+  background: rgba(27, 38, 59, 0.08);
   transform: translateY(-2px);
 }
 
@@ -409,7 +406,7 @@ if (investorBadge && investorHandle && investorHandleUrl) {
   right: 3rem;
   bottom: 3rem; /* squared with right */
   display: inline-block;
-  color: var(--color-text-tertiary);
+  color: #DA6A47; /* midpoint between #bc2520 and #f8af6e */
   font-size: 1.1rem;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -421,21 +418,24 @@ if (investorBadge && investorHandle && investorHandleUrl) {
 }
 
 .investor-badge .investor-link {
-  color: var(--color-text-secondary);
+  color: #DA6A47;
   text-decoration-line: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 2px;
-  text-decoration-color: var(--color-text-tertiary);
-}
-
-.investor-badge .investor-link:hover {
-  color: var(--color-text-secondary);
-  text-decoration-color: var(--color-text-tertiary);
-  text-decoration-thickness: 2px;
+  text-decoration-color: #DA6A47;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
 .investor-badge .investor-link:visited {
-  color: var(--color-text-secondary);
+  color: #DA6A47; /* keep visited state consistent with badge color */
+  text-decoration-color: #DA6A47;
+}
+
+/* Place hover after :visited so it wins when both apply */
+.investor-badge .investor-link:hover {
+  color: #f8af6e; /* banner orange */
+  text-decoration-color: #f8af6e;
+  text-decoration-thickness: 2px;
 }
 
 @media (max-width: 768px) {

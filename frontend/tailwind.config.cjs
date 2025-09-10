@@ -4,22 +4,23 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '#0B5FFF',
-        'accent': '#0B5FFF',
-        'background': '#f9f8f4',
+        // Turbopuffer-inspired palette (exact hexes provided)
+        'primary': '#0F172A', // deep navy for CTAs and headings
+        'accent': '#64748B',  // muted slate for hovers/secondary
+        'background': '#F9FAFC',
         'surface': '#FFFFFF',
-        'surface-secondary': '#f9f8f4',
+        'surface-secondary': '#F9FAFC',
         'surface-tertiary': '#FFFFFF',
         'text-primary': '#0F172A',
-        'text-secondary': '#475569',
+        'text-secondary': '#64748B',
         'text-tertiary': '#64748B',
-        'text-muted': '#94A3B8',
-        'border-light': '#E2E8F0',
-        'border-medium': '#CBD5E1',
-        'border-strong': '#94A3B8',
+        'text-muted': '#64748B',
+        'border-light': '#E8ECF4',
+        'border-medium': '#E8ECF4',
+        'border-strong': '#64748B',
         'light-gray': '#F1F5F9',
         'white': '#FFFFFF',
-        'mid-gray': '#475569',
+        'mid-gray': '#64748B',
         'dark': '#0F172A',
         'accent-green': '#059669',
         'accent-orange': '#EA580C',
@@ -38,10 +39,16 @@ module.exports = {
           900: '#111827',
         },
         // Additional color palettes
-        'blue': {
-          100: '#DBEAFE',
-          500: '#3B82F6',
-          800: '#1E40AF',
+        // Slate scale proxies
+        'slatebrand': {
+          50: '#F9FAFC',
+          100: '#F1F5F9',
+          200: '#E8ECF4',
+          300: '#E8ECF4',
+          400: '#64748B',
+          500: '#64748B',
+          700: '#0F172A',
+          900: '#0F172A',
         },
         'green': {
           100: '#D1FAE5',
