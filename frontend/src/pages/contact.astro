@@ -1,258 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageSection from '../components/ui/PageSection.astro';
 ---
 
-<BaseLayout 
-  title="Contact Us"
-  description="Get in touch with the Bomfather team for questions, support, or to schedule a demo."
-  showNewsletter={false}
->
-  <!-- Contact Header -->
-  <PageSection 
-    id="contact-header"
-    variant="dark"
-    size="lg"
-    title="Contact Us"
-    subtitle="Talk directly with our engineers who build the open source tools that secure the modern software supply chain"
-    headerLevel={1}
-    centerHeader={true}
-    className="contact-header-section"
-  >
-    <div class="hero-content">
-      <h2 class="trust-statement">
-        Trusted by <span class="highlight">Google</span>. Proven on <span class="highlight">LF Stages</span>. Built by <span class="highlight">3× OSS Maintainers</span>.
-      </h2>
-    </div>
-  </PageSection>
+<BaseLayout title="Contact Us" description="Email the Bomfather team">
+  <div class="contact-redirect">
+    <p>Opening your email client… If nothing happens, click below:</p>
+    <p><a href="mailto:contact@bomfather.dev" class="mailto-link">Email contact@bomfather.dev</a></p>
+  </div>
 
-  <!-- Contact Form Section -->
-  <PageSection 
-    id="contact-form"
-    variant="dark"
-    size="lg"
-    className="contact-form-section"
-  >
-    <div class="form-container">
-      <form name="contact" method="POST" data-netlify="true" class="contact-form" id="contact-form">
-        <h3 class="form-title">Send us a Message</h3>
-        
-        <div class="form-group">
-          <label for="name" class="form-label">Name</label>
-          <input type="text" id="name" name="name" class="form-input" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" name="email" class="form-input" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="subject" class="form-label">Subject</label>
-          <input type="text" id="subject" name="subject" class="form-input" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="message" class="form-label">Message</label>
-          <textarea id="message" name="message" rows="5" class="form-input form-textarea" required></textarea>
-        </div>
-        
-        <button type="submit" class="form-submit">
-          Send Message
-        </button>
-      </form>
-    </div>
-  </PageSection>
+  <script>
+    if (typeof window !== 'undefined') {
+      // Trigger mailto immediately on load
+      window.location.href = 'mailto:contact@bomfather.dev';
+    }
+  </script>
+
+  <style>
+    .contact-redirect {
+      min-height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+      text-align: center;
+    }
+    .mailto-link {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+  </style>
 </BaseLayout>
-
-<style>
-/* Professional Theme Base - matching homepage */
-:root {
-  --bg-primary: #f9f8f4;
-  --bg-secondary: #f9f8f4;
-  --bg-tertiary: #FFFFFF;
-  --text-primary: var(--color-text-primary);
-  --text-secondary: var(--color-text-secondary);
-  --text-tertiary: var(--color-text-tertiary);
-  --accent-primary: var(--color-primary);
-  --accent-secondary: #3b82f6;
-  --accent-gradient: linear-gradient(135deg, var(--color-primary) 0%, #1d4ed8 100%);
-  --border-color: var(--color-border-light);
-  --glass-bg: #FFFFFF;
-  --shadow-professional: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --success-color: #16a34a;
-  --error-color: #dc2626;
-  
-  /* Professional spacing */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 0.75rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-}
-
-/* Professional Global Styles - matching homepage */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  background: var(--bg-primary) !important;
-  color: var(--text-secondary);
-  font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-  line-height: 1.6;
-  font-size: 14px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Keep Inter for hero titles and main headings */
-.hero-title,
-.hero-subtitle,
-.trust-statement,
-.form-title {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-}
-
-/* Contact Header Section */
-.contact-header-section {
-  padding-top: 6rem !important;
-  padding-bottom: 2rem !important;
-}
-
-.hero-content {
-  margin-top: var(--spacing-lg);
-  text-align: center;
-}
-
-.trust-statement {
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: var(--text-primary);
-  line-height: 1.4;
-  margin: 0;
-}
-
-.trust-statement .highlight {
-  font-weight: 700;
-  color: var(--accent-primary);
-}
-
-/* Contact Form Section */
-.contact-form-section {
-  padding-top: 1rem !important;
-}
-
-.form-container {
-  max-width: 48rem;
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
-}
-
-.contact-form {
-  background: var(--glass-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 1rem;
-  padding: var(--spacing-2xl);
-  box-shadow: var(--shadow-professional);
-}
-
-.form-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-xl);
-  text-align: center;
-}
-
-.form-group {
-  margin-bottom: var(--spacing-lg);
-}
-
-.form-label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-sm);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.form-input {
-  width: 100%;
-  padding: var(--spacing-md);
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
-  color: var(--text-primary);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  transition: all 0.2s ease;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.form-input::placeholder {
-  color: var(--text-tertiary);
-}
-
-.form-textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.form-submit {
-  width: 100%;
-  background: var(--accent-primary);
-  color: white;
-  font-weight: 600;
-  padding: var(--spacing-md) var(--spacing-xl);
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-top: var(--spacing-md);
-}
-
-.form-submit:hover {
-  background: var(--accent-secondary);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-.form-submit:active {
-  transform: translateY(0);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .trust-statement {
-    font-size: 1.125rem;
-  }
-  
-  .contact-form {
-    padding: var(--spacing-xl);
-  }
-  
-  .form-container {
-    padding: 0 var(--spacing-sm);
-  }
-}
-
-@media (max-width: 640px) {
-  .trust-statement {
-    font-size: 1rem;
-  }
-  
-  .contact-form {
-    padding: var(--spacing-lg);
-  }
-}
-</style> 
