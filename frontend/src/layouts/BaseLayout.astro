@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import AnnouncementBanner from '../components/AnnouncementBanner.astro';
+import LatestNewsBanner from '../components/LatestNewsBanner.astro';
 
 export interface Props {
   title: string;
@@ -21,6 +22,7 @@ const { title, description, showHeader = true, showAnnouncement = false, showNew
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#f9f8f4" />
     <link rel="icon" type="image/png" href="/images/logos/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
@@ -46,9 +48,68 @@ const { title, description, showHeader = true, showAnnouncement = false, showNew
     </script>
   </head>
   <body class="bg-background text-text-secondary">
+    <LatestNewsBanner />
     {showAnnouncement ? <AnnouncementBanner /> : null}
     {showHeader ? <Header /> : null}
     
+    <script>
+      // Keep a CSS var with the banner height so sections can offset themselves
+      (function () {
+        function setBannerHeightVar() {
+          try {
+            const banner = document.getElementById('latest-news-banner');
+            const height = banner ? banner.offsetHeight : 0;
+            document.documentElement.style.setProperty('--latest-news-banner-height', `${height}px`);
+          } catch (e) {
+            // noop
+          }
+        }
+        function setHeaderHeightVar() {
+          try {
+            const header = document.querySelector('.header-nav');
+            const height = header ? header.offsetHeight : 0;
+            document.documentElement.style.setProperty('--header-height', `${height}px`);
+          } catch (e) {
+            // noop
+          }
+        }
+        function setAllOffsets() {
+          setBannerHeightVar();
+          setHeaderHeightVar();
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => {
+            setAllOffsets();
+            const banner = document.getElementById('latest-news-banner');
+            if (banner && 'ResizeObserver' in window) {
+              const ro = new ResizeObserver(setBannerHeightVar);
+              ro.observe(banner);
+            }
+            const header = document.querySelector('.header-nav');
+            if (header && 'ResizeObserver' in window) {
+              const roh = new ResizeObserver(setHeaderHeightVar);
+              roh.observe(header);
+            }
+            window.addEventListener('resize', setAllOffsets, { passive: true });
+          });
+        } else {
+          setAllOffsets();
+          const banner = document.getElementById('latest-news-banner');
+          if (banner && 'ResizeObserver' in window) {
+            const ro = new ResizeObserver(setBannerHeightVar);
+            ro.observe(banner);
+          }
+          const header = document.querySelector('.header-nav');
+          if (header && 'ResizeObserver' in window) {
+            const roh = new ResizeObserver(setHeaderHeightVar);
+            roh.observe(header);
+          }
+          window.addEventListener('resize', setAllOffsets, { passive: true });
+        }
+      })();
+    </script>
+
     <main>
       <slot />
     </main>
@@ -424,6 +485,8 @@ const { title, description, showHeader = true, showAnnouncement = false, showNew
     /* Subtle hover fade on all anchors */
     a { transition: color 0.15s ease, opacity 0.15s ease; }
     a:hover { opacity: 0.9; }
+  </style>
+  <style is:global>
   </style>
   <script>
     // Ensure all external links open in a new tab and append an external-link icon
