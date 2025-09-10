@@ -75,11 +75,8 @@ const formatDate = (date: Date) => {
 
           {article.data.externalLink && (
             <p class="external-link-cta">
-              <a href={article.data.externalLink} target="_blank" rel="noopener noreferrer" class="inline-text-link">
-                Read the paper on arXiv
-                <svg class="inline-text-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+              <a href={article.data.externalLink} target="_blank" rel="noopener noreferrer" class="arxiv-link-strong">
+                <strong>Read the paper on arXiv</strong>
               </a>
             </p>
           )}
@@ -242,6 +239,18 @@ body {
     margin-bottom: 2rem;
   }
 
+  /* News page: show underline on hover only (like About page) */
+  .article-content a {
+    text-decoration: none;
+  }
+
+  .article-content a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: currentColor;
+  }
+
   /* Inline external link under excerpt (no bubble) */
   .featured-article .external-link-cta {
     margin-top: 0.5rem;
@@ -255,16 +264,31 @@ body {
     align-items: center;
     gap: 0.35rem;
     color: var(--accent-primary);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-thickness: 1px;
+    text-decoration: none;
     font-weight: 600;
     white-space: nowrap;
   }
 
-  .featured-article .inline-text-link:hover { color: var(--accent-secondary); }
+  .featured-article .inline-text-link:hover {
+    color: var(--accent-secondary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: currentColor;
+  }
 
   .featured-article .inline-text-link-icon { opacity: 0.85; }
+
+  /* Ensure the arXiv external link uses accent color and underline on hover */
+  .featured-article .external-link-cta a { color: var(--accent-primary); text-decoration: none; }
+  .featured-article .external-link-cta a:hover {
+    color: var(--accent-secondary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: currentColor;
+  }
+  .featured-article .external-link-cta a.arxiv-link-strong strong { font-weight: 700; }
 
   /* Floated images for wrapped text in news articles */
   .article-content img.news-float-image {
