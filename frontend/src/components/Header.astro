@@ -149,7 +149,7 @@
   }
 
   .nav-link {
-    color: var(--color-text-secondary);
+    color: var(--color-text-tertiary); /* muted by default for contrast on hover */
     font-size: 0.875rem;
     font-weight: 500;
     transition: all 0.2s ease;
@@ -163,10 +163,7 @@
     text-decoration: none;
   }
 
-  .nav-link:hover {
-    background: var(--color-surface-secondary);
-    color: var(--color-text-primary);
-  }
+  .nav-link:hover { background: rgba(15, 23, 42, 0.06); color: var(--color-text-primary); }
 
   .dropdown-trigger {
     cursor: pointer;
@@ -278,9 +275,7 @@
     transition: background-color 0.15s ease;
   }
 
-  .dropdown-link:hover {
-    background: var(--color-surface-secondary);
-  }
+  .dropdown-link:hover { background: rgba(15, 23, 42, 0.05); }
 
   .dropdown-icon {
     flex-shrink: 0;
@@ -302,9 +297,20 @@
     line-height: 1.4;
   }
 
+  /* Header CTA follows CSS variables so brand updates propagate */
   .cta-button {
-    @apply bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200;
+    background-color: var(--color-primary);
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
   }
+  .cta-button:hover { filter: brightness(0.95); }
 
   .mobile-menu-button {
     color: var(--color-text-primary);
@@ -323,7 +329,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(10, 13, 20, 0.95);
+    background: rgba(13, 27, 42, 0.95);
     backdrop-filter: blur(20px);
     z-index: 100;
     opacity: 0;
@@ -366,8 +372,10 @@
   }
 
   .mobile-nav-cta {
-    @apply bg-blue-600 hover:bg-blue-700 mt-8;
+    background-color: var(--color-primary);
+    margin-top: 2rem;
   }
+  .mobile-nav-cta:hover { filter: brightness(0.95); }
 
   /* Animation for dropdown arrows */
   @keyframes dropdown-enter {

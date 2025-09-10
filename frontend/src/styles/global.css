@@ -3,41 +3,38 @@
 @tailwind utilities;
 
 :root {
-  /* Primary colors */
-  --color-primary: #0B5FFF;
-  --color-secondary: #224BC5;
-  --color-dark-blue: #0A2463;
-  
-  /* Light theme neutral colors */
-  --color-background: #f9f8f4;
-  --color-surface: #FFFFFF;
-  --color-surface-secondary: #f9f8f4;
-  --color-surface-tertiary: #FFFFFF;
-  
-  /* Text colors for light theme */
-  --color-text-primary: #0F172A;
-  --color-text-secondary: #475569;
-  --color-text-tertiary: #64748B;
-  --color-text-muted: #94A3B8;
-  
-  /* Border colors */
-  --color-border-light: #E2E8F0;
-  --color-border-medium: #CBD5E1;
-  --color-border-strong: #94A3B8;
-  
-  /* Legacy colors for compatibility */
-  --color-dark: #0F172A;
-  --color-mid-gray: #475569;
-  --color-light-gray: #F1F5F9;
-  --color-white: #FFFFFF;
-  --color-accent: #0B5FFF;
-  
-  /* Accent colors */
-  --color-green: #059669;
-  --color-orange: #EA580C;
-  --color-red: #DC2626;
+  /* Brand core hues */
+  --brand-deep: #34374b;       /* deep navy (headings, primary CTAs) */
+  --brand-muted: #64748B;      /* slate/muted text and subtle UI */
+  --brand-bg: #F9FAFC;         /* site background */
+  --brand-surface-tint: #F1F5F9; /* legacy light tint (not used for sections) */
+  --brand-border: #E8ECF4;     /* soft border */
 
-  /* Professional fonts: Fira Code for body, Inter for headings */
+  /* Semantic tokens mapped to brand */
+  --color-primary: var(--brand-deep);        /* primary brand (buttons/links) */
+  --color-background: var(--brand-bg);       /* page background */
+  --color-surface: #FFFFFF;                  /* cards/surfaces */
+  --color-surface-secondary: var(--color-background); /* section backgrounds */
+  --color-surface-tertiary: #FFFFFF;         /* code blocks, alt surfaces */
+
+  /* Text tokens */
+  --color-text-primary: var(--brand-deep);   /* main headings/text */
+  --color-text-secondary: var(--brand-deep); /* body text */
+  --color-text-tertiary: var(--brand-muted); /* captions/secondary */
+  --color-text-muted: var(--brand-muted);    /* subtle UI text */
+
+  /* Border tokens */
+  --color-border-light: var(--brand-border); /* light borders */
+  --color-border-medium: var(--brand-border);/* medium borders */
+  --color-border-strong: var(--brand-muted); /* strong/dividers */
+
+  /* Compatibility aliases (still referenced in styles) */
+  --color-dark: var(--brand-deep);           /* alias of deep navy */
+  --color-mid-gray: var(--brand-muted);      /* alias of muted slate */
+  --color-light-gray: var(--brand-surface-tint); /* alias of legacy tint */
+  --color-white: #FFFFFF;                    /* pure white */
+
+  /* Professional fonts */
   --font-sans: 'Fira Code', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
   --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'Fira Code', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
@@ -65,12 +62,16 @@ code, pre {
     @apply px-6 py-3 rounded-md font-medium transition duration-300;
   }
   
-  .btn-primary {
-    @apply bg-primary text-white hover:bg-accent;
-  }
+  .btn-primary { @apply bg-primary text-white hover:bg-accent; }
   
+  /* Secondary buttons should not blend with the page background. Use brand-border. */
   .btn-secondary {
-    @apply bg-transparent border border-primary text-primary hover:bg-primary/10;
+    background-color: var(--brand-border);
+    border: 1px solid var(--brand-border);
+    color: var(--color-primary);
+  }
+  .btn-secondary:hover {
+    filter: brightness(0.97);
   }
   
   .container {
@@ -143,25 +144,20 @@ code, pre {
   /* Professional Table Styling */
   .data-table {
     width: 100%;
-    background-color: white;
-    border: 1px solid #E5E7EB;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: 0.5rem;
     overflow: hidden;
   }
   
-  .data-table-header {
-    background-color: #f9f8f4;
-    border-bottom: 1px solid #E5E7EB;
-  }
+  .data-table-header { background-color: var(--color-surface-secondary); border-bottom: 1px solid var(--color-border-light); }
   
   .data-table-row {
-    border-bottom: 2px solid #e5e7eb;
+    border-bottom: 2px solid var(--color-border-light);
     transition: background-color 0.2s ease;
   }
   
-  .data-table-row:hover {
-    background-color: #f9f8f4;
-  }
+  .data-table-row:hover { background-color: var(--color-surface-secondary); }
   
   .data-table-row:last-child {
     border-bottom: 2px solid #e5e7eb;
@@ -170,7 +166,7 @@ code, pre {
   .data-table-cell {
     padding: 0.75rem 1rem;
     font-size: 0.875rem;
-    color: #111827;
+    color: var(--color-text-primary);
     font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
     line-height: 1.5;
   }
@@ -180,7 +176,7 @@ code, pre {
     padding: 0.75rem 1rem;
     font-size: 0.75rem;
     font-weight: 500;
-    color: #6B7280;
+    color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -229,8 +225,8 @@ code, pre {
   
   /* Professional Card Styling */
   .professional-card {
-    background-color: white;
-    border: 1px solid #E5E7EB;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: 0.5rem;
     padding: 1.5rem;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -248,12 +244,12 @@ code, pre {
   .professional-card-title {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #111827;
+    color: var(--color-text-primary);
   }
   
   .professional-card-subtitle {
     font-size: 0.875rem;
-    color: #6B7280;
+    color: var(--color-text-muted);
     margin-top: 0.25rem;
   }
   

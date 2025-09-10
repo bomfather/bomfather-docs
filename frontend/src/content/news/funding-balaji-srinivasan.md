@@ -11,7 +11,7 @@ draft: false
   
 </a>
 
-We're excited to announce that Bomfather has secured funding from [**Balaji Srinivasan**](https://x.com/balajis), former CTO of Coinbase and one of the most respected voices in technology. 
+We're excited to announce that Bomfather has secured funding from <a href="https://x.com/balajis" target="_blank" rel="noopener noreferrer" class="external-link"><strong>Balaji Srinivasan</strong></a>, former CTO of Coinbase and one of the most respected voices in technology. 
 
 This investment validates our mission to revolutionize AI security through kernel-level protection and will accelerate our development of revolutionary security. 
 

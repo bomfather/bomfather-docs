@@ -94,29 +94,28 @@ const formatDate = (date: Date) => {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 0; /* switch to list style with separators */
   }
 
   .blog-post-card {
-    background: #ffffff;
-    border: 1px solid var(--color-border-light);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--border-color);
+    border-radius: 0;
+    overflow: visible;
+    transition: all 0.2s ease;
     opacity: 0;
     transform: translateY(20px);
   }
+
+  .blog-post-card:first-child { border-top: 2px solid var(--border-color); }
 
   .blog-post-card.animate-on-scroll {
     animation: slideUpFade 0.6s ease forwards;
     animation-delay: var(--delay, 0s);
   }
 
-  .blog-post-card:hover {
-    border-color: #d1d5db;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
-    transform: translateY(-4px);
-  }
+  .blog-post-card:hover { background: transparent; transform: none; }
 
   .blog-post-link {
     display: block;
@@ -164,13 +163,13 @@ const formatDate = (date: Date) => {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #2563eb;
+    color: #DA6A47; /* warm external-link color */
     font-weight: 600;
     font-size: 14px;
     transition: all 0.2s ease;
   }
 
-  .blog-post-card:hover .blog-post-read-more { color: #1d4ed8; transform: translateX(4px); }
+  .blog-post-card:hover .blog-post-read-more { color: #f8af6e; transform: translateX(4px); }
 
   .read-more-arrow {
     transition: transform 0.2s ease;

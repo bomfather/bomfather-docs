@@ -222,8 +222,8 @@ const {
 <style>
 /* Professional Theme Base */
 :root {
-  --bg-primary: #f9f8f4;
-  --bg-secondary: #f9f8f4;
+  --bg-primary: var(--color-background);
+  --bg-secondary: var(--color-background);
   --bg-tertiary: #FFFFFF;
   --text-primary: var(--color-text-primary);
   --text-secondary: var(--color-text-secondary);
@@ -597,6 +597,7 @@ body {
 
 .step-number {
   position: relative;
+  isolation: isolate; /* ensure z-index layering is respected within */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -609,15 +610,17 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: var(--accent-gradient);
+  background: var(--brand-deep);
   border-radius: 50%;
-  animation: glow 3s ease-in-out infinite;
+  box-shadow: none;
+  animation: none;
+  z-index: 0;
 }
 
 .step-number-text {
   position: relative;
   z-index: 1;
-  color: white;
+  color: var(--color-background) !important; /* match page background */
   font-weight: 700;
   font-size: 1.5rem;
 }
@@ -924,10 +927,10 @@ body {
   width: max-content; /* shrink to content */
   gap: 0.5rem;
   margin: 0 auto 1rem auto; /* center the pill */
-  background: #fff;
+  background: var(--color-surface);
   padding: 0.25rem;
   border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border-light);
 }
 
 .toggle-btn {
@@ -937,12 +940,20 @@ body {
   padding: 0.5rem 0.875rem;
   border-radius: 8px;
   font-weight: 600;
-  color: #374151;
+  color: var(--color-text-secondary);
   cursor: pointer;
 }
 
 .toggle-btn.active {
-  background: #111827;
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.toggle-btn:hover { background: var(--brand-border); color: var(--color-primary); }
+
+/* Keep the active button dark blue even on hover */
+.toggle-btn.active:hover {
+  background: var(--color-primary);
   color: #fff;
 }
 

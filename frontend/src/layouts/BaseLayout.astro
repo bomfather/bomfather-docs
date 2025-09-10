@@ -22,7 +22,7 @@ const { title, description, showHeader = true, showAnnouncement = false, showNew
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light">
-    <meta name="theme-color" content="#f9f8f4" />
+    <meta name="theme-color" content="#F9FAFC" />
     <link rel="icon" type="image/png" href="/images/logos/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
@@ -368,7 +368,7 @@ const { title, description, showHeader = true, showAnnouncement = false, showNew
       .email-input:focus {
         outline: none;
         border-color: var(--color-primary);
-        box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.1);
+        box-shadow: 0 0 0 3px rgba(27, 38, 59, 0.12);
         background: var(--color-background);
       }
       
@@ -387,12 +387,12 @@ const { title, description, showHeader = true, showAnnouncement = false, showNew
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 14px rgba(11, 95, 255, 0.3);
+        box-shadow: 0 4px 14px rgba(27, 38, 59, 0.25);
       }
       
       .subscribe-button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(11, 95, 255, 0.4);
+        box-shadow: 0 6px 20px rgba(27, 38, 59, 0.35);
       }
       
       .subscribe-button:active {
@@ -485,6 +485,24 @@ const { title, description, showHeader = true, showAnnouncement = false, showNew
     /* Subtle hover fade on all anchors */
     a { transition: color 0.15s ease, opacity 0.15s ease; }
     a:hover { opacity: 0.9; }
+    /* Unified external link styling site-wide */
+    /* External links: text (and nested strong) use warm brand accents */
+    a.external-link,
+    a.external-link strong {
+      color: #DA6A47 !important; /* warm midpoint (banner red/orange) */
+      text-decoration: none;
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+    a.external-link:visited,
+    a.external-link:visited strong { color: #DA6A47 !important; }
+    a.external-link:hover,
+    a.external-link:hover strong {
+      color: #f8af6e !important; /* same hover orange as investor handle */
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: currentColor;
+    }
   </style>
   <style is:global>
   </style>
@@ -517,6 +535,9 @@ const { title, description, showHeader = true, showAnnouncement = false, showNew
             const needed = ['noopener', 'noreferrer'];
             needed.forEach((r) => { if (!existingRel.includes(r)) existingRel.push(r); });
             a.setAttribute('rel', existingRel.join(' '));
+
+            // Add a class so we can style all external links consistently
+            a.classList.add('external-link');
 
             // Trim any trailing whitespace text node so icon sits tight after text
             let last = a.lastChild;

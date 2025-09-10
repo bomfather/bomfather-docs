@@ -61,7 +61,7 @@ function initHeroAnimations() {
   if (primaryCta) {
     // Create a repeating pulse animation for the primary CTA button
     gsap.to(primaryCta, {
-      boxShadow: '0 0 15px rgba(11, 95, 255, 0.5)',
+      boxShadow: '0 0 15px rgba(27, 38, 59, 0.45)',
       scale: 1.03,
       duration: 1.5,
       repeat: -1,

@@ -65,8 +65,8 @@ import PageSection from '../components/ui/PageSection.astro';
 <style>
 /* Professional Theme Base - matching homepage */
 :root {
-  --bg-primary: #f9f8f4;
-  --bg-secondary: #f9f8f4;
+  --bg-primary: var(--color-background);
+  --bg-secondary: var(--color-background);
   --bg-tertiary: #FFFFFF;
   --text-primary: var(--color-text-primary);
   --text-secondary: var(--color-text-secondary);
@@ -150,17 +150,8 @@ body {
   margin: 0;
 }
 
-.accent-link {
-  color: var(--accent-primary);
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
+/* Use centralized external-link styling */
 
-.accent-link:hover {
-  text-decoration: underline;
-  color: var(--accent-secondary);
-}
 
 .highlight-text {
   font-weight: 600;
