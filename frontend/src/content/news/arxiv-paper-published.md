@@ -1,5 +1,5 @@
 ---
-title: "Bomfather Research Published on arXiv: Kernel-Level Monitoring Framework for Software Supply Chains"
+title: "Bomfather Research Published on arXiv"
 publishedAt: 2025-08-03T00:00:00Z
 category: "Research"
 author: "Naveen Srinivasan, Nathan Naveen, Neil Naveen"
@@ -14,7 +14,7 @@ draft: false
 
 We're excited to announce the publication of our research paper *"Bomfather: An eBPF-based Kernel-level Monitoring Framework for Accurate Identification of Unknown, Unused, and Dynamically Loaded Dependencies in Modern Software Supply Chains"* on arXiv.
 
-The paper, authored by **Nathan Naveen**, **Neil Naveen**, and **Naveen Srinivasan** introduces our revolutionary approach to software supply chain security, which addresses critical gaps in conventional dependency-tracking methods.
+The paper introduces our revolutionary approach to software supply chain security, which addresses critical gaps in conventional dependency-tracking methods.
 
 ## Key Research Takeaways
 
@@ -26,5 +26,4 @@ Unlike traditional static analysis approaches, our methodology accounts for:
 - Partial library dependencies and dynamic linking
 - Libraries loaded at runtime and short-lived build files
 
-This results in significantly more precise Software Bills of Materials (SBOMs) and enhancing trustworthiness in software artifacts through kernel-level evidence of build provenance.
-
+This results in significantly more precise Software Bills of Materials (SBOMs) and enhances trustworthiness in software artifacts through kernel-level evidence of build provenance.

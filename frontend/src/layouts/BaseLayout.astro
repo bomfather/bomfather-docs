@@ -21,7 +21,7 @@ const { title, description, showHeader = true, showAnnouncement = false, showNew
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light">
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/png" href="/images/logos/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title} | Bomfather</title>
@@ -412,4 +412,68 @@ const { title, description, showHeader = true, showAnnouncement = false, showNew
     </style>
     )}
   </body>
+  <style is:global>
+    /* External link icon styling - inherits link color */
+    .external-link-icon {
+      display: inline-block;
+      vertical-align: -0.15em; /* nudge up to align with text baseline */
+      margin-left: 0.15rem; /* tighter spacing so punctuation isn't pushed */
+      line-height: 1;
+    }
+    .external-link-icon svg { width: 1em; height: 1em; stroke: currentColor; }
+    /* Subtle hover fade on all anchors */
+    a { transition: color 0.15s ease, opacity 0.15s ease; }
+    a:hover { opacity: 0.9; }
+  </style>
+  <script>
+    // Ensure all external links open in a new tab and append an external-link icon
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch('/images/external-link.svg', { cache: 'force-cache' });
+        const svgText = await res.text();
+
+        const isExternal = (anchor) => {
+          try {
+            const url = new URL(anchor.href, window.location.origin);
+            return url.origin !== window.location.origin && ['http:', 'https:'].includes(url.protocol);
+          } catch {
+            return false;
+          }
+        };
+
+        document.querySelectorAll('a[href]')
+          .forEach((a) => {
+            // Skip if link is not external, or wraps an image/SVG, or already has an icon
+            if (!isExternal(a)) return;
+            if (a.querySelector('img, svg')) return;
+            if (a.querySelector('.external-link-icon')) return;
+
+            // Enforce new-tab and safe rel
+            a.setAttribute('target', '_blank');
+            const existingRel = (a.getAttribute('rel') || '').split(/\s+/).filter(Boolean);
+            const needed = ['noopener', 'noreferrer'];
+            needed.forEach((r) => { if (!existingRel.includes(r)) existingRel.push(r); });
+            a.setAttribute('rel', existingRel.join(' '));
+
+            // Trim any trailing whitespace text node so icon sits tight after text
+            let last = a.lastChild;
+            while (last && last.nodeType === Node.TEXT_NODE) {
+              const trimmed = last.textContent.replace(/\s+$/,'');
+              if (trimmed.length === last.textContent.length) break;
+              last.textContent = trimmed;
+              break;
+            }
+
+            // Append inline SVG so it inherits currentColor
+            const span = document.createElement('span');
+            span.className = 'external-link-icon';
+            span.setAttribute('aria-hidden', 'true');
+            span.innerHTML = svgText;
+            a.appendChild(span);
+          });
+      } catch (e) {
+        console.warn('External link icon setup failed:', e);
+      }
+    });
+  </script>
 </html> 
