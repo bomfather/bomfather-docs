@@ -178,10 +178,6 @@ const {
         ></iframe>
       </div>
       <div class="demo-info animate-fade-in" style="--delay: 0.3s">
-        <p class="demo-description">
-          This demo showcases Bomfather's kernel level protection in action, blocking AI attacks before they execute. 
-          Experience how our eBPF based security transforms AI system protection.
-        </p>
       </div>
     </div>
   </PageSection>
@@ -198,10 +194,6 @@ const {
     <div class="steps-container">
       {howItWorks.steps.map((step, index) => (
         <div class="step-item animate-on-scroll" style={`--delay: ${index * 0.3}s`}>
-          <div class="step-number animate-scale">
-            <span class="step-number-text">{step.step}</span>
-            <div class="step-number-bg"></div>
-          </div>
           <div class="step-content">
             <h3 class="step-title animate-slide-up">{step.title}</h3>
             <p class="step-description animate-fade-in" style="--delay: 0.1s">{step.description}</p>
@@ -492,7 +484,7 @@ body {
 .problem-solution-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 /* Solution Grid - Centered for single card */
@@ -505,6 +497,29 @@ body {
 .solution-grid .card {
   max-width: 500px;
   width: 100%;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0;
+  position: relative;
+  isolation: isolate;
+}
+
+.solution-grid .card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-bg);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.solution-grid .card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(10px, 10px);
+  background: rgba(100, 116, 139, 0.12);
+  border-radius: inherit;
+  z-index: -2;
 }
 
 .solution-grid .card p,
@@ -590,40 +605,44 @@ body {
 
 .step-item {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 3rem;
+  grid-template-columns: 1fr;
+  gap: 1rem;
   align-items: start;
-}
-
-.step-number {
+  padding: 1.5rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0;
   position: relative;
-  isolation: isolate; /* ensure z-index layering is respected within */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  flex-shrink: 0;
+  isolation: isolate;
 }
 
-.step-number-bg {
+.step-content { min-width: 0; }
+
+.step-item::before {
+  content: '';
   position: absolute;
-  width: 100%;
-  height: 100%;
-  background: var(--brand-deep);
-  border-radius: 50%;
-  box-shadow: none;
-  animation: none;
-  z-index: 0;
+  inset: 0;
+  background: var(--glass-bg);
+  z-index: -1;
 }
 
-.step-number-text {
-  position: relative;
-  z-index: 1;
-  color: var(--color-background) !important; /* match page background */
-  font-weight: 700;
-  font-size: 1.5rem;
+.step-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(10px, 10px);
+  background: rgba(100, 116, 139, 0.12);
+  z-index: -2;
 }
+
+.step-number { display: none; }
+
+.step-number-bg { display: none; }
+
+.step-number-text { display: none; }
+
+.step-eyebrow { display: none; }
+
+.step-index { display: none; }
 
 .step-title {
   font-size: 1.75rem;
@@ -640,34 +659,29 @@ body {
 }
 
 .code-block {
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
+  background: #1e293b; /* medium slate (not pure black) */
+  border: 1px solid #334155; /* slate 700 */
   border-radius: 0.75rem;
   padding: 1.5rem;
-  overflow: hidden;
+  /* Prevent long lines from expanding the card; enable horizontal scroll */
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+  text-align: left; /* ensure left alignment on mobile where parents may center text */
   font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
   position: relative;
 }
 
-.code-block::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--accent-gradient);
-  border-radius: 0.75rem 0.75rem 0 0;
-}
+.code-block::before { display: none; }
 
 .code-block code {
-  color: var(--text-primary);
+  color: #e5e7eb; /* light gray text */
   font-size: 0.875rem;
   line-height: 1.6;
-  display: block;
-  white-space: pre;
-  height: 100%;
-  overflow: hidden;
+  display: inline-block;
+  white-space: pre; /* preserve spaces and newlines */
+  min-width: max-content; /* prevent wrapping; enable scroll */
 }
 
 /* Features Grid */
@@ -678,14 +692,38 @@ body {
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 2rem;
+  gap: 1.5rem;
   position: relative;
   z-index: 2;
 }
 
 .feature-card {
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
+  border: 1px solid var(--color-border-strong);
+  transition: none;
+  border-radius: 0;
+  position: relative;
+  isolation: isolate;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-bg);
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.feature-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(10px, 10px);
+  background: rgba(100, 116, 139, 0.12);
+  border-radius: inherit;
+  z-index: -2;
+  pointer-events: none;
 }
 
 .benefits-list {
@@ -872,6 +910,7 @@ body {
   .features-grid,
   .get-started-options {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
   
   /* Demo Video Mobile Styles */
@@ -967,24 +1006,31 @@ body {
 .table-text-content {
   margin-top: 0;
   padding: 1.5rem;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  border-top: none;
-  border-radius: 0 0 0.75rem 0.75rem;
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   position: relative;
+  isolation: isolate;
 }
 
 .table-text-content::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--border-color);
+  inset: 0;
+  background: var(--glass-bg);
+  z-index: -1;
+}
+
+.table-text-content::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(10px, 10px);
+  background: rgba(100, 116, 139, 0.12);
+  z-index: -2;
 }
 
 .table-text-content p {
@@ -1037,18 +1083,40 @@ body {
 .attack-vector-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-lg);
+  gap: 1.5rem;
 }
 
 .attack-vector-card {
-  background: white;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0;
   padding: var(--spacing-xl);
-  box-shadow: var(--shadow-professional);
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
-  transition: all 0.2s ease;
+  transition: none;
+}
+
+.attack-vector-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-bg);
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.attack-vector-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(10px, 10px);
+  background: rgba(100, 116, 139, 0.12);
+  border-radius: inherit;
+  z-index: -2;
+  pointer-events: none;
 }
 
 .attack-vector-card:hover {
@@ -1141,6 +1209,7 @@ body {
   
   .attack-vector-card {
     min-height: auto;
+    border: 1px solid var(--color-border-strong);
   }
   
   .attack-vectors-separator {

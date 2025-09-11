@@ -123,8 +123,7 @@ const pageContent = {
     id="demo-video"
     variant="dark"
     size="lg"
-    title="See Bomfather AI Protection In Action"
-    subtitle="Watch how kernel-level security stops AI attacks that traditional solutions miss"
+    title="See Bomfathers AI Protection In Action"
     headerLevel={2}
     centerHeader={true}
     className="demo-video-section"
@@ -159,7 +158,7 @@ const pageContent = {
         <Card 
           variant="glass"
           padding="lg"
-          className="scenario-card animate-slide-up hover-lift"
+          className="scenario-card animate-slide-up"
           style={`--delay: ${index * 0.2}s`}
         >
           <h3 class="scenario-title">{scenario.title}</h3>
@@ -323,10 +322,7 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.hover-lift:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
+/* Removed hover effect for non-clickable elements */
 
 .hover-glow {
   transition: all 0.3s ease;
@@ -342,24 +338,44 @@ body {
 .attack-vector-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-lg);
+  gap: 1.5rem;
 }
 
 .attack-vector-card {
-  background: white;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0;
   padding: var(--spacing-xl);
-  box-shadow: var(--shadow-professional);
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
-  transition: all 0.2s ease;
+  transition: none;
 }
 
-.attack-vector-card:hover {
-  border-color: #d1d5db;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+/* Paint main surface and offset tile (solid rectangle shadow) */
+.attack-vector-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-bg);
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
 }
+
+.attack-vector-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(10px, 10px);
+  background: rgba(100, 116, 139, 0.12);
+  border-radius: inherit;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* Removed hover effect on non-clickable attack vector cards */
 
 .attack-card-title {
   font-size: 1.125rem;
@@ -497,11 +513,7 @@ body {
   transition: all 0.3s ease;
 }
 
-.video-wrapper:hover {
-  box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
-  border-color: var(--accent-secondary);
-  transform: translateY(-4px);
-}
+/* Removed hover effect on non-clickable video wrapper */
 
 .demo-description {
   color: var(--text-secondary);
@@ -519,11 +531,42 @@ body {
   margin: 0 auto;
 }
 
-.scenario-card {
-  border: 1px solid var(--border-color);
+/* Ensure strong borders and offset tiles for Card wrappers */
+.scenarios-grid :global(.card--glass) {
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  box-shadow: none;
+}
+
+.scenarios-grid :global(.card) {
+  border-radius: 0;
+  padding: var(--spacing-xl);
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+  isolation: isolate;
+}
+
+.scenarios-grid :global(.card)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-bg);
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.scenarios-grid :global(.card)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(10px, 10px);
+  background: rgba(100, 116, 139, 0.12);
+  border-radius: inherit;
+  z-index: -2;
+  pointer-events: none;
 }
 
 .scenario-title {
@@ -602,6 +645,7 @@ body {
   
   .attack-vector-card {
     min-height: auto;
+    border: 1px solid var(--color-border-strong);
   }
   
   .features-grid,
