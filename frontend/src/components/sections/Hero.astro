@@ -108,7 +108,18 @@ if (investorBadge && investorHandle && investorHandleUrl) {
   {investorBadge && (
     <div class="investor-badge" aria-label="Investor recognition">
       {(investorHandle && investorHandleUrl && investorBadge.includes(investorHandle)) ? (
-        <>{badgeBefore}<a href={investorHandleUrl} class="investor-link" target="_blank" rel="noopener noreferrer">{investorHandle}</a>{badgeAfter}</>
+        <>
+          {badgeBefore}
+          <a href={investorHandleUrl} class="investor-link" target="_blank" rel="noopener noreferrer">{investorHandle}</a>
+          {badgeAfter && badgeAfter.startsWith(',') ? (
+            <>
+              <br />
+              {badgeAfter.replace(/^,\s*/, '')}
+            </>
+          ) : (
+            badgeAfter
+          )}
+        </>
       ) : (
         investorBadge
       )}

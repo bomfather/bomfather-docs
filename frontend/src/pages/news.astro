@@ -161,26 +161,42 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem; /* space between tiles */
   }
 
-  /* Clean list layout: flat background with clear separators */
+  /* Tile layout matching blog cards */
   .featured-article {
+    position: relative;
     background: transparent;
-    border: none;
+    border: 2px solid var(--color-border-strong);
     border-radius: 0;
-    padding: 2.5rem 0;
+    padding: 28px 32px; /* generous buffer around text */
     margin: 0;
-    box-shadow: none;
-    border-bottom: 2px solid var(--border-color);
+    isolation: isolate;
   }
 
-  .featured-article:first-child {
-    border-top: 2px solid var(--border-color);
+  /* Solid surface covers the offset shadow */
+  .featured-article::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #ffffff; /* solid white tile */
+    border-radius: inherit;
+    z-index: -1;
+    pointer-events: none;
   }
 
-  /* Remove divider on the last article to avoid a trailing line */
-  .featured-article:last-child {
-    border-bottom: 0;
+  .featured-article::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translate(14px, 14px);
+    background: rgba(100, 116, 139, 0.24);
+    border-radius: inherit;
+    z-index: -2;
+    pointer-events: none;
   }
 
   /* Removed zebra tint for a cleaner, high-contrast separation */
@@ -448,9 +464,7 @@ body {
       padding: 0 0.5rem;
     }
 
-    .featured-article {
-      padding: 2rem 0;
-    }
+    .featured-article { padding: 20px 24px; }
 
     .article-title {
       font-size: 1.5rem;
