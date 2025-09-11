@@ -95,14 +95,19 @@ const formatDate = (date: Date) => {
     className="blog-post-cta-section"
   >
     <div class="blog-post-cta animate-on-scroll">
-      <div class="cta-content">
-        <div class="cta-text">
-          <h3 class="cta-title">Keep Reading</h3>
-          <p class="cta-description">Explore more insights on AI security, eBPF technology, and kernel-level protection.</p>
-        </div>
-        <div class="cta-actions">
-          <a href="/blog" class="cta-button secondary">View All Articles</a>
-        </div>
+      <div class="cta-tile">
+        <a href="/blog" class="cta-tile-link">
+          <div class="cta-text">
+            <h3 class="cta-title">Keep Reading</h3>
+            <p class="cta-description">Explore more insights on AI security, eBPF technology, and kernel-level protection.</p>
+          </div>
+          <div class="cta-actions">
+            <span class="arrow-link-text">View All Articles</span>
+            <svg class="arrow-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
       </div>
     </div>
   </PageSection>
@@ -171,6 +176,9 @@ const formatDate = (date: Date) => {
     .blog-post-header-section.page-section--md {
       padding-top: 9.5rem !important;
     }
+    /* Slightly more breathing room on larger screens but still tight */
+    .blog-post-content-section.page-section--lg { padding-bottom: 2rem !important; }
+    .blog-post-cta-section.page-section--md { padding-top: 2rem !important; }
   }
 
   .blog-post-description {
@@ -196,6 +204,9 @@ const formatDate = (date: Date) => {
   }
 
   .blog-post-content-section { background: transparent; }
+  /* Tighten gap between content and CTA */
+  .blog-post-content-section.page-section--lg { padding-bottom: 1.5rem !important; }
+  .blog-post-cta-section.page-section--md { padding-top: 1.5rem !important; padding-bottom: 2rem !important; }
 
   .blog-post-article {
     max-width: 800px;
@@ -362,11 +373,39 @@ const formatDate = (date: Date) => {
     font-style: italic;
   }
 
-  .blog-post-cta-section { background: transparent; border-top: 1px solid var(--color-border-light); }
+  .blog-post-cta-section { background: transparent; border-top: none; }
 
   .blog-post-cta {
     max-width: 800px;
     margin: 0 auto;
+  }
+
+  /* CTA tile using same surface/shadow treatment as cards */
+  .cta-tile {
+    position: relative;
+    border: 2px solid var(--color-border-strong);
+    border-radius: 0;
+    background: transparent;
+    isolation: isolate;
+  }
+
+  .cta-tile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #ffffff; /* solid white surface */
+    border-radius: inherit;
+    z-index: -1;
+  }
+
+  .cta-tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translate(14px, 14px);
+    background: rgba(100, 116, 139, 0.24);
+    border-radius: inherit;
+    z-index: -2;
   }
 
   .cta-content {
@@ -374,6 +413,17 @@ const formatDate = (date: Date) => {
     align-items: center;
     justify-content: space-between;
     gap: 32px;
+  }
+
+  /* Make the entire tile clickable and add padding like list cards */
+  .cta-tile-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    text-decoration: none;
+    color: inherit;
+    padding: 28px 32px;
   }
 
   .cta-text {
@@ -385,23 +435,20 @@ const formatDate = (date: Date) => {
 
   .cta-description { font-size: 1.125rem; color: var(--color-text-secondary); line-height: 1.625; margin-bottom: 0; }
 
+  .cta-actions { flex-shrink: 0; }
+
   .cta-actions {
-    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #DA6A47;
+    font-weight: 600;
+    transition: transform 0.15s ease, color 0.15s ease;
   }
 
-  .cta-button {
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    text-decoration: none;
-    text-align: center;
-    min-width: 160px;
-  }
-
-  .cta-button.secondary { background: #0F172A; color: #fff; border: 1px solid #0F172A; }
-
-  .cta-button.secondary:hover { opacity: 0.95; }
+  .cta-tile-link:hover .cta-actions { color: #f8af6e; transform: translateX(4px); }
+  .arrow-link-icon { transition: transform 0.15s ease; }
+  .cta-tile-link:hover .arrow-link-icon { transform: translateX(2px); }
 
   /* Responsive design */
   @media (max-width: 768px) {
@@ -452,20 +499,9 @@ const formatDate = (date: Date) => {
       margin: 1.5em 0;
     }
     
-    .cta-content {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 20px;
-      text-align: center;
-    }
-
-    .cta-text {
-      text-align: center;
-    }
-
-    .cta-actions {
-      align-self: center;
-    }
+    .cta-tile-link { flex-direction: column; align-items: flex-start; gap: 16px; padding: 20px 24px; }
+    .cta-text { text-align: left; }
+    .cta-actions { align-self: flex-start; }
   }
 
   /* Animation */

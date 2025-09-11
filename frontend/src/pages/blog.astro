@@ -94,21 +94,42 @@ const formatDate = (date: Date) => {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 0; /* switch to list style with separators */
+    gap: 1.25rem; /* space between cards */
   }
 
   .blog-post-card {
     background: transparent;
-    border: none;
-    border-bottom: 2px solid var(--border-color);
+    border: 2px solid var(--color-border-strong);
     border-radius: 0;
     overflow: visible;
+    position: relative;
+    isolation: isolate;
     transition: all 0.2s ease;
     opacity: 0;
     transform: translateY(20px);
   }
 
-  .blog-post-card:first-child { border-top: 2px solid var(--border-color); }
+  /* Paint main surface and offset tile shadow (covered by surface) */
+  .blog-post-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #ffffff; /* solid white tile surface */
+    border-radius: inherit;
+    z-index: -1; /* ensures the surface covers the shadow */
+    pointer-events: none;
+  }
+
+  .blog-post-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translate(14px, 14px);
+    background: rgba(100, 116, 139, 0.24);
+    border-radius: inherit;
+    z-index: -2;
+    pointer-events: none;
+  }
 
   .blog-post-card.animate-on-scroll {
     animation: slideUpFade 0.6s ease forwards;
@@ -125,16 +146,17 @@ const formatDate = (date: Date) => {
   }
 
   .blog-post-content {
-    padding: 32px;
+    padding: 28px 32px; /* generous buffer around text */
   }
 
   .blog-post-meta {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
     font-size: 14px;
     color: var(--color-text-tertiary);
+    line-height: 1.6; /* ensure breathing room */
   }
 
   .blog-post-date { color: var(--color-text-tertiary); }
@@ -145,8 +167,8 @@ const formatDate = (date: Date) => {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--color-text-primary);
-    margin-bottom: 0.75rem;
-    line-height: 1.25;
+    margin-bottom: 0.9rem;
+    line-height: 1.3;
     transition: color 0.2s ease;
   }
 
@@ -154,9 +176,9 @@ const formatDate = (date: Date) => {
 
   .blog-post-description {
     color: var(--color-text-secondary);
-    margin-bottom: 1rem;
+    margin-bottom: 1.1rem;
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.7; /* extra buffer between lines */
   }
 
   .blog-post-read-more {
@@ -204,17 +226,13 @@ const formatDate = (date: Date) => {
       font-size: 1rem;
     }
     
-    .blog-post-content {
-      padding: 24px;
-    }
+    .blog-post-content { padding: 22px 24px; }
     
     .blog-post-title {
       font-size: 1.25rem;
     }
     
-    .blog-posts-container {
-      gap: 20px;
-    }
+    .blog-posts-container { gap: 1rem; }
   }
 </style>
 

@@ -3,13 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/sections/Hero.astro';
 import PageSection from '../components/ui/PageSection.astro';
 import Card from '../components/ui/Card.astro';
+import DataTable from '../components/ui/DataTable.astro';
 
 // Build Protection content structured like AI security page
 const pageContent = {
   hero: {
     title: "Build Protection That Prevents, Not Just Detects",
     subtitle: "Traditional tools scan your manifest files. But they have no idea what actually happened during your build. By the time your code ships, the damage is already done.",
-    primaryCTA: { text: "Contact Us", href: "mailto:contact@bomfather.dev" },
+    primaryCTA: { text: "Talk to the Founders", href: "mailto:contact@bomfather.dev" },
     // Removed secondaryCTA; no destination yet
     // secondaryCTA: { text: "Learn More", href: "#problem" },
     metrics: []
@@ -18,7 +19,7 @@ const pageContent = {
   attackVectors: {
     title: "The SBOM Reality Check: Intent vs. Reality",
     build: {
-      header: "Traditional SBOMs vs. Kernel-Level Reality",
+      header: "SBOMs Lie... We Don't",
       headerDescription: "Traditional tools scan manifest files but can't see post-install scripts, compiler hijacks, or build-time attacks that happen at the kernel level.",
       traditional: {
         title: "Traditional SBOM (from manifests)",
@@ -44,8 +45,8 @@ const pageContent = {
   },
 
   solution: {
-    title: "Zero-Trust Build Security with Real Provenance",
-    subtitle: "The only solution that protects builds in real-time at the kernel level where attacks actually happen",
+    title: "So... Tell Me More",
+    subtitle: "A more in depth dive",
     features: [
       {
         title: "Default Deny Architecture",
@@ -85,18 +86,6 @@ const pageContent = {
     subtitle: "See how Bomfather prevents build attacks that traditional security completely misses",
     cases: [
       {
-        title: "The Typosquatter Attack",
-        attack: "Malicious package in dependencies runs post-install script to steal AWS keys and source code.",
-        traditional: "Include both packages in SBOM. Attack succeeds, credentials stolen.",
-        bomfather: "Post-install blocked from reading /src/config. Attack prevented, evidence logged."
-      },
-      {
-        title: "The CI/CD Injection",
-        attack: "Attacker modifies GitHub Action to download and execute malicious script during build.",
-        traditional: "No protection during build execution. Secrets exfiltrated successfully.",
-        bomfather: "Bash script blocked from accessing /home directory. Build fails safely with full forensics."
-      },
-      {
         title: "The Compiler Hijack",
         attack: "Attacker replaces legitimate compiler with wrapper that steals source code.",
         traditional: "Build succeeds with compromised compiler. Source code leaked.",
@@ -107,6 +96,12 @@ const pageContent = {
         attack: "Malicious developer adds script to zip and upload source code to external S3 bucket.",
         traditional: "Legitimate AWS CLI usage appears normal. Source code successfully stolen.",
         bomfather: "Zip command blocked from accessing /src directory. Developer's backdoor neutralized."
+      },
+      {
+        title: "The CI/CD Injection",
+        attack: "Attacker modifies GitHub Action to download and execute malicious script during build.",
+        traditional: "No protection during build execution. Secrets exfiltrated successfully.",
+        bomfather: "Bash script blocked from accessing /home directory. Build fails safely with full forensics."
       }
     ]
   }
@@ -139,61 +134,34 @@ const pageContent = {
     centerHeader={true}
     className="attack-vectors-section"
   >
-    <div class="attack-vector-cards">
-      <div class="attack-vector-card">
-        <h4 class="attack-card-title">{pageContent.attackVectors.build.traditional.title}</h4>
-        <p class="attack-card-description">{pageContent.attackVectors.build.traditional.description}</p>
-        <ul class="attack-problems-list">
-          {pageContent.attackVectors.build.traditional.problems.map((problem) => (
-            <li class="problem-item">{problem}</li>
-          ))}
-        </ul>
-      </div>
-      
-      <div class="attack-vector-card">
-        <h4 class="attack-card-title">{pageContent.attackVectors.build.bomfather.title}</h4>
-        <ul class="attack-benefits-list">
-          {pageContent.attackVectors.build.bomfather.benefits.map((benefit) => (
-            <li class="benefit-item">{benefit}</li>
-          ))}
-        </ul>
-        <p class="attack-card-tagline">{pageContent.attackVectors.build.bomfather.tagline}</p>
-      </div>
-    </div>
+    <DataTable 
+      className="build-security-table"
+      columns={[
+        { key: 'aspect', label: 'Security Aspect', width: '30%' },
+        { key: 'traditional', label: 'Traditional Approach', width: '35%' },
+        { key: 'bomfather', label: 'Bomfather Solution', width: '35%' }
+      ]}
+      data={[
+        {
+          aspect: 'Manifest Scanning',
+          traditional: 'Scans static manifest files',
+          bomfather: 'Real SBOMs from kernel, which captures actual runtime behavior, not just declared dependencies. We capture which files actually got compiled.'
+        },
+        {
+          aspect: 'Attack Response',
+          traditional: 'Alerts after compromise; discovers breaches too late',
+          bomfather: 'Stops execution attacks and control what reads your code in real time at the kernel level'
+        },
+        {
+          aspect: 'Default Posture',
+          traditional: 'Allow-by-default policies across build steps',
+          bomfather: 'Default-deny with human-readable YAML policy'
+        }
+      ]}
+    />
   </PageSection>
 
-  <!-- Solution Section -->
-  <PageSection 
-    id="solution"
-    variant="dark"
-    size="lg"
-    title={pageContent.solution.title}
-    subtitle={pageContent.solution.subtitle}
-    headerLevel={2}
-    centerHeader={true}
-    className="features-section"
-  >
-    <div class="features-grid animate-stagger">
-      {pageContent.solution.features.map((feature, index) => (
-        <Card 
-          variant="glass"
-          padding="lg"
-          className="feature-card animate-slide-up"
-          style={`--delay: ${index * 0.2}s`}
-        >
-          <h3 class="feature-title">{feature.title}</h3>
-          <p class="feature-description">{feature.description}</p>
-          <ul class="benefits-list">
-            {feature.benefits.map((benefit, bIndex) => (
-              <li class="animate-fade-in" style={`--delay: ${0.1 + bIndex * 0.1}s`}>
-                {benefit}
-              </li>
-            ))}
-          </ul>
-        </Card>
-      ))}
-    </div>
-  </PageSection>
+  
 
   <!-- Attack Scenarios Section -->
   <PageSection 
@@ -231,6 +199,37 @@ const pageContent = {
             <p class="scenario-text bomfather-text">✓ {scenario.bomfather}</p>
           </div>
         </Card>
+      ))}
+    </div>
+  </PageSection>
+
+  <!-- Solution Section (moved to bottom, collapsible) -->
+  <PageSection 
+    id="solution"
+    variant="dark"
+    size="lg"
+    title={pageContent.solution.title}
+    subtitle={pageContent.solution.subtitle}
+    headerLevel={2}
+    centerHeader={true}
+    className="features-section"
+  >
+    <div class="collapsible-features animate-stagger">
+      {pageContent.solution.features.map((feature, index) => (
+        <details class="collapsible-card animate-slide-up" style={`--delay: ${index * 0.2}s`}>
+          <summary class="collapsible-summary">
+            <h3 class="feature-title">{feature.title}</h3>
+            <span class="chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="collapsible-content">
+            <p class="feature-description">{feature.description}</p>
+            <ul class="benefits-list">
+              {feature.benefits.map((benefit) => (
+                <li>{benefit}</li>
+              ))}
+            </ul>
+          </div>
+        </details>
       ))}
     </div>
   </PageSection>
@@ -511,6 +510,74 @@ body {
   margin: 0 auto;
 }
 
+/* Collapsible Features (moved section) */
+.collapsible-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.collapsible-card {
+  border: 2px solid var(--color-border-strong);
+  border-radius: 0;
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+}
+
+.collapsible-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-bg);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.collapsible-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(14px, 14px);
+  background: rgba(100, 116, 139, 0.24);
+  border-radius: inherit;
+  z-index: -2;
+}
+
+.collapsible-summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xl);
+  cursor: pointer;
+  gap: 0.75rem;
+}
+
+.collapsible-summary::-webkit-details-marker { display: none; }
+
+.collapsible-summary .feature-title {
+  margin: 0;
+  line-height: 1.1;
+}
+
+.collapsible-content {
+  padding: 0 var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+}
+
+.chevron {
+  width: 16px;
+  height: 16px;
+  border-right: 2px solid #6b7280;
+  border-bottom: 2px solid #6b7280;
+  transform: rotate(-45deg) translateY(-1px);
+  transition: transform 0.2s ease;
+}
+
+details[open] .chevron { transform: rotate(45deg) translateY(1px); }
+
 /* Remove boxy card visuals; use grid dividers instead */
 .features-grid :global(.card--glass) {
   background: transparent;
@@ -552,7 +619,7 @@ body {
 /* Remove connected grid dividers; use standalone boxes with gap */
 
 .feature-title {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
   margin-bottom: 1rem;
   color: var(--text-primary) !important;
@@ -560,9 +627,10 @@ body {
 
 .feature-description {
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.7;
   margin-bottom: 1.5rem;
   flex-grow: 1;
+  font-size: 1.125rem;
 }
 
 .benefits-list {
@@ -576,7 +644,8 @@ body {
   padding-left: 2rem;
   margin-bottom: 0.75rem;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
+  font-size: 1rem;
 }
 
 .benefits-list li::before {
@@ -591,7 +660,7 @@ body {
 /* Scenarios Grid */
 .scenarios-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -639,7 +708,7 @@ body {
 /* No extra grid dividers; each scenario is a full outlined box */
 
 .scenario-title {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
   color: var(--text-primary) !important;
@@ -654,7 +723,7 @@ body {
 }
 
 .scenario-label {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -671,8 +740,8 @@ body {
 }
 
 .scenario-text {
-  font-size: 0.9rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.75;
   margin: 0;
 }
 
@@ -704,16 +773,13 @@ body {
 
 /* Responsive Design - matching AI security page */
 @media (max-width: 1200px) {
-  .features-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 0 1rem;
-  }
+  .features-grid { grid-template-columns: 1fr; gap: 1rem; padding: 0 1rem; }
+  .collapsible-features { padding: 0 1rem; }
 }
 
 @media (max-width: 1024px) {
   .scenarios-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
   }
 }

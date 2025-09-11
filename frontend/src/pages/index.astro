@@ -28,12 +28,12 @@ const {
     primaryCTA={hero.primaryCTA}
     secondaryCTA={hero.secondaryCTA}
     metrics={hero.metrics}
-    investorBadge="Funded by @balajis, former CTO of Coinbase"
-    investorHandle="@balajis"
+    investorBadge="Funded by Balaji Srinivasan, former CTO of Coinbase"
+    investorHandle="Balaji Srinivasan"
     investorHandleUrl="https://x.com/balajis"
   />
 
-  <!-- Security Comparison Tables -->
+  <!-- Security Comparison Table -->
   <PageSection 
     id="security-comparison"
     variant="dark"
@@ -45,116 +45,39 @@ const {
     className="security-comparison-section"
   >
     <div class="security-tables-container">
-      <!-- Toggle Buttons -->
-      <div class="security-toggle" role="tablist" aria-label="Security comparison toggle">
-        <button class="toggle-btn active" data-view="ai" role="tab" aria-selected="true">AI Protection</button>
-        <button class="toggle-btn" data-view="build" role="tab" aria-selected="false">Build Protection</button>
-      </div>
-
-      <div class="tables-views">
-        <!-- AI Security Comparison Table -->
-        <div class="table-view" data-view="ai">
-          <DataTable 
-            title="AI Security Protection"
-            subtitle="Comprehensive analysis of AI security approaches and their effectiveness"
-            columns={[
-              { key: 'aspect', label: 'Security Aspect', width: '30%' },
-              { key: 'traditional', label: 'Traditional Approach', width: '35%' },
-              { key: 'bomfather', label: 'Bomfather Solution', width: '35%' }
-            ]}
-            data={[
-              {
-                aspect: 'Model Protection',
-                traditional: 'Can\'t see GPU memory access',
-                bomfather: 'Proactively blocks GPU theft at the kernel level'
-              },
-              {
-                aspect: 'Data Theft Prevention',
-                traditional: 'No control over IPC exploitation',
-                bomfather: 'Unauthorized programs can\'t use IPCs to access the GPU'
-              },
-              {
-                aspect: 'Workflow Impact',
-                traditional: 'Forces you to break pipelines to integrate it',
-                bomfather: 'Zero workflow changes needed'
-              },
-              {
-                aspect: 'Runtime Overhead',
-                traditional: 'Confidential computing adds ~40% time overhead',
-                bomfather: 'eBPF efficiency delivers ~3% overhead'
-              }
-            ]}
-            className="security-comparison-table"
-          />
-        </div>
-
-        <!-- Build Security Comparison Table -->
-        <div class="table-view" data-view="build" style="display:none">
-          <DataTable 
-            title="Build Security Protection"
-            subtitle="Comparison of traditional build security against Bomfather's zero-trust build protection"
-            columns={[
-              { key: 'aspect', label: 'Security Aspect', width: '30%' },
-              { key: 'traditional', label: 'Traditional Approach', width: '35%' },
-              { key: 'bomfather', label: 'Bomfather Solution', width: '35%' }
-            ]}
-            data={[
-              {
-                aspect: 'Manifest Scanning',
-                traditional: 'Scans static manifest files',
-                bomfather: 'Real SBOMs from kernel, which captures actual runtime behavior, not just declared dependencies. We capture which files actually got compiled.'
-              },
-              {
-                aspect: 'Attack Response',
-                traditional: 'Alerts after compromise; discovers breaches too late',
-                bomfather: 'Stops execution attacks and control what reads your code in real time at the kernel level'
-              },
-              {
-                aspect: 'Default Posture',
-                traditional: 'Allow-by-default policies across build steps',
-                bomfather: 'Default-deny with human-readable YAML policy'
-              }
-            ]}
-            className="security-comparison-table"
-            hasContentBelow={true}
-          />
-          
-          <!-- Build Protection Text -->
-          <div class="table-text-content">
-            <p>We don't find vulnerabilities in your declared dependencies. Instead, we see what has actually been compiled. By focusing only on dependencies that were actually built, you're affected by fewer vulnerabilities. <strong>Other tools report tons of vulnerabilities, Bomfather only reports the ones that actually affect you.</strong></p>
-          </div>
-        </div>
-      </div>
+      <DataTable 
+        columns={[
+          { key: 'aspect', label: 'Security Aspect', width: '30%' },
+          { key: 'traditional', label: 'Traditional Approach', width: '35%' },
+          { key: 'bomfather', label: 'Bomfather Solution', width: '35%' }
+        ]}
+        data={[
+          {
+            aspect: 'Model Protection',
+            traditional: 'Can\'t see GPU memory access',
+            bomfather: 'Proactively blocks GPU theft at the kernel level'
+          },
+          {
+            aspect: 'Data Theft Prevention',
+            traditional: 'No control over IPC exploitation',
+            bomfather: 'Unauthorized programs can\'t use IPCs to access the GPU'
+          },
+          {
+            aspect: 'Workflow Impact',
+            traditional: 'Forces you to break pipelines to integrate it',
+            bomfather: 'Zero workflow changes needed'
+          },
+          {
+            aspect: 'Runtime Overhead',
+            traditional: 'Confidential computing adds ~40% time overhead',
+            bomfather: 'eBPF efficiency delivers ~3% overhead'
+          }
+        ]}
+        className="security-comparison-table"
+      />
     </div>
   </PageSection>
 
-  <script>
-    // Simple toggle logic for AI vs Build tables
-    document.addEventListener('DOMContentLoaded', () => {
-      const buttons = document.querySelectorAll('.security-toggle .toggle-btn');
-      const views = document.querySelectorAll('.tables-views .table-view');
-
-      function showView(target) {
-        views.forEach((view) => {
-          const shouldShow = view.getAttribute('data-view') === target;
-          view.style.display = shouldShow ? 'block' : 'none';
-        });
-      }
-
-      buttons.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const target = btn.getAttribute('data-view');
-          // update active button styles and aria state
-          buttons.forEach((b) => {
-            const isActive = b === btn;
-            b.classList.toggle('active', isActive);
-            b.setAttribute('aria-selected', String(isActive));
-          });
-          showView(target);
-        });
-      });
-    });
-  </script>
 
   <!-- Demo Video Section -->
   <PageSection 
