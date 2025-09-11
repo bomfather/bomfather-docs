@@ -333,6 +333,17 @@ body {
   border-color: var(--accent-secondary);
 }
 
+/* Page override: make secondary hero button dark blue */
+:global(.hero-section .btn.btn-secondary) {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+:global(.hero-section .btn.btn-secondary:hover) {
+  filter: brightness(0.95);
+  border-color: var(--color-primary);
+}
+
 /* Attack Vectors Section - simplified */
 
 .attack-vector-cards {
@@ -343,7 +354,7 @@ body {
 
 .attack-vector-card {
   background: transparent;
-  border: 1px solid var(--color-border-strong);
+  border: 2px solid var(--color-border-strong);
   border-radius: 0;
   padding: var(--spacing-xl);
   position: relative;
@@ -368,8 +379,8 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  transform: translate(10px, 10px);
-  background: rgba(100, 116, 139, 0.12);
+  transform: translate(14px, 14px);
+  background: rgba(100, 116, 139, 0.24);
   border-radius: inherit;
   z-index: -2;
   pointer-events: none;
@@ -497,7 +508,7 @@ body {
   margin-bottom: 2rem;
   border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: none;
   border: 1px solid var(--border-color);
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
@@ -534,7 +545,7 @@ body {
 /* Ensure strong borders and offset tiles for Card wrappers */
 .scenarios-grid :global(.card--glass) {
   background: transparent;
-  border: 1px solid var(--color-border-strong);
+  border: 2px solid var(--color-border-strong);
   box-shadow: none;
 }
 
@@ -562,8 +573,8 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  transform: translate(10px, 10px);
-  background: rgba(100, 116, 139, 0.12);
+  transform: translate(14px, 14px);
+  background: rgba(100, 116, 139, 0.24);
   border-radius: inherit;
   z-index: -2;
   pointer-events: none;
@@ -645,7 +656,7 @@ body {
   
   .attack-vector-card {
     min-height: auto;
-    border: 1px solid var(--color-border-strong);
+    border: 2px solid var(--color-border-strong);
   }
   
   .features-grid,

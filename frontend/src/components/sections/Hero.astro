@@ -234,12 +234,12 @@ if (investorBadge && investorHandle && investorHandleUrl) {
 .btn-primary {
   background: var(--color-primary);
   color: white;
-  box-shadow: 0 4px 14px rgba(27, 38, 59, 0.25);
+  box-shadow: none;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(27, 38, 59, 0.35);
+  box-shadow: none;
 }
 
 .btn-secondary {
@@ -248,7 +248,11 @@ if (investorBadge && investorHandle && investorHandleUrl) {
   border-color: var(--brand-border);
 }
 
-.btn-secondary:hover { filter: brightness(0.97); }
+.btn-secondary:hover {
+  filter: brightness(0.97);
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
 
 .hero-metrics {
   display: flex;
@@ -493,6 +497,9 @@ if (investorBadge && investorHandle && investorHandleUrl) {
   }
   
   .btn-primary:hover {
+    transform: none;
+  }
+  .btn-secondary:hover {
     transform: none;
   }
 }

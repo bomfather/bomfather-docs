@@ -26,7 +26,7 @@
   /* Border tokens */
   --color-border-light: var(--brand-border); /* light borders */
   --color-border-medium: var(--brand-border);/* medium borders */
-  --color-border-strong: var(--brand-muted); /* strong/dividers */
+  --color-border-strong: #000000; /* strong/dividers now black */
 
   /* Compatibility aliases (still referenced in styles) */
   --color-dark: var(--brand-deep);           /* alias of deep navy */
