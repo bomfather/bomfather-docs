@@ -235,7 +235,7 @@ allow:
       },
       {
         step: 2,
-        title: "Parent-Aware Enforcement",
+        title: "Parent Aware Enforcement",
         description: "Trust individual files or entire folders, it's your choice. When you trust a directory, all files within it and its subdirectories automatically inherit that trust. This means you can specify single programs when needed, or trust whole folder structures to avoid listing every file individually.",
         code: `python train.py            ✓ (trusted)
   └── dataloader.py       ✓ (inherits)

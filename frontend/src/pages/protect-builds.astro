@@ -10,7 +10,8 @@ const pageContent = {
     title: "Build Protection That Prevents, Not Just Detects",
     subtitle: "Traditional tools scan your manifest files. But they have no idea what actually happened during your build. By the time your code ships, the damage is already done.",
     primaryCTA: { text: "Contact Us", href: "mailto:contact@bomfather.dev" },
-    secondaryCTA: { text: "Learn More", href: "#problem" },
+    // Removed secondaryCTA; no destination yet
+    // secondaryCTA: { text: "Learn More", href: "#problem" },
     metrics: []
   },
 
@@ -422,8 +423,8 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  transform: translate(10px, 10px);
-  background: rgba(100, 116, 139, 0.12);
+  transform: translate(14px, 14px);
+  background: rgba(100, 116, 139, 0.24);
   z-index: -2;
   border-radius: inherit;
   pointer-events: none;
@@ -431,7 +432,7 @@ body {
 
 /* Standalone boxes: each column has its own border */
 .attack-vector-card {
-  border: 1px solid var(--color-border-strong);
+  border: 2px solid var(--color-border-strong);
 }
 
 .attack-card-title {
@@ -513,7 +514,7 @@ body {
 /* Remove boxy card visuals; use grid dividers instead */
 .features-grid :global(.card--glass) {
   background: transparent;
-  border: 1px solid var(--color-border-strong);
+  border: 2px solid var(--color-border-strong);
   box-shadow: none;
 }
 
@@ -541,8 +542,8 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  transform: translate(10px, 10px);
-  background: rgba(100, 116, 139, 0.12);
+  transform: translate(14px, 14px);
+  background: rgba(100, 116, 139, 0.24);
   z-index: -2;
   border-radius: inherit;
   pointer-events: none;
@@ -599,7 +600,7 @@ body {
 /* Scenarios outlined boxes */
 .scenarios-grid :global(.card--glass) {
   background: transparent;
-  border: 1px solid var(--color-border-strong);
+  border: 2px solid var(--color-border-strong);
   box-shadow: none;
 }
 
@@ -628,8 +629,8 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  transform: translate(10px, 10px);
-  background: rgba(100, 116, 139, 0.12);
+  transform: translate(14px, 14px);
+  background: rgba(100, 116, 139, 0.24);
   z-index: -2;
   border-radius: inherit;
   pointer-events: none;
@@ -725,7 +726,7 @@ body {
   
   .attack-vector-card {
     min-height: auto;
-    border: 1px solid var(--color-border-strong);
+    border: 2px solid var(--color-border-strong);
   }
   /* Standalone boxes on mobile; no connector borders */
   

@@ -1,5 +1,5 @@
 ---
-title: "Bomfather Gets Funded by Balaji Srinivasan"
+title: "Bomfather Has Been Funded by Balaji Srinivasan"
 publishedAt: 2025-09-01T00:00:00Z
 category: "Funding"
 author: "The Bomfather Team"
