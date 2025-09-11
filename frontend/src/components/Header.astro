@@ -115,7 +115,13 @@
     transition: transform 0.2s ease;
     will-change: transform;
     backface-visibility: hidden;
-    transform: translateZ(0);
+    /* Avoid setting a default transform so fixed descendants remain viewport-fixed */
+  }
+
+  /* When mobile menu is open, ensure the header doesn't create a containing block */
+  .header-nav.menu-open {
+    transform: none !important;
+    z-index: 2000 !important;
   }
 
   .header-content {
@@ -331,7 +337,8 @@
     bottom: 0;
     background: rgba(13, 27, 42, 0.95);
     backdrop-filter: blur(20px);
-    z-index: 100;
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 3000;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -411,14 +418,33 @@
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileMenuClose = document.getElementById('mobile-menu-close');
     
+    // Ensure the overlay is not limited by header stacking context: move it under <body>
+    if (mobileMenu && mobileMenu.parentElement !== document.body) {
+      try { document.body.appendChild(mobileMenu); } catch {}
+    }
+    if (mobileMenu) {
+      mobileMenu.style.zIndex = '2000';
+    }
+    
     mobileMenuButton?.addEventListener('click', () => {
       mobileMenu?.classList.add('show');
       document.body.style.overflow = 'hidden';
+      // Ensure fixed-positioned mobile menu is relative to the viewport
+      if (headerEl) {
+        headerEl.style.transform = 'none';
+        headerEl.classList.add('menu-open');
+      }
+      document.body.classList.add('menu-open');
     });
     
     mobileMenuClose?.addEventListener('click', () => {
       mobileMenu?.classList.remove('show');
       document.body.style.overflow = 'auto';
+      if (headerEl) {
+        headerEl.style.transform = '';
+        headerEl.classList.remove('menu-open');
+      }
+      document.body.classList.remove('menu-open');
     });
 
     // Close mobile menu when clicking on backdrop
@@ -426,6 +452,11 @@
       if (e.target === mobileMenu) {
         mobileMenu.classList.remove('show');
         document.body.style.overflow = 'auto';
+        if (headerEl) {
+          headerEl.style.transform = '';
+          headerEl.classList.remove('menu-open');
+        }
+        document.body.classList.remove('menu-open');
       }
     });
 
