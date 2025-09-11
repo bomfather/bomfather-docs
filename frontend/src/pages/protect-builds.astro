@@ -177,7 +177,7 @@ const pageContent = {
         <Card 
           variant="glass"
           padding="lg"
-          className="feature-card animate-slide-up hover-lift"
+          className="feature-card animate-slide-up"
           style={`--delay: ${index * 0.2}s`}
         >
           <h3 class="feature-title">{feature.title}</h3>
@@ -210,7 +210,7 @@ const pageContent = {
         <Card 
           variant="glass"
           padding="lg"
-          className="scenario-card animate-slide-up hover-lift"
+          className="scenario-card animate-slide-up"
           style={`--delay: ${index * 0.2}s`}
         >
           <h3 class="scenario-title">{scenario.title}</h3>
@@ -374,10 +374,7 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.hover-lift:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
+/* Removed hover effect for non-clickable elements */
 
 .hover-glow {
   transition: all 0.3s ease;
@@ -393,23 +390,48 @@ body {
 .attack-vector-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-lg);
+  gap: 1.5rem;
 }
 
 .attack-vector-card {
-  background: white;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
   padding: var(--spacing-xl);
-  box-shadow: var(--shadow-professional);
+  /* Offset tile shadow (solid rectangle) */
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
-  transition: all 0.2s ease;
+  transition: none;
 }
 
-.attack-vector-card:hover {
-  border-color: #d1d5db;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+/* Paint the main card surface so the offset tile does not bleed through */
+.attack-vector-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-bg);
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Solid offset tile behind each attack vector column */
+.attack-vector-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(10px, 10px);
+  background: rgba(100, 116, 139, 0.12);
+  z-index: -2;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Standalone boxes: each column has its own border */
+.attack-vector-card {
+  border: 1px solid var(--color-border-strong);
 }
 
 .attack-card-title {
@@ -481,17 +503,52 @@ body {
 .features-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
   position: relative;
   z-index: 2;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-.feature-card {
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
+/* Remove boxy card visuals; use grid dividers instead */
+.features-grid :global(.card--glass) {
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  box-shadow: none;
 }
+
+.features-grid :global(.card) {
+  border-radius: 0;
+  padding: var(--spacing-xl);
+  /* Offset tile shadow */
+  position: relative;
+  isolation: isolate;
+}
+
+/* Paint the main card surface */
+.features-grid :global(.card)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-bg);
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Solid offset tile behind each feature card */
+.features-grid :global(.card)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(10px, 10px);
+  background: rgba(100, 116, 139, 0.12);
+  z-index: -2;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Remove connected grid dividers; use standalone boxes with gap */
 
 .feature-title {
   font-size: 1.5rem;
@@ -534,17 +591,51 @@ body {
 .scenarios-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.scenario-card {
-  border: 1px solid var(--border-color);
+/* Scenarios outlined boxes */
+.scenarios-grid :global(.card--glass) {
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  box-shadow: none;
+}
+
+.scenarios-grid :global(.card) {
+  border-radius: 0;
+  padding: var(--spacing-xl);
   height: 100%;
   display: flex;
   flex-direction: column;
+  /* Offset tile shadow */
+  position: relative;
+  isolation: isolate;
 }
+
+/* Solid offset tile behind each scenario card */
+.scenarios-grid :global(.card)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-bg);
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+.scenarios-grid :global(.card)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(10px, 10px);
+  background: rgba(100, 116, 139, 0.12);
+  z-index: -2;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* No extra grid dividers; each scenario is a full outlined box */
 
 .scenario-title {
   font-size: 1.25rem;
@@ -614,7 +705,7 @@ body {
 @media (max-width: 1200px) {
   .features-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1rem;
     padding: 0 1rem;
   }
 }
@@ -622,7 +713,7 @@ body {
 @media (max-width: 1024px) {
   .scenarios-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 }
 
@@ -634,7 +725,9 @@ body {
   
   .attack-vector-card {
     min-height: auto;
+    border: 1px solid var(--color-border-strong);
   }
+  /* Standalone boxes on mobile; no connector borders */
   
   .features-grid,
   .scenarios-grid {
