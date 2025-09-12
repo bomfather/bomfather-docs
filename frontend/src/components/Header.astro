@@ -8,7 +8,7 @@
       <!-- Logo -->
       <div class="header-logo">
         <a href="/" class="flex items-center">
-          <img src="/images/logos/bomfather-long-logo.png" alt="Bomfather Logo" class="h-10" />
+          <img src="/images/logos/bomfather-long-logo.png" alt="Bomfather Logo" class="header-logo-img" />
         </a>
       </div>
 
@@ -69,7 +69,7 @@
 
       <!-- CTA Button -->
       <div class="header-cta hidden lg:flex items-center space-x-4">
-        <a href="mailto:contact@bomfather.dev" class="cta-button">
+        <a href="mailto:contact@bomfather.dev" class="cta-button btn-shadow-rounded-sm">
           Talk to the Founders
         </a>
       </div>
@@ -100,7 +100,7 @@
         <a href="/news" class="mobile-nav-link">News</a>
         <a href="/protect-ai" class="mobile-nav-link">Protect AI</a>
         <a href="/protect-builds" class="mobile-nav-link">Protect Builds</a>
-        <a href="mailto:contact@bomfather.dev" class="mobile-nav-link mobile-nav-cta">Talk to the Founders</a>
+        <a href="mailto:contact@bomfather.dev" class="mobile-nav-link mobile-nav-cta btn-shadow-rounded-sm">Talk to the Founders</a>
       </nav>
     </div>
   </div>
@@ -126,13 +126,28 @@
 
   .header-content {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     padding: 1rem 0;
   }
 
   .header-logo {
     justify-self: start;
+  }
+
+  /* Ensure logo scales by height while preserving aspect ratio and avoiding width squish */
+  .header-logo img {
+    height: 32px;
+    width: auto;
+    max-width: none;
+  }
+
+  @media (min-width: 640px) {
+    .header-logo img { height: 36px; }
+  }
+
+  @media (min-width: 1024px) {
+    .header-logo img { height: 40px; }
   }
 
   .header-nav-center {

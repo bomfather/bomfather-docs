@@ -140,6 +140,27 @@ code, pre {
   .btn-secondary {
     @apply bg-transparent border border-primary text-primary hover:bg-primary/10;
   }
+
+  /* Rounded layered shadow utility for buttons (outside-only; no overlay) */
+  .btn-shadow-rounded {
+    position: relative;
+    filter: drop-shadow(8px 8px 0 rgba(100, 116, 139, 0.24));
+    will-change: filter;
+  }
+
+  /* Slightly tighter offset and lighter tone for compact areas (e.g., header) */
+  .btn-shadow-rounded-sm {
+    position: relative;
+    filter: drop-shadow(6px 6px 0 rgba(100, 116, 139, 0.18));
+    will-change: filter;
+  }
+
+  /* Extra-small offset for small controls (e.g., pagination) */
+  .btn-shadow-rounded-xs {
+    position: relative;
+    filter: drop-shadow(4px 4px 0 rgba(100, 116, 139, 0.16));
+    will-change: filter;
+  }
   
   /* Professional Table Styling */
   .data-table {
