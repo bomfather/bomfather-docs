@@ -18,7 +18,7 @@ The paper introduces our revolutionary approach to software supply chain securit
 
 ## Key Research Takeaways
 
-Our research demonstrates how kernel-level monitoring can provide **tamper-evident** build time dependencies by computing cryptographic hashes of files accessed during compilation and constructing Merkle trees based on observed file content.
+Our research demonstrates how kernel-level monitoring can provide **tamper evident** build time dependencies by computing cryptographic hashes of files accessed during compilation and constructing Merkle trees based on observed file content.
 
 Unlike traditional static analysis approaches, our methodology accounts for:
 
