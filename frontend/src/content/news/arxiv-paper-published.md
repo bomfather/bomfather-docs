@@ -1,6 +1,6 @@
 ---
 title: "Bomfather Research Published on arXiv"
-publishedAt: 2025-08-03T00:00:00Z
+publishedAt: 2025-08-05T00:00:00Z
 category: "Research"
 author: "Naveen Srinivasan, Nathan Naveen, Neil Naveen"
 externalLink: "https://arxiv.org/abs/2503.02097"
