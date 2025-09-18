@@ -10,12 +10,13 @@ const blogPosts = await getCollection('blog', ({ data }) => {
 
 blogPosts.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
 
-// Format date for display
+// Format date for display (use UTC to avoid off-by-one due to local TZ)
 const formatDate = (date: Date) => {
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
+    timeZone: 'UTC',
   });
 };
 ---

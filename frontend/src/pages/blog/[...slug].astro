@@ -18,12 +18,13 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-// Format date for display
+// Format date for display (UTC to prevent off-by-one day)
 const formatDate = (date: Date) => {
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
+    timeZone: 'UTC',
   });
 };
 ---
@@ -321,7 +322,10 @@ const formatDate = (date: Date) => {
     margin: 0.75em 0;
   }
 
-  .prose pre { background: #f9fafb; border: 1px solid var(--color-border-light); border-radius: 12px; padding: 1.5em; overflow-x: auto; margin: 2em 0; font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; line-height: 1.6; box-shadow: none; }
+  /* Blog code blocks: match homepage code block styling */
+  .prose pre { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 1.5em; overflow-x: auto; margin: 2em 0; font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; line-height: 1.6; box-shadow: none; }
+  /* Remove global pre overlay gradient for blog content */
+  .prose pre::before { content: none !important; background: none !important; }
 
   .prose code { background: #f3f4f6; border: 1px solid var(--color-border-light); border-radius: 6px; padding: 0.25em 0.5em; font-family: 'JetBrains Mono', monospace; font-size: 0.875em; color: #111827; font-weight: 500; }
 
@@ -329,7 +333,7 @@ const formatDate = (date: Date) => {
     background: none;
     border: none;
     padding: 0;
-    color: #e2e8f0;
+    color: #e5e7eb;
     border-radius: 0;
   }
 
@@ -360,6 +364,10 @@ const formatDate = (date: Date) => {
     margin: 2em 0;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
+
+  /* Mermaid diagrams */
+  .prose .mermaid { margin: 2em 0; display: flex; justify-content: center; }
+  .prose .mermaid svg { max-width: 100%; height: auto; margin: 0 auto; display: block; }
 
   .prose figure {
     margin: 2em 0;
@@ -545,3 +553,92 @@ const formatDate = (date: Date) => {
     });
   });
 </script> 
+
+<script>
+  // Render Mermaid diagrams from fenced code blocks
+  (function() {
+    const loadMermaid = () => new Promise((resolve) => {
+      if (window.mermaid) return resolve(window.mermaid);
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+      s.onload = () => resolve(window.mermaid);
+      document.head.appendChild(s);
+    });
+
+    const convertBlocks = () => {
+      const blocks = Array.from(document.querySelectorAll('pre > code, pre'));
+      const mermaidStart = /^(graph|flowchart|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|gantt)\b/;
+      blocks.forEach((el) => {
+        const isCode = el.tagName.toLowerCase() === 'code';
+        const codeEl = isCode ? el : el.querySelector('code');
+        const className = (codeEl && codeEl.className) || '';
+        const langIsMermaid = className.includes('language-mermaid') || className.includes('lang-mermaid') || (codeEl && codeEl.getAttribute('data-language') === 'mermaid');
+        const text = (codeEl ? codeEl.textContent : el.textContent) || '';
+        const looksLikeMermaid = mermaidStart.test(text.trimStart());
+        if (!(langIsMermaid || looksLikeMermaid)) return;
+
+        const pre = isCode ? el.parentElement : el;
+        if (!pre) return;
+        const container = document.createElement('div');
+        container.className = 'mermaid';
+        container.textContent = text;
+        pre.replaceWith(container);
+      });
+    };
+
+    const sanitizeMermaidText = (text) => {
+      if (!text) return '';
+      let t = text
+        .replace(/\u00A0/g, ' ') // nbsp → space
+        .replace(/\r/g, '')
+        .trimStart();
+      // Strip accidental fences
+      t = t.replace(/^```mermaid\s*/i, '').replace(/```\s*$/i, '');
+      // Ensure first directive is at top
+      return t.trim();
+    };
+
+    const normalizeExistingMermaidBlocks = () => {
+      document.querySelectorAll('.mermaid').forEach((el) => {
+        const raw = el.textContent || '';
+        const cleaned = sanitizeMermaidText(raw);
+        if (cleaned !== raw) {
+          el.textContent = cleaned;
+        }
+      });
+    };
+
+    const init = async () => {
+      const mermaid = await loadMermaid();
+      convertBlocks();
+      normalizeExistingMermaidBlocks();
+      try {
+        mermaid.initialize({ startOnLoad: false, securityLevel: 'loose' });
+        mermaid.run({ querySelector: '.mermaid' });
+      } catch (e) {
+        console.error('Mermaid init failed', e);
+      }
+    };
+
+    const ready = () => {
+      init();
+      // Re-run if content is injected/rehydrated later
+      const target = document.querySelector('.blog-post-article') || document.body;
+      if (!target) return;
+      const mo = new MutationObserver(() => {
+        convertBlocks();
+        normalizeExistingMermaidBlocks();
+        if (window.mermaid) {
+          try { window.mermaid.run({ querySelector: '.mermaid' }); } catch {}
+        }
+      });
+      mo.observe(target, { childList: true, subtree: true });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', ready);
+    } else {
+      ready();
+    }
+  })();
+  </script>
