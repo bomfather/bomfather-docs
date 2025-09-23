@@ -129,7 +129,7 @@ export const homepageContent: HomepageContent = {
   hero: {
     title: "Effortlessly Protect Your GPUs",
     subtitle: "Today's GPUs Weren't Built for Security. Bomfather Stops Data Theft From The Kernel.",
-    primaryCTA: { text: "Protect Your AI", href: "/protect-ai" },
+    primaryCTA: { text: "Protect Your GPUs", href: "/protect-ai" },
     secondaryCTA: { text: "Secure Your Builds", href: "/protect-builds" },
     metrics: []
   },
@@ -143,7 +143,7 @@ export const homepageContent: HomepageContent = {
   attackVectors: {
     title: "Two Attack Vectors. One Real Solution.",
     ai: {
-      header: "Protect AI",
+      header: "Protect GPUs",
       headerDescription: "You Spent Millions training your AI models. And it can all be stolen in 30 seconds.",
       traditional: {
         title: "Traditional \"AI Security\"",
@@ -254,7 +254,7 @@ malicious.sh              ✗ (unknown)
     subtitle: "AI theft & supply-chain attacks blocked at the same kernel layer.",
     features: [
       {
-        title: "Protect AI",
+        title: "Protect GPUs",
         description: "Blocks GPU model theft others can't even see.",
         icon: "shield",
         benefits: [
