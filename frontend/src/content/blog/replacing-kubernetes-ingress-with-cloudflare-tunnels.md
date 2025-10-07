@@ -2,7 +2,7 @@
 title: "We're Replacing Our Kubernetes Ingress Stack with Cloudflare Tunnels, Here's Why"
 description: "Why we're moving from NGINX/Ingress + Load Balancers to Cloudflare Tunnels: simpler ops, better security, global performance, and lower cost."
 publishedAt: 2025-09-18T00:00:00Z
-author: "The Bomfather Team"
+author: "Neil Naveen"
 # featuredImage: "/images/blog/cloudflare-tunnels-vs-ingress.jpg"
 draft: false
 ---

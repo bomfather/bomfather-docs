@@ -510,7 +510,7 @@ const { title, description, showHeader = true, showAnnouncement = false, showNew
     // Ensure all external links open in a new tab and append an external-link icon
     document.addEventListener('DOMContentLoaded', async () => {
       try {
-        const res = await fetch('/images/external-link.svg', { cache: 'force-cache' });
+        const res = await fetch('/images/extra/external-link.svg', { cache: 'force-cache' });
         const svgText = await res.text();
 
         const isExternal = (anchor) => {

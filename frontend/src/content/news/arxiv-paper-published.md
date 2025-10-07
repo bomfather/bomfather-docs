@@ -8,7 +8,7 @@ draft: false
 ---
 
 <a href="https://arxiv.org/abs/2503.02097" target="_blank" rel="noopener noreferrer">
-  <img src="/images/arxiv.jpg" alt="arXiv" class="news-float-image" />
+  <img src="/images/news/arxiv.jpg" alt="arXiv" class="news-float-image" />
   
 </a>
 

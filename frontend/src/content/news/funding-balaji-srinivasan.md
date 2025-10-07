@@ -7,7 +7,7 @@ draft: false
 ---
 
 <a href="https://x.com/balajis" target="_blank" rel="noopener noreferrer">
-  <img src="/images/balaji_srinivasan.jpg" alt="Balaji Srinivasan" class="news-float-image" />
+  <img src="/images/news/balaji_srinivasan.jpg" alt="Balaji Srinivasan" class="news-float-image" />
   
 </a>
 
