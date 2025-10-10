@@ -50,7 +50,7 @@ For transparency, here are all 16 vulnerable packages we found:
 
 These are just the packages we could scan. We couldn't scan the 1,214 `APT` packages or the 119 `Conda` packages. The actual vulnerability count is almost certainly higher.
 
-The code for getting the vulnerabilities is here, `https://github.com/bomfather/gh-vulns`
+The code for getting the vulnerabilities is here, **[bomfather/tools](https://github.com/bomfather/tools)**.
 
 ## Attack surface
 
@@ -64,7 +64,10 @@ The math is brutal. If 4.6% of scanned packages have CVEs, and we extrapolate th
 
 In production, one CVE gets immediate attention. We patch, test, deploy. Having 38 or 77 known vulnerabilities would be a critical incident.
 
-![grusPlan.jpg](attachment:2fdd2b9f-3dc7-4cb9-8f80-1460871c4a9f:grusPlan.jpg)
+<div style="text-align: center; margin: 2em 0;">
+  <img src="/images/blog/grusPlan.jpg" alt="grusPlan" style="display: block; margin: 0 auto; max-width: 100%; height: auto;" />
+  
+</div>
 
 ## The big problem
 
