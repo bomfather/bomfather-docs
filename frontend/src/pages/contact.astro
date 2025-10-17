@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Contact Us" description="Email the Bomfather team">
+  <div class="contact-redirect">
+    <p>Opening your email client… If nothing happens, click below:</p>
+    <p><a href="mailto:contact@bomfather.dev" class="mailto-link">Email contact@bomfather.dev</a></p>
+  </div>
+
+  <script>
+    if (typeof window !== 'undefined') {
+      // Trigger mailto immediately on load
+      window.location.href = 'mailto:contact@bomfather.dev';
+    }
+  </script>
+
+  <style>
+    .contact-redirect {
+      min-height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+      text-align: center;
+    }
+    .mailto-link {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+  </style>
+</BaseLayout>

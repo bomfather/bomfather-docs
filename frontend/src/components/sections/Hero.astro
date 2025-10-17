@@ -1,0 +1,563 @@
+---
+// components/sections/Hero.astro
+interface Props {
+  title: string;
+  subtitle: string;
+  primaryCTA?: { text: string; href: string };
+  secondaryCTA?: { text: string; href: string };
+  tableOfContents?: { 
+    items: Array<{ label: string; href: string }> 
+  };
+  metrics: Array<{ value: string; label: string }>;
+  heroImage?: string;
+  investorBadge?: string;
+  investorHandle?: string;
+  investorHandleUrl?: string;
+}
+
+const {
+  title,
+  subtitle,
+  primaryCTA,
+  secondaryCTA,
+  tableOfContents,
+  metrics,
+  heroImage,
+  investorBadge,
+  investorHandle,
+  investorHandleUrl
+} = Astro.props;
+
+// Prepare parts so we can render a real <a> element (avoids scoped CSS issues with set:html)
+let badgeBefore = '';
+let badgeAfter = '';
+if (investorBadge && investorHandle && investorHandleUrl) {
+  const index = investorBadge.indexOf(investorHandle);
+  if (index !== -1) {
+    badgeBefore = investorBadge.slice(0, index);
+    badgeAfter = investorBadge.slice(index + investorHandle.length);
+  }
+}
+---
+
+<section class="hero-section">
+  <div class="container">
+    <div class={`hero-content ${!heroImage ? 'hero-content--centered' : ''}`}>
+      <div class="hero-text">
+        <h1 class="hero-title">
+          {title}
+        </h1>
+        
+        <p class="hero-subtitle">
+          {subtitle}
+        </p>
+        
+        {(primaryCTA || secondaryCTA) && (
+        <div class="hero-actions">
+            {primaryCTA && (
+          <a href={primaryCTA.href} class="btn btn-primary btn-shadow-rounded">
+            {primaryCTA.text}
+          </a>
+            )}
+            {secondaryCTA && (
+          <a href={secondaryCTA.href} class="btn btn-secondary btn-shadow-rounded">
+            {secondaryCTA.text}
+          </a>
+            )}
+          </div>
+        )}
+        
+        {tableOfContents && (
+          <div class="hero-toc">
+            <nav class="toc-nav">
+              {tableOfContents.items.map((item, index) => (
+                <>
+                  <a 
+                    href={item.href} 
+                    class="toc-link"
+                    style={`--delay: ${index * 0.1}s`}
+                  >
+                    {item.label}
+                  </a>
+                  {index < tableOfContents.items.length - 1 && (
+                    <span class="toc-separator">•</span>
+                  )}
+                </>
+              ))}
+            </nav>
+        </div>
+        )}
+        
+        <div class="hero-metrics">
+          {metrics.map((metric) => (
+            <div class="metric">
+              <div class="metric-value">{metric.value}</div>
+              <div class="metric-label">{metric.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {heroImage && (
+        <div class="hero-visual">
+          <img src={heroImage} alt="Product demonstration" class="hero-image" />
+        </div>
+      )}
+    </div>
+  </div>
+  {investorBadge && (
+    <div class="investor-badge" aria-label="Investor recognition">
+      {(investorHandle && investorHandleUrl && investorBadge.includes(investorHandle)) ? (
+        <>
+          {badgeBefore}
+          <a href={investorHandleUrl} class="investor-link" target="_blank" rel="noopener noreferrer">{investorHandle}</a>
+          {badgeAfter && badgeAfter.startsWith(',') ? (
+            <>
+              <br />
+              {badgeAfter.replace(/^,\s*/, '')}
+            </>
+          ) : (
+            badgeAfter
+          )}
+        </>
+      ) : (
+        investorBadge
+      )}
+    </div>
+  )}
+</section>
+
+<style>
+.hero-section {
+  position: relative;
+  background: var(--color-background);
+  color: var(--color-text-secondary);
+  padding: 8rem 0 6rem;
+  /* Pull hero up only by banner height so it sits just below the header */
+  margin-top: calc(-1 * var(--latest-news-banner-height, 0px));
+  overflow: hidden;
+  /* Fill the visible viewport area minus the sticky header */
+  min-height: calc(100vh - var(--header-height, 0px));
+  display: flex;
+  align-items: center;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-background);
+  pointer-events: none;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  width: 100%;
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: calc(100vh - 16rem - var(--header-height, 0px));
+}
+
+.hero-content--centered {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-content--centered .hero-text {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+.hero-content--centered .hero-subtitle {
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-content--centered .hero-actions {
+  justify-content: center;
+}
+
+.hero-content--centered .hero-metrics {
+  justify-content: center;
+}
+
+.hero-content--centered .hero-toc {
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: var(--color-text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin-bottom: 2.5rem;
+  max-width: 700px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  font-size: 1.125rem;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background-color: var(--brand-border);
+  color: var(--color-primary);
+  border-color: var(--brand-border);
+}
+
+.btn-secondary:hover {
+  filter: brightness(0.97);
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+.hero-metrics {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.metric {
+  text-align: center;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.metric-label {
+  font-size: 0.875rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-toc {
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.toc-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: 2rem;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.toc-link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+  white-space: nowrap;
+}
+
+.toc-link:hover {
+  color: var(--color-primary);
+  background: rgba(27, 38, 59, 0.08);
+  transform: translateY(-2px);
+}
+
+.toc-separator {
+  color: var(--color-text-muted);
+  font-weight: bold;
+  user-select: none;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    min-height: calc(100vh - 12rem - var(--header-height, 0px));
+  }
+  
+  .toc-nav {
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    justify-content: flex-start;
+  }
+  
+  .toc-link {
+    font-size: 0.875rem;
+    padding: 0.4rem 0.6rem;
+  }
+  
+  .hero-toc {
+    padding-top: 2rem;
+  }
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .hero-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+  
+  .hero-content--centered {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero-actions {
+    flex-wrap: nowrap;
+  }
+  
+  .hero-metrics {
+    gap: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-section {
+    padding: 10rem 0 8rem;
+  }
+  
+  .hero-content {
+    gap: 6rem;
+  }
+  
+  .hero-metrics {
+    gap: 5rem;
+  }
+}
+
+/* Investor badge (bottom-right, text-only) */
+.investor-badge {
+  position: absolute;
+  right: 3rem;
+  bottom: 3rem; /* squared with right */
+  display: inline-block;
+  color: #DA6A47; /* midpoint between #bc2520 and #f8af6e */
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  opacity: 0; /* default hidden until hero fully fills viewport */
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  will-change: opacity, transform;
+  z-index: 2;
+}
+
+.investor-badge .investor-link {
+  color: #DA6A47;
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #DA6A47;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.investor-badge .investor-link:visited {
+  color: #DA6A47; /* keep visited state consistent with badge color */
+  text-decoration-color: #DA6A47;
+}
+
+/* Place hover after :visited so it wins when both apply */
+.investor-badge .investor-link:hover {
+  color: #f8af6e; /* banner orange */
+  text-decoration-color: #f8af6e;
+  text-decoration-thickness: 2px;
+}
+
+@media (max-width: 768px) {
+  .investor-badge {
+    right: 1.25rem;
+    left: 1.25rem;
+    bottom: 1.5rem;
+    white-space: normal; /* allow wrapping on mobile */
+    max-width: calc(100% - 2.5rem);
+    text-align: center;
+  }
+  .investor-badge {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .investor-badge {
+    right: 4rem;
+    bottom: 4rem; /* squared with right */
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: calc(90vh - var(--header-height, 0px));
+    padding: 6rem 0 4rem;
+  }
+  
+  .hero-metrics {
+    gap: 2rem;
+  }
+  
+  .metric-value {
+    font-size: 1.5rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .hero-title {
+    color: var(--color-text-primary);
+  }
+  
+  .btn {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+  
+  .btn-primary:hover {
+    transform: none;
+  }
+  .btn-secondary:hover {
+    transform: none;
+  }
+}
+</style> 
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const badge = document.querySelector('.investor-badge');
+    const hero = document.querySelector('.hero-section');
+    const banner = document.getElementById('latest-news-banner');
+    if (!badge || !hero) return;
+
+    function setBadgeVisible(visible) {
+      if (visible) {
+        badge.style.opacity = '1';
+        badge.style.transform = 'translateY(0)';
+      } else {
+        badge.style.opacity = '0';
+        badge.style.transform = 'translateY(8px)';
+      }
+    }
+
+    const update = () => {
+      const atTop = (window.scrollY || document.documentElement.scrollTop || 0) <= 0;
+      // Keep visible while the banner is still on-screen; hide once banner fully disappears
+      let bannerVisible = false;
+      if (banner) {
+        const b = banner.getBoundingClientRect();
+        bannerVisible = b.bottom > 0; // any part visible
+      }
+      setBadgeVisible(atTop || bannerVisible);
+    };
+
+    // Use scroll/resize to evaluate exact geometry; requestAnimationFrame for smoothness
+    let ticking = false;
+    function onScrollOrResize() {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          update();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    update();
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+  });
+</script>

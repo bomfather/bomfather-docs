@@ -1,0 +1,43 @@
+---
+// Professional Status Badge Component
+interface Props {
+  status: 'success' | 'warning' | 'error' | 'info' | 'neutral';
+  text: string;
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+}
+
+const { status, text, size = 'md', className = '' } = Astro.props;
+
+const statusClasses = {
+  success: 'bg-green-100 text-green-800 border-green-200',
+  warning: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+  error: 'bg-red-100 text-red-800 border-red-200',
+  info: 'bg-navy-100 text-navy-700 border-navy-200',
+  neutral: 'bg-gray-100 text-gray-800 border-gray-200'
+};
+
+const sizeClasses = {
+  sm: 'px-2 py-1 text-xs',
+  md: 'px-2.5 py-1.5 text-sm',
+  lg: 'px-3 py-2 text-base'
+};
+---
+
+<span class={`
+  inline-flex items-center font-medium rounded-md border
+  ${statusClasses[status]}
+  ${sizeClasses[size]}
+  ${className}
+`}>
+  {text}
+</span>
+
+<style>
+/* Additional professional styling */
+.status-badge {
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+</style>

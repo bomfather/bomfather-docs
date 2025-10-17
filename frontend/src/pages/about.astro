@@ -1,0 +1,210 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageSection from '../components/ui/PageSection.astro';
+---
+
+<BaseLayout 
+  title="About Bomfather - Our Mission and Team"
+  description="Learn about the Bomfather project, our mission to secure software supply chains, and the team behind this innovative tool."
+  showNewsletter={false}
+>
+  <!-- About Header -->
+  <PageSection 
+    id="about-header"
+    variant="dark"
+    size="lg"
+    title="About Bomfather"
+    subtitle="Our mission: Verify trust at its source - securing software supply chains through kernel-level truth."
+    headerLevel={1}
+    centerHeader={true}
+    className="about-header-section"
+  >
+  </PageSection>
+
+  <!-- About Content -->
+  <PageSection 
+    id="about-content"
+    variant="dark"
+    size="lg"
+    className="about-content-section"
+  >
+    <div class="about-content-container">
+      <h2 class="section-title">Who We Are</h2>
+      <div class="content-block">
+        <p>
+          Creators of 
+          <a href="https://github.com/bitbomdev/minefield" target="_blank" rel="noopener noreferrer" class="accent-link">
+            Minefield
+          </a>, a lightning-fast SBOM graphing tool that has become the go-to solution for vulnerability impact analysis in enterprise security stacks.
+        </p>
+      </div>
+
+      <div class="content-block">
+        <p>
+          We're leading contributors to critical open source security projects that protect the modern software supply chain, including 
+          <a href="https://github.com/ossf/scorecard" target="_blank" rel="noopener noreferrer" class="accent-link">OpenSSF Scorecard</a>, 
+          <a href="https://github.com/ossf/criticality_score" target="_blank" rel="noopener noreferrer" class="accent-link">Criticality Score</a>, 
+          <a href="https://github.com/guacsec/guac" target="_blank" rel="noopener noreferrer" class="accent-link">GUAC</a>, 
+          <a href="https://github.com/gittuf/gittuf" target="_blank" rel="noopener noreferrer" class="accent-link">gittuf</a>, and 
+          <a href="https://github.com/sigstore" target="_blank" rel="noopener noreferrer" class="accent-link">Sigstore</a>. 
+          Our expertise is recognized across the industry through presentations at <span class="highlight-text">Linux Foundation conferences</span>, <span class="highlight-text">RSA</span>, and <span class="highlight-text">DEF CON</span>, along with <span class="highlight-text">3× Google Peer Bonus awards</span> for our impact on the security ecosystem.
+        </p>
+      </div>
+
+      <h2 class="section-title story-title">Our Story</h2>
+      <p class="content-block">
+        A critical red team exercise of ours revealed what others missed, attackers could silently swap model weights post-deployment without detection. While traditional security stops at code review, we discovered the real threats emerge during runtime.
+      </p>
+      <p class="content-block">
+        Bomfather was born from this revelation. Our proprietary technology leverages eBPF within the Linux kernel to create a Merkle tree security architecture that monitors, protects, and comprehensively logs every file access, GPU call, and system interaction in real-time. This cryptographic chain not only detects unauthorized changes—to models, data, or libraries—but actively protects against them while maintaining immutable records of all system activities.
+      </p>
+    </div>
+  </PageSection>
+</BaseLayout>
+
+<style>
+/* Professional Theme Base - matching homepage */
+:root {
+  --bg-primary: var(--color-background);
+  --bg-secondary: var(--color-background);
+  --bg-tertiary: #FFFFFF;
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-tertiary: var(--color-text-tertiary);
+  --accent-primary: var(--color-primary);
+  --accent-secondary: #3b82f6;
+  --accent-gradient: linear-gradient(135deg, var(--color-primary) 0%, #1d4ed8 100%);
+  --border-color: var(--color-border-light);
+  --glass-bg: #FFFFFF;
+  --shadow-professional: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  
+  /* Professional spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+}
+
+/* Professional Global Styles - matching homepage */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-primary) !important;
+  color: var(--text-secondary);
+  font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+  line-height: 1.6;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Keep Inter for hero titles and main headings */
+.hero-title,
+.hero-subtitle,
+.section-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* About Header Section */
+.about-header-section {
+  padding-top: 8rem !important;
+  padding-bottom: 2.5rem !important;
+}
+
+/* About Content Section */
+.about-content-section {
+  padding-top: 1rem !important;
+}
+
+.about-content-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section-title {
+  font-size: 1.875rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-primary) !important;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+}
+
+.story-title {
+  margin-top: var(--spacing-2xl);
+}
+
+.content-block {
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.content-block p {
+  margin: 0;
+}
+
+/* Use centralized external-link styling */
+
+
+.highlight-text {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-content-section {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .content-block {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-title {
+    font-size: 1.25rem;
+  }
+  
+  .content-block {
+    font-size: 0.875rem;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-content-container {
+    padding: 0 0.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .content-block {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-title {
+    font-size: 1.25rem;
+  }
+  
+  .content-block {
+    font-size: 0.875rem;
+  }
+}
+</style> 

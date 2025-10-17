@@ -1,0 +1,785 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import PageSection from '../components/ui/PageSection.astro';
+import Card from '../components/ui/Card.astro';
+import DataTable from '../components/ui/DataTable.astro';
+
+// AI Security content structured like homepage
+const pageContent = {
+  hero: {
+    title: "Your Models Are One File Descriptor Away From Theft",
+    subtitle: "You spent millions training your model. Months perfecting it. Your entire competitive advantage condensed into a weights file. It takes 30 seconds to steal it all.",
+    primaryCTA: { text: "Talk to the Founders", href: "mailto:contact@bomfather.dev" },
+    secondaryCTA: { text: "Learn More", href: "/blog/gpus-insecure-ai-data-theft" },
+    metrics: []
+  },
+
+  attackVectors: {
+    title: "How AI Data Gets Stolen (And Why Current Security Can't Stop It)",
+    ai: {
+      header: "The GPU Memory Backdoor",
+      headerDescription: "Any process with the same UID can steal or tamper with your model weights directly from GPU memory using simple Linux commands.",
+      traditional: {
+        title: "Traditional \"AI Security\"",
+        description: "Your GPU memory is wide open. Any process with the same UID can steal your models through file descriptors. Training data worth millions? Gone in seconds.",
+        problems: [
+          "IPC 'pins' memory and creates readable file descriptors",
+          "Kubernetes isolation means nothing at the GPU level",
+          "Containers share the same UID for GPU access",
+          "No visibility into who accesses GPU memory"
+        ]
+      },
+      bomfather: {
+        title: "Bomfather AI Protection",
+        benefits: [
+          "Block unauthorized GPU access instantly",
+          "Stop container escapes from reaching GPU resources",
+          "Zero-trust enforcement at the hardware level"
+        ],
+        tagline: "The same augment.py file can be run for legitimate training, while blocked for attackers."
+      }
+    }
+  },
+
+  scenarios: {
+    title: "Real Attack Scenarios We Stop",
+    subtitle: "See how Bomfather prevents the attacks that traditional security misses",
+    cases: [
+      {
+        title: "The Insider Threat",
+        attack: "A contractor deploys a 'monitoring script' that silently exfiltrates model weights via GPU memory access.",
+        traditional: "Detects unusual network traffic... after your model is in China.",
+        bomfather: "Blocks the unauthorized GPU access instantly. Attack never succeeds."
+      },
+      {
+        title: "The Model Swap",
+        attack: "Malicious actor attempts to replace your production model with a backdoored version.",
+        traditional: "Model serves predictions including attacker's backdoor logic.",
+        bomfather: "Malicious actor blocked from accessing GPU resources. Cannot deploy backdoored model."
+      },
+      {
+        title: "The Process Injection Attack",
+        attack: "Attacker compromises data loading script and spawns GPU-accessing subprocess to steal weights.",
+        traditional: "If subprocess has valid credentials, it gets GPU access.",
+        bomfather: "Subprocess blocked—wrong parent process. Kernel denies access despite valid credentials."
+      }
+    ]
+  }
+};
+---
+
+<BaseLayout 
+  title="Protect GPUs - Kernel-Level Security for AI Models | Bomfather"
+  description="Stop AI model theft and data poisoning with kernel-level security. GPU memory protection, training provenance, and cryptographic verification for your AI."
+  showAnnouncement={false}
+  showNewsletter={false}
+>
+  <!-- Hero Section -->
+  <Hero 
+    title={pageContent.hero.title}
+    subtitle={pageContent.hero.subtitle}
+    primaryCTA={pageContent.hero.primaryCTA}
+    secondaryCTA={pageContent.hero.secondaryCTA}
+    metrics={pageContent.hero.metrics}
+  />
+
+  <!-- GPU Memory Backdoor Section -->
+  <PageSection 
+    id="gpu-memory-backdoor"
+    variant="dark"
+    size="lg"
+    title={pageContent.attackVectors.ai.header}
+    subtitle={pageContent.attackVectors.ai.headerDescription}
+    headerLevel={2}
+    centerHeader={true}
+    className="attack-vectors-section"
+  >
+    <DataTable 
+      className="security-comparison-table"
+      columns={[
+        { key: 'aspect', label: 'Security Aspect', width: '30%' },
+        { key: 'traditional', label: 'Traditional Approach', width: '35%' },
+        { key: 'bomfather', label: 'Bomfather Solution', width: '35%' }
+      ]}
+      data={[
+        {
+          aspect: 'Model Protection',
+          traditional: 'Can\'t see GPU memory access',
+          bomfather: 'Proactively blocks GPU theft at the kernel level'
+        },
+        {
+          aspect: 'Data Theft Prevention',
+          traditional: 'No control over IPC exploitation',
+          bomfather: 'Unauthorized programs can\'t use IPCs to access the GPU'
+        },
+        {
+          aspect: 'Workflow Impact',
+          traditional: 'Forces you to break pipelines to integrate it',
+          bomfather: 'Zero workflow changes needed'
+        },
+        {
+          aspect: 'Runtime Overhead',
+          traditional: 'Confidential computing adds ~40% time overhead',
+          bomfather: 'eBPF efficiency delivers ~3% overhead'
+        }
+      ]}
+    />
+  </PageSection>
+
+  <!-- Demo Video Section -->
+  <PageSection 
+    id="demo-video"
+    variant="dark"
+    size="lg"
+    title="See Our AI Protection In Action"
+    headerLevel={2}
+    centerHeader={true}
+    className="demo-video-section"
+  >
+    <div class="demo-video-container animate-on-scroll">
+      <div class="video-wrapper btn-shadow-rounded">
+        <iframe 
+          class="demo-video"
+          src="https://www.youtube.com/embed/QJ_C2qN7PhA"
+          title="Bomfather AI Protection Demo"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </PageSection>
+
+  <!-- Attack Scenarios Section -->
+  <PageSection 
+    id="scenarios"
+    variant="dark"
+    size="lg"
+    title={pageContent.scenarios.title}
+    subtitle={pageContent.scenarios.subtitle}
+    headerLevel={2}
+    centerHeader={true}
+    className="scenarios-section"
+  >
+    <div class="scenarios-grid animate-stagger">
+      {pageContent.scenarios.cases.map((scenario, index) => (
+        <Card 
+          variant="glass"
+          padding="lg"
+          className="scenario-card animate-slide-up"
+          style={`--delay: ${index * 0.2}s`}
+        >
+          <h3 class="scenario-title">{scenario.title}</h3>
+          
+          <div class="scenario-section">
+            <h4 class="scenario-label">The Attack:</h4>
+            <p class="scenario-text attack-text">{scenario.attack}</p>
+          </div>
+          
+          <div class="scenario-section">
+            <h4 class="scenario-label traditional-label">Traditional Security:</h4>
+            <p class="scenario-text traditional-text">✗ {scenario.traditional}</p>
+          </div>
+          
+          <div class="scenario-section">
+            <h4 class="scenario-label bomfather-label">Bomfather:</h4>
+            <p class="scenario-text bomfather-text">✓ {scenario.bomfather}</p>
+          </div>
+        </Card>
+      ))}
+    </div>
+  </PageSection>
+</BaseLayout>
+
+<style>
+/* Professional Theme Base - matching homepage */
+:root {
+  --bg-primary: var(--color-background);
+  --bg-secondary: var(--color-background);
+  --bg-tertiary: #FFFFFF;
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-tertiary: var(--color-text-tertiary);
+  --accent-primary: var(--color-primary);
+  --accent-secondary: #3b82f6;
+  --accent-gradient: linear-gradient(135deg, var(--color-primary) 0%, #1d4ed8 100%);
+  --border-color: var(--color-border-light);
+  --glass-bg: #FFFFFF;
+  --shadow-professional: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --success-color: #16a34a;
+  --error-color: #dc2626;
+  
+  /* Professional spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+}
+
+/* Professional Global Styles - matching homepage */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-primary) !important;
+  color: var(--text-secondary);
+  font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+  line-height: 1.6;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Keep Inter for hero titles and main headings */
+.hero-title,
+.hero-subtitle,
+.page-section h1,
+.page-section h2,
+.page-section h3,
+.section-title,
+.attack-card-title,
+.step-title,
+.scenario-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* Background gradients */
+.bg-gradient-dark {
+  background: var(--bg-primary);
+  position: relative;
+}
+
+.bg-gradient-dark::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-primary);
+  pointer-events: none;
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.1); }
+  50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.3); }
+}
+
+@keyframes bounceX {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+/* Animation Classes */
+.animate-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.animate-slide-up {
+  opacity: 0;
+  animation: slideUp 0.8s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.animate-scale {
+  opacity: 0;
+  animation: scaleIn 0.6s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.animate-stagger > * {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
+  animation-delay: calc(var(--delay, 0s) + var(--stagger-delay, 0s));
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.animate-on-scroll.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover Animations */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Removed hover effect for non-clickable elements */
+
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
+  border-color: var(--accent-secondary);
+}
+
+/* Page override: make secondary hero button dark blue */
+:global(.hero-section .btn.btn-secondary) {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+:global(.hero-section .btn.btn-secondary:hover) {
+  filter: brightness(0.95);
+  border-color: var(--color-primary);
+}
+
+/* Attack Vectors Section - simplified */
+
+.attack-vector-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.attack-vector-card {
+  background: transparent;
+  border: 2px solid var(--color-border-strong);
+  border-radius: 0;
+  padding: var(--spacing-xl);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  transition: none;
+}
+
+/* Paint main surface and offset tile (solid rectangle shadow) */
+.attack-vector-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-bg);
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.attack-vector-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(14px, 14px);
+  background: rgba(100, 116, 139, 0.24);
+  border-radius: inherit;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* Removed hover effect on non-clickable attack vector cards */
+
+.attack-card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary) !important;
+  letter-spacing: -0.025em;
+  line-height: 1.4;
+}
+
+.attack-card-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+  font-size: 0.875rem;
+}
+
+.attack-problems-list,
+.attack-benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  flex: 1;
+}
+
+.problem-item,
+.benefit-item {
+  padding: var(--spacing-sm) 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.problem-item:last-child,
+.benefit-item:last-child {
+  border-bottom: none;
+}
+
+.problem-item::before {
+  content: '✗';
+  color: #ef4444;
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+.benefit-item::before {
+  content: '✓';
+  color: #10b981;
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+.attack-card-tagline {
+  font-style: italic;
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+
+
+/* Features Grid - matching homepage */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.feature-card {
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.benefits-list {
+  margin-top: 1.5rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.benefits-list li {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.benefits-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent-primary);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Demo Video Section - matching homepage */
+.demo-video-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 var(--spacing-lg);
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  margin-bottom: 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: none;
+  border: 1px solid var(--border-color);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+}
+
+.demo-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+/* Removed hover effect on non-clickable video wrapper */
+
+.demo-description {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* Scenarios Grid */
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Ensure strong borders and offset tiles for Card wrappers */
+.scenarios-grid :global(.card--glass) {
+  background: transparent;
+  border: 2px solid var(--color-border-strong);
+  box-shadow: none;
+}
+
+.scenarios-grid :global(.card) {
+  border-radius: 0;
+  padding: var(--spacing-xl);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  isolation: isolate;
+}
+
+.scenarios-grid :global(.card)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-bg);
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.scenarios-grid :global(.card)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(14px, 14px);
+  background: rgba(100, 116, 139, 0.24);
+  border-radius: inherit;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.scenario-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary) !important;
+}
+
+.scenario-section {
+  margin-bottom: 1.5rem;
+}
+
+.scenario-section:last-child {
+  margin-bottom: 0;
+}
+
+.scenario-label {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  color: #a1a1aa;
+}
+
+.traditional-label {
+  color: var(--error-color);
+}
+
+.bomfather-label {
+  color: var(--success-color);
+}
+
+.scenario-text {
+  font-size: 1rem;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.attack-text { color: var(--text-secondary); }
+
+.traditional-text {
+  color: var(--error-color);
+}
+
+.bomfather-text {
+  color: var(--success-color);
+}
+
+
+
+/* Card title and text improvements - matching homepage */
+.card h1, .card h2, .card h3, .card h4, .card h5, .card h6,
+.card .title, .card .card-title, .card .heading,
+.feature-card h1, .feature-card h2, .feature-card h3, .feature-card h4, .feature-card h5, .feature-card h6,
+.get-started-card h1, .get-started-card h2, .get-started-card h3, .get-started-card h4, .get-started-card h5, .get-started-card h6 {
+  color: var(--text-primary) !important;
+}
+
+.card-title {
+  color: var(--text-primary) !important;
+}
+
+.card-content {
+  color: var(--text-secondary) !important;
+  margin-bottom: 2rem !important;
+}
+
+/* Responsive Design - matching homepage */
+@media (max-width: 768px) {
+  .attack-vector-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .attack-vector-card {
+    min-height: auto;
+    border: 2px solid var(--color-border-strong);
+  }
+  
+  .features-grid,
+  .scenarios-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .demo-video-container {
+    margin: 0 1rem;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .animate-bounce-x {
+    animation: none;
+  }
+}
+</style>
+
+<script>
+// Intersection Observer for scroll animations - matching homepage
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    }
+  });
+}, observerOptions);
+
+// Initialize animations when DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollElements = document.querySelectorAll('.animate-on-scroll');
+  scrollElements.forEach(el => observer.observe(el));
+  
+  // Initialize typing animations
+  initTypingAnimations();
+  
+  // Add stagger delays for grid items
+  const staggerContainers = document.querySelectorAll('.animate-stagger');
+  
+  staggerContainers.forEach(container => {
+    const items = container.children;
+    Array.from(items).forEach((item, index) => {
+      item.style.setProperty('--stagger-delay', `${index * 0.1}s`);
+    });
+  });
+});
+
+// Typing animation for code blocks
+function initTypingAnimations() {
+  const codeBlocks = document.querySelectorAll('.animate-typing');
+  
+  codeBlocks.forEach((block, index) => {
+    const code = block.dataset.code;
+    const codeElement = block.querySelector('code');
+    
+    if (code && codeElement) {
+      // Calculate fixed height based on number of lines
+      const lines = code.split('\n');
+      const lineCount = lines.length;
+      const lineHeight = 1.6; // rem
+      const fontSize = 0.875; // rem  
+      const paddingTop = 1.5; // rem
+      const paddingBottom = 1.5; // rem
+      
+      // Calculate height in pixels (16px = 1rem)
+      const contentHeight = lineCount * lineHeight * fontSize * 16;
+      const totalPadding = (paddingTop + paddingBottom) * 16;
+      const fixedHeight = contentHeight + totalPadding;
+      
+      // Set fixed height immediately to prevent expansion
+      block.style.height = `${fixedHeight}px`;
+      block.style.maxHeight = `${fixedHeight}px`;
+      block.style.minHeight = `${fixedHeight}px`;
+      
+      // Ensure code element also has constraints
+      const codeContentHeight = lineCount * lineHeight * fontSize * 16;
+      codeElement.style.height = `${codeContentHeight}px`;
+      codeElement.style.maxHeight = `${codeContentHeight}px`;
+      
+      let i = 0;
+      const speed = 20;
+      
+      function typeWriter() {
+        if (i < code.length) {
+          codeElement.textContent += code.charAt(i);
+          i++;
+          setTimeout(typeWriter, speed);
+        }
+      }
+      
+      // Start typing animation when in view
+      const blockObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && codeElement.textContent === '') {
+            setTimeout(typeWriter, 200);
+          }
+        });
+      }, observerOptions);
+      
+      blockObserver.observe(block);
+    }
+  });
+}
+</script> 

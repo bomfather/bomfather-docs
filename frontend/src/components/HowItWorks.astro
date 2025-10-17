@@ -1,0 +1,234 @@
+---
+// HowItWorks.astro - A visual explanation of how Bomfather works
+---
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeTimelineAnimation();
+  });
+  
+  async function initializeTimelineAnimation() {
+    try {
+      // Dynamic import of GSAP and ScrollTrigger to avoid reference errors
+      const { gsap } = await import('gsap');
+      
+      // Check if we're near the bottom of the page
+      const isNearPageBottom = () => {
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+        
+        // If we're within 10% of the bottom of the page
+        return (scrollPosition + windowHeight) > (documentHeight * 0.9);
+      };
+      
+      // If we're already near the bottom, show all steps immediately
+      if (isNearPageBottom()) {
+        document.querySelectorAll('.step-card').forEach(card => {
+          card.style.opacity = 1;
+          card.style.transform = 'translateX(0)';
+        });
+        document.querySelector('#how-it-works-header').style.opacity = 1;
+        document.querySelector('#how-it-works-header').style.transform = 'translateY(0)';
+        document.querySelector('.timeline-line').style.width = '100%';
+        return; // Skip the animation setup
+      }
+      
+      // Check if ScrollTrigger is available
+      let ScrollTrigger;
+      try {
+        // Try to import ScrollTrigger
+        ScrollTrigger = (await import('gsap/ScrollTrigger')).ScrollTrigger;
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // If ScrollTrigger is available, use the scroll-based animation
+        initScrollAnimation(gsap, ScrollTrigger);
+      } catch (error) {
+        console.warn('ScrollTrigger not available, using fallback animation', error);
+        // If ScrollTrigger is not available, use a simpler animation approach
+        initFallbackAnimation(gsap);
+      }
+    } catch (error) {
+      console.error('Error initializing animations:', error);
+      // Make elements visible in case of error
+      document.querySelectorAll('.step-card').forEach(card => {
+        card.style.opacity = 1;
+      });
+      document.querySelector('#how-it-works-header').style.opacity = 1;
+    }
+  }
+  
+  function initScrollAnimation(gsap, ScrollTrigger) {
+    // Check if we're near the bottom of the page
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+    const howItWorksSection = document.querySelector('#how-it-works');
+    
+    // Calculate if the section is close to the bottom of the viewport
+    const sectionRect = howItWorksSection.getBoundingClientRect();
+    const isSectionNearBottom = sectionRect.bottom <= windowHeight + 100;
+    
+    // If the section is near the bottom, show all elements immediately with a stagger
+    if (isSectionNearBottom) {
+      // Show header first
+      gsap.to("#how-it-works-header", { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.3 
+      });
+      
+      // Show timeline
+      gsap.to(".timeline-line", { 
+        width: "100%", 
+        duration: 0.5,
+        delay: 0.1
+      });
+      
+      // Show all steps with a quick stagger
+      gsap.to(".step-card", {
+        opacity: 1,
+        x: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        delay: 0.2,
+        ease: "power1.out"
+      });
+      
+      return; // Skip the regular animation
+    }
+    
+    // Create a timeline for the animations
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#how-it-works",
+        start: "top 80%", // Start earlier when the section is higher in the viewport
+        end: "top 30%", // End sooner so all animations complete with minimal scrolling
+        toggleActions: "play none none reset", // Reset on scroll up to allow replaying
+        markers: false, // Set to true for debugging
+        scrub: 0.3, // Faster scrubbing for quicker animations
+      }
+    });
+    
+    // Header animation - initial state
+    gsap.set("#how-it-works-header", { opacity: 0, y: 20 });
+    
+    // Animate header first but much faster
+    timeline.to("#how-it-works-header", {
+      opacity: 1,
+      y: 0,
+      duration: 0.2
+    });
+    
+    // Animate timeline line with a drawing effect - faster
+    gsap.set(".timeline-line", { width: "0%" });
+    timeline.to(".timeline-line", {
+      width: "100%",
+      duration: 0.3
+    }, "-=0.1");
+    
+    // Animate all steps with minimal delay between them
+    // First step appears almost immediately after header
+    timeline.fromTo("#step-1", 
+      { x: 100, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.3, ease: "power1.out" },
+      "-=0.2"
+    );
+    
+    // Reduced delays between steps
+    timeline.fromTo("#step-2", 
+      { x: 100, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.3, ease: "power1.out" },
+      "-=0.2"
+    );
+    
+    timeline.fromTo("#step-3", 
+      { x: 100, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.3, ease: "power1.out" },
+      "-=0.2"
+    );
+    
+    timeline.fromTo("#step-4", 
+      { x: 100, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.3, ease: "power1.out" },
+      "-=0.2"
+    );
+    
+    // Add a fallback to ensure all steps are visible even if scrolling is limited
+    const ensureVisibility = () => {
+      // After 2 seconds, make sure all steps are visible regardless of scroll position
+      setTimeout(() => {
+        if (document.querySelector("#step-3").style.opacity === "0" || 
+            document.querySelector("#step-4").style.opacity === "0") {
+          gsap.to([".step-card"], {
+            opacity: 1,
+            x: 0,
+            stagger: 0.1,
+            duration: 0.5,
+            ease: "power1.out"
+          });
+        }
+      }, 2000);
+    };
+    
+    // Call the function to ensure visibility
+    ensureVisibility();
+    
+    // On mobile, create an alternative approach with simpler scroll triggers
+    if (window.innerWidth < 768) {
+      // Clear the timeline for mobile
+      timeline.clear();
+      
+      // Make all elements visible with a stagger effect
+      gsap.to("#how-it-works-header", { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.5 
+      });
+      
+      // Animate all steps at once with stagger
+      gsap.to([".step-card"], {
+        opacity: 1,
+        y: 0,
+        stagger: 0.15,
+        duration: 0.5,
+        delay: 0.3,
+        ease: "power1.out"
+      });
+      
+      // Animate the timeline
+      gsap.to(".timeline-line", { 
+        width: "100%", 
+        duration: 0.8 
+      });
+    }
+  }
+  
+  function initFallbackAnimation(gsap) {
+    // Make header visible immediately
+    gsap.to("#how-it-works-header", { opacity: 1, y: 0, duration: 0.5 });
+    
+    // Animate all steps with staggered timing but without requiring scroll
+    const steps = ["#step-1", "#step-2", "#step-3", "#step-4"];
+    
+    // Set initial state for all steps
+    steps.forEach((stepId) => {
+      const step = document.querySelector(stepId);
+      gsap.set(step, { opacity: 0, x: 100 });
+    });
+    
+    // Animate all steps in sequence without waiting for scroll
+    gsap.to(steps, {
+      opacity: 1,
+      x: 0,
+      duration: 0.5,
+      stagger: 0.2,
+      delay: 0.5,
+      ease: "power1.out"
+    });
+    
+    // Animate the timeline
+    gsap.to(".timeline-line", { width: "100%", duration: 0.8, delay: 0.3 });
+  }
+</script> 

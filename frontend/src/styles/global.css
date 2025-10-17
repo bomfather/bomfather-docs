@@ -1,0 +1,412 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand core hues */
+  --brand-deep: #34374b;       /* deep navy (headings, primary CTAs) */
+  --brand-muted: #64748B;      /* slate/muted text and subtle UI */
+  --brand-bg: #F9FAFC;         /* site background */
+  --brand-surface-tint: #F1F5F9; /* legacy light tint (not used for sections) */
+  --brand-border: #E8ECF4;     /* soft border */
+
+  /* Semantic tokens mapped to brand */
+  --color-primary: var(--brand-deep);        /* primary brand (buttons/links) */
+  --color-background: var(--brand-bg);       /* page background */
+  --color-surface: #FFFFFF;                  /* cards/surfaces */
+  --color-surface-secondary: var(--color-background); /* section backgrounds */
+  --color-surface-tertiary: #FFFFFF;         /* code blocks, alt surfaces */
+
+  /* Text tokens */
+  --color-text-primary: var(--brand-deep);   /* main headings/text */
+  --color-text-secondary: var(--brand-deep); /* body text */
+  --color-text-tertiary: var(--brand-muted); /* captions/secondary */
+  --color-text-muted: var(--brand-muted);    /* subtle UI text */
+
+  /* Border tokens */
+  --color-border-light: var(--brand-border); /* light borders */
+  --color-border-medium: var(--brand-border);/* medium borders */
+  --color-border-strong: #000000; /* strong/dividers now black */
+
+  /* Compatibility aliases (still referenced in styles) */
+  --color-dark: var(--brand-deep);           /* alias of deep navy */
+  --color-mid-gray: var(--brand-muted);      /* alias of muted slate */
+  --color-light-gray: var(--brand-surface-tint); /* alias of legacy tint */
+  --color-white: #FFFFFF;                    /* pure white */
+
+  /* Professional fonts */
+  --font-sans: 'Fira Code', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Fira Code', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-text-secondary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+code, pre {
+  font-family: var(--font-mono);
+}
+
+/* Custom component classes */
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-md font-medium transition duration-300;
+  }
+  
+  .btn-primary { @apply bg-primary text-white hover:bg-accent; }
+  
+  /* Secondary buttons should not blend with the page background. Use brand-border. */
+  .btn-secondary {
+    background-color: var(--brand-border);
+    border: 1px solid var(--brand-border);
+    color: var(--color-primary);
+  }
+  .btn-secondary:hover {
+    filter: brightness(0.97);
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+/* Override any ConvertKit styles */
+.formkit-alert svg,
+.formkit-alert path,
+.formkit-success svg,
+.formkit-success path {
+  color: var(--color-primary) !important;
+  fill: var(--color-primary) !important;
+  stroke: var(--color-primary) !important;
+}
+
+/* Hide any ConvertKit success elements entirely if desired */
+.formkit-alert.formkit-alert-success,
+.formkit-success {
+  display: none !important;
+}
+
+/* Global styles */
+
+/* Add smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+/* Code blocks */
+code, pre {
+  font-family: var(--font-mono);
+}
+
+/* Utilities */
+.font-heading {
+  font-family: var(--font-sans);
+}
+
+/* Light Theme Variables */
+:root {
+  --color-bg: var(--color-background);
+  --color-text: var(--color-text-primary);
+  --color-text-muted: var(--color-text-muted);
+}
+
+/* Professional Components */
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-accent;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent border border-primary text-primary hover:bg-primary/10;
+  }
+
+  /* Rounded layered shadow utility for buttons (outside-only; no overlay) */
+  .btn-shadow-rounded {
+    position: relative;
+    filter: drop-shadow(8px 8px 0 rgba(100, 116, 139, 0.24));
+    will-change: filter;
+  }
+
+  /* Slightly tighter offset and lighter tone for compact areas (e.g., header) */
+  .btn-shadow-rounded-sm {
+    position: relative;
+    filter: drop-shadow(6px 6px 0 rgba(100, 116, 139, 0.18));
+    will-change: filter;
+  }
+
+  /* Extra-small offset for small controls (e.g., pagination) */
+  .btn-shadow-rounded-xs {
+    position: relative;
+    filter: drop-shadow(4px 4px 0 rgba(100, 116, 139, 0.16));
+    will-change: filter;
+  }
+  
+  /* Professional Table Styling */
+  .data-table {
+    width: 100%;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .data-table-header { background-color: var(--color-surface-secondary); border-bottom: 1px solid var(--color-border-light); }
+  
+  .data-table-row {
+    border-bottom: 2px solid var(--color-border-light);
+    transition: background-color 0.2s ease;
+  }
+  
+  .data-table-row:hover { background-color: var(--color-surface-secondary); }
+  
+  .data-table-row:last-child {
+    border-bottom: 2px solid #e5e7eb;
+  }
+  
+  .data-table-cell {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: var(--color-text-primary);
+    font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+    line-height: 1.5;
+  }
+  
+  .data-table-header-cell {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Color coding for comparison columns */
+  .data-table-cell.traditional-approach {
+    background-color: #fef2f2;
+    border-left: 4px solid #dc2626;
+    color: #7f1d1d;
+    font-weight: 500;
+  }
+
+  .data-table-cell.bomfather-solution {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a;
+    color: #14532d;
+    font-weight: 500;
+  }
+
+  .data-table-cell.aspect-cell {
+    background-color: #f8f9fa;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  /* Color coding for column headers */
+  .data-table-header-cell.traditional-header {
+    background-color: #fef2f2;
+    color: #7f1d1d;
+    border-left: 4px solid #dc2626;
+    font-weight: 600;
+  }
+
+  .data-table-header-cell.bomfather-header {
+    background-color: #f0fdf4;
+    color: #14532d;
+    border-left: 4px solid #16a34a;
+    font-weight: 600;
+  }
+
+  .data-table-header-cell.aspect-header {
+    background-color: #f8f9fa;
+    color: #374151;
+    font-weight: 600;
+  }
+  
+  /* Professional Card Styling */
+  .professional-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+  
+  .professional-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #F3F4F6;
+  }
+  
+  .professional-card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+  
+  .professional-card-subtitle {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+  }
+  
+  /* Status Badges */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  
+  .status-badge-success {
+    background-color: #D1FAE5;
+    color: #065F46;
+  }
+  
+  .status-badge-warning {
+    background-color: #FEF3C7;
+    color: #92400E;
+  }
+  
+  .status-badge-error {
+    background-color: #FEE2E2;
+    color: #991B1B;
+  }
+  
+  .status-badge-info {
+    background-color: #DBEAFE;
+    color: #1E40AF;
+  }
+  
+  /* Professional Form Controls */
+  .form-input {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    font-size: 0.875rem;
+    background-color: white;
+  }
+  
+  .form-input::placeholder {
+    color: #9CA3AF;
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  .form-select {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #D1D5DB;
+    background-color: white;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    font-size: 0.875rem;
+  }
+  
+  .form-select:focus {
+    outline: none;
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  .form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Light theme code blocks */
+pre {
+  position: relative;
+  background-color: var(--color-surface-tertiary);
+  border: 1px solid var(--color-border-light);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+pre code {
+  display: block;
+  position: relative;
+  z-index: 2;
+  color: var(--color-text-primary);
+}
+
+pre::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(120deg, rgba(248, 250, 252, 0.8) 0%, rgba(241, 245, 249, 0.8) 50%, rgba(248, 250, 252, 0.8) 100%);
+}
+
+/* Global transitions */
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Header styles */
+.header-nav {
+  /* transition: background-color 0.3s ease, border 0.3s ease, backdrop-filter 0.3s ease, top 0.3s ease; */
+  /* Removed transition related to floating behavior */
+}
+
+/* Hero pulse animation */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes sway {
+  0%   { transform: rotate(-1deg); }
+  50%  { transform: rotate(1deg); }
+  100% { transform: rotate(-1deg); }
+}
+
+.hero-drone {
+  animation: sway 18s ease-in-out infinite;
+} 

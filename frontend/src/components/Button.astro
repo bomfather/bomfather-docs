@@ -1,0 +1,40 @@
+---
+export interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const { 
+  href, 
+  variant = 'primary', 
+  size = 'md',
+  class: className = ''
+} = Astro.props;
+
+const sizeClasses = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-3',
+  lg: 'px-8 py-4 text-lg'
+};
+
+const variantClasses = {
+  primary: 'bg-primary text-white hover:bg-accent',
+  secondary: 'bg-white text-primary border border-primary hover:bg-primary/10'
+};
+
+const classes = `inline-block rounded-md font-medium transition duration-300 btn-shadow-rounded ${sizeClasses[size]} ${variantClasses[variant]} ${className}`;
+---
+
+{
+  href ? (
+    <a href={href} class={classes}>
+      <slot />
+    </a>
+  ) : (
+    <button class={classes}>
+      <slot />
+    </button>
+  )
+} 

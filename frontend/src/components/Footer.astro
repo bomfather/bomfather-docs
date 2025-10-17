@@ -1,0 +1,275 @@
+---
+ // Footer component for site footer
+---
+
+<footer class="footer-section">
+  <div class="footer-container">
+    <div class="footer-content">
+      <!-- Links section -->
+      <div class="footer-links">
+        <div class="footer-column">
+          <h3 class="footer-heading">Products</h3>
+          <ul class="footer-nav">
+            <li><a href="/protect-ai" class="footer-link">Protect GPUs</a></li>
+            <li><a href="/protect-builds" class="footer-link">Protect Builds</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3 class="footer-heading">Company</h3>
+          <ul class="footer-nav">
+            <li><a href="/about" class="footer-link">About</a></li>
+            <li><a href="/blog" class="footer-link">Blog</a></li>
+            <li><a href="mailto:contact@bomfather.dev" class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        
+
+      </div>
+      
+      <!-- Quote section with enhanced styling -->
+      <div class="quote-section">
+        <blockquote class="quote-blockquote">
+          <div class="quote-mark">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 7L8 10H11V16H5V10L7 7H10ZM19 7L17 10H20V16H14V10L16 7H19Z" fill="currentColor"/>
+            </svg>
+          </div>
+          <p class="quote-text">"I am going to give him security he can't refuse"</p>
+          <footer class="quote-attribution">—The Bomfather</footer>
+        </blockquote>
+      </div>
+      
+      <!-- Copyright section -->
+      <div class="copyright-section">
+        <p class="copyright-text">© 2025 Bomfather. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-section {
+    background: var(--color-surface-secondary);
+    color: var(--color-text-secondary);
+    padding: 2rem 0;
+    border-top: 1px solid var(--color-border-light);
+    position: relative;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
+  
+  .footer-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .footer-column {
+    text-align: center;
+  }
+  
+  .footer-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .footer-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .footer-link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    display: inline-block;
+  }
+  
+  .footer-link:hover {
+    color: var(--color-primary);
+    transform: translateY(-1px);
+  }
+  
+  .quote-section {
+    text-align: center;
+  }
+  
+  .quote-blockquote {
+    position: relative;
+    max-width: 500px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .quote-mark {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    opacity: 0.8;
+  }
+  
+  .quote-text {
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    font-style: italic;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+    position: relative;
+    white-space: nowrap;
+    text-align: center;
+  }
+  
+  .quote-attribution {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-tertiary);
+    font-style: normal;
+  }
+  
+  .copyright-section {
+    text-align: center;
+  }
+  
+  .copyright-text {
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    margin: 0;
+  }
+  
+  /* Desktop layout */
+  @media (min-width: 768px) {
+    .footer-content {
+      gap: 4rem;
+    }
+    
+    .footer-links {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      max-width: 600px;
+    }
+    
+    .footer-column {
+      text-align: left;
+    }
+    
+    .quote-section {
+      text-align: center;
+    }
+    
+    .quote-blockquote {
+      max-width: 500px;
+      margin: 0 auto;
+      align-items: center;
+    }
+    
+    .quote-mark {
+      justify-content: center;
+    }
+    
+    .copyright-section {
+      text-align: center;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .footer-content {
+      display: grid;
+      grid-template-areas: 
+        "links quote"
+        "links copyright";
+      grid-template-columns: 1fr auto;
+      gap: 2rem 4rem;
+      align-items: start;
+    }
+    
+    .footer-links {
+      grid-area: links;
+      justify-self: start;
+      align-self: start;
+    }
+    
+    .quote-section {
+      grid-area: quote;
+      text-align: right;
+      justify-self: end;
+    }
+    
+    .quote-blockquote {
+      margin: 0;
+      max-width: 450px;
+      margin-right: 1rem;
+      align-items: flex-end;
+    }
+    
+    .quote-mark {
+      justify-content: flex-end;
+    }
+    
+    .copyright-section {
+      grid-area: copyright;
+      text-align: right;
+      justify-self: end;
+      align-self: start;
+    }
+  }
+  
+  /* Enhanced responsive design */
+  @media (max-width: 767px) {
+    .footer-section {
+      padding: 1.5rem 0;
+    }
+    
+    .footer-container {
+      padding: 0 1rem;
+    }
+    
+    .footer-content {
+      gap: 1.5rem;
+    }
+  }
+  
+  /* Print styles */
+  @media print {
+    .footer-section {
+      background: white !important;
+      color: black !important;
+      border-top: 1px solid #ccc !important;
+    }
+    
+    .quote-text,
+    .quote-attribution {
+      color: black !important;
+    }
+    
+    .quote-mark {
+      color: #666 !important;
+    }
+  }
+</style> 
