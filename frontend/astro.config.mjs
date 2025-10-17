@@ -6,7 +6,8 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://bomfather.bitbomdev.org', // Replace with actual domain when available
+  site: 'https://bomfather.github.io',
+  base: '/bomfather-docs',
   integrations: [
     mdx(),
     sitemap(),
